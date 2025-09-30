@@ -1,7 +1,8 @@
 # AY2526S1-CS2103-F13-2
 
-## CI Status
-[![CI Status](https://github.com/AY2526S1-CS2103-F13-2/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103-F13-2/tp/actions)
+## Status
+[![CI Status](https://github.com/AY2526S1-CS2103-F13-2/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103-F13-2/tp/actions/workflows/gradle.yml)
+[![codecov](https://codecov.io/gh/AY2526S1-CS2103-F13-2/tp/graph/badge.svg?token=IZ7REY1HBS)](https://codecov.io/gh/AY2526S1-CS2103-F13-2/tp)
 
 ## UI
 ![Ui](docs/images/Ui.png)
