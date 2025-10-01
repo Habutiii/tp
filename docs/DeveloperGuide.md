@@ -489,7 +489,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Private contact detail**: Contact Liangce @Habutiii if you have any queries
+
+* AddressBook: The core system being developed is a lightweight contact management application for independent ethical insurance agents.
+* Actor: A user (typically Insurance Agent) or external entity that interacts with the system.
+* Analytical Insurance Agent: A type of user who wants to analyse client demographics, insurance plans and overall portfolio statistics.
+* Client: An individual whose personal and insurance details are stored and managed in the AddressBook (AB3).
+* Command Guide: A reference page within the application that shows all available commands and their formats.
+* Contact Detail: Any piece of information related to a client, such as name, phone number, email or insurance details.
+* Duplicate Client: An entry in the AddressBook that repeats an existing client’s details.
+* GUI (Graphical User Interface): The visual interface of the application, allowing users to interact with the AddressBook via windows, buttons and other graphical elements.
+* Human-editable format (JSON): A structured text format (JavaScript Object Notation) used to store client data, which can be read and edited directly by users.
+* Insurance Premium: The regular payment made by a client for their insurance coverage.
+* Non-Functional Requirement (NFR): A requirement that specifies system quality or constraints (e.g., performance, usability, storage format), rather than a specific feature.
+* Tag: A label attached to a client (e.g., “priority”, “prospect”, “policyholder”) that helps agents organize and filter their portfolio.
+* Undo: A feature allowing the user to revert a mistaken action (e.g., wrong edit or deletion).
 
 --------------------------------------------------------------------------------------------------------------------
 
