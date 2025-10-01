@@ -308,30 +308,168 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+### Use case: `add`
 
-**MSS**
+> **Example 1**  
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]... command.  
+> 2. System validates each parameter.  
+> 3. System checks for duplicates using (name + phone).  
+> 4. If valid, system creates a new client entry and updates the display.  
+>    - Use case ends.  
+>
+> **Extensions:**  
+> - 2a. Missing required fields.  
+>   - 2a1. System displays: “ERROR: Missing required fields. Required: n/, p/, e/, a/.”  
+>   - Use case ends.  
+>
+> - 2b. Invalid parameter format.  
+>   - 2b1. System displays specific error message (e.g., “Phone must be a valid number”).  
+>   - 2b2. Agent corrects input.  
+>   - Use case resumes from step 2.  
+>
+> - 3a. Duplicate detected.  
+>   - 3a1. System displays: “DUPLICATE CLIENT: A client with the same phone/email already exists.”  
+>   - 3a2. Agent may use edit INDEX instead.  
+>   - Use case ends.  
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+---
 
-    Use case ends.
+### Use case: `edit`
 
-**Extensions**
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... command.  
+> 2. System validates the index and input fields.  
+> 3. System checks for duplicates (name + phone).  
+> 4. If valid, system updates client details and displays confirmation.  
+>    - Use case ends.  
+>
+> **Extensions:**  
+> - 2a. Index out of bounds.  
+>   - 2a1. System displays error: “Index not found.”  
+>   - Use case ends.  
+>
+> - 2b. Invalid parameter format.  
+>   - 2b1. System displays error specifying invalid field.  
+>   - 2b2. Agent corrects input.  
+>   - Use case resumes from step 2.  
+>
+> - 3a. Duplicate detected.  
+>   - 3a1. System displays duplicate warning.  
+>   - Use case ends.  
+>
+> - 4a. Tag replacement error.  
+>   - 4a1. System rejects entire edit if one invalid tag is found.  
+>   - Use case ends.  
+>
+> - 4b. Storage failure occurs.  
+>   - 4b1. System displays: “Couldn’t save data. Your edit was cancelled.”  
+>   - Use case ends.  
 
-* 2a. The list is empty.
+---
 
-  Use case ends.
+### Use case: `delete`
 
-* 3a. The given index is invalid.
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues delete INDEX command.  
+> 2. System verifies the index.  
+> 3. System deletes the client record at that index.  
+> 4. System displays confirmation: “Deleted Person: <Client details>”.  
+>    - Use case ends.  
+>
+> **Extensions:**  
+> - 2a. Index out of bounds.  
+>   - 2a1. System displays error: “Index not found.”  
+>   - Use case ends.  
 
-    * 3a1. AddressBook shows an error message.
+---
 
-      Use case resumes at step 2.
+### Use case: `find`
 
-*{More to be added}*
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues find STRING command.  
+> 2. System searches client records by name, UID, email, or phone.  
+> 3. System returns matching records in a tabular list (CLI) or as clickable results (GUI).  
+> 4. Agent views or selects the desired client record.  
+>    - Use case ends.  
+>
+> **Extensions:**  
+> - 2a. No matches found.  
+>   - 2a1. System displays: “No clients matched the provided filters.”  
+>   - Use case ends.  
+>
+> - 2b. Invalid parameter provided (e.g., malformed input).  
+>   - 2b1. System displays error specifying the issue (e.g., invalid characters).  
+>   - 2b2. Agent re-enters correct input.  
+>   - Use case resumes from step 2.  
+>
+> - 2c. Conflicting filters applied.  
+>   - 2c1. System displays: "No clients matched all provided filters."  
+>   - Use case ends.  
+
+---
+
+### Use case: `help`
+
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues help command.  
+> 2. System displays a list of commands with usage details.  
+> 3. Agent reads and continues working.  
+>    - Use case ends.  
+>
+> **Extensions:**  
+> - 1a. Agent types synonym (e.g., guide, man).  
+>   - 1a1. System displays: “Unknown command. Type help to see available commands.”  
+>   - Use case ends.  
+
+---
+
+### Use case: `stats`
+
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues stats command.  
+> 2. System analyses customer data.  
+> 3. System displays summary table (Packages vs. No. of Customers).  
+> 4. Agent reviews performance insights.  
+>    - Use case ends.  
+>
+> **Extensions:**  
+> - 2a. No data available.  
+>   - 2a1. System displays: “No statistics available – no clients found.”  
+>   - Use case ends.  
+
+---
+
+### Use case: `list`
+
+> **Example 1**  
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent  
+>
+> **MSS:**  
+> 1. Agent issues list command.  
+> 2. System displays all the persons in the address book.  
+> 3. Use case ends.  
+
+
 
 ### Non-Functional Requirements
 
