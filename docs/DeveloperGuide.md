@@ -275,14 +275,30 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                           | I want to …​                                                               | So that I can…​                                                         |
+|----------|-----------------------------------|----------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| `* * *`  | Insurance Agent                   | find clients using attributes other than name (e.g., uid, email, phone)    | locate clients more flexibly                                            |
+| `* * *`  | Insurance Agent                   | view client details and insurance premium                                  | keep track of my client details                                         |
+| `* * *`  | Insurance Agent                   | add a new client’s contact information                                     | maintain an up-to-date client list                                      |
+| `* * *`  | Insurance Agent                   | edit a client’s details                                                    | quickly update changes like phone numbers or address                    |
+| `* * *`  | Insurance Agent                   | avoid adding duplicate clients                                             | avoid keeping the same person twice                                     |
+| `* * *`  | Insurance Agent                   | delete contacts                                                            | keep my contact list clean and relevant                                 |
+| `* * *`  | Insurance Agent (First-time user) | access a command guide (main page)                                         | learn or recall the command formats quickly                             |
+| `* * *`  | Insurance Agent                   | save client details                                                        | ensure client details will not go missing                               |
+| `* * *`  | Analytical Insurance Agent        | view a summary of plans purchased and customer statistics                  | quickly analyse the demographics of clients                             |
+| `* *`    | Experienced Insurance Agent       | tag clients (e.g., “priority”, “prospect”, “policyholder”)                 | organise my portfolio logically                                         |
+| `* *`    | Insurance Agent                   | view tags as folders                                                       | group and browse clients by relationship or category                    |
+| `* *`    | Insurance Agent                   | undo my mistake while using the application                                | rectify errors without re-editing an entry                              |
+| `* *`    | Insurance Agent                   | sort clients based on attributes (e.g., name, date added)                  | quickly update changes like phone numbers or addresses                  |
+| `* *`    | Insurance Agent                   | see a live preview of client input while adding/editing                    | know immediately if I missed a field                                    |
+| `* *`    | Insurance Agent                   | perform multi-entry actions (e.g., delete multiple clients in one command) | save time when cleaning up data                                         |
+| `* *`    | Insurance Agent                   | import/export to excel                                                     | view data in excel and share with others                                |
+| `* *`    | Insurance Agent                   | get a warning before dangerous action                                      | avoid losing client details by accident                                 |
+| `*`      | Insurance Agent                   | use aliases for commands (e.g., ls for list)                               | work faster without clashing with existing commands                     |
+| `*`      | Insurance Agent                   | use AI assistant to deep analysis on my data                               | uncover invaluable insights                                             |
+| `*`      | Insurance Agent                   | ask AI to perform actions on the application                               | save time and manual labour                                             |
+| `*`      | Insurance Agent                   | build schedule for all my meetings                                         | keep track of my schedule in a single application                       |
+| `*`      | Insurance Agent                   | auto-calculate insurance premium per term                                  | quickly know how much the client has/will be paying over the term years |
 
 *{More to be added}*
 
