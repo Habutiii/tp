@@ -1,6 +1,6 @@
 ---
 layout: page
-title: John Doe's Project Portfolio Page
+title: Habutiii's Project Portfolio Page
 ---
 
 ### Project: AddressBook Level 3
@@ -12,7 +12,9 @@ It is written in Java, and has about [PLACEHOLDER] kLoC.
 Given below are my contributions to the project.
 * TBC
 * **Documentation**:
-  * TBC
+  * Set up the Github repo and initial documentation for the group.
+  * Added MVP decription of multiple features.
+  * Standardizing MVP Documentations
 * **Community**:
     * TBC
 * **Tools**:
