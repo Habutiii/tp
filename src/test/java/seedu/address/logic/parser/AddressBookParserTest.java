@@ -112,4 +112,15 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
                 parser.parseCommand("unknownCommand"));
     }
+
+    @Test
+    public void parseCommand_nonPrintableAsciiInput_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_INVALID_INPUT_CHARACTERS, () -> parser.parseCommand("list \u0007"));
+        assertThrows(ParseException.class, MESSAGE_INVALID_INPUT_CHARACTERS, () -> parser.parseCommand("list\n"));
+    }
+
+    @Test
+    public void parseCommand_commandWordOnlyDash_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("-"));
+    }
 }

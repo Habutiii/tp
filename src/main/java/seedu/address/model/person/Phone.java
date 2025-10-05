@@ -32,7 +32,8 @@ public class Phone {
      */
     public static boolean isValidPhone(String test) {
 
-        return test.matches(VALIDATION_REGEX) && test.matches(PRINTABLE_ASCII_REGEX);
+        return test.matches(PRINTABLE_ASCII_REGEX)
+                && test.matches(VALIDATION_REGEX);
     }
 
     @Override

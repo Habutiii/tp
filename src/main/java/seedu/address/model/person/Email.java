@@ -50,7 +50,8 @@ public class Email {
      */
     public static boolean isValidEmail(String test) {
 
-        return test.matches(VALIDATION_REGEX) && test.matches(PRINTABLE_ASCII_REGEX);
+        return test.matches(PRINTABLE_ASCII_REGEX)
+                && test.matches(VALIDATION_REGEX);
     }
 
     @Override

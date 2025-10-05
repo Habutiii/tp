@@ -29,6 +29,10 @@ public class NameTest {
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName("你好")); // trailing space
+        assertFalse(Name.isValidName(" John")); // VALIDATION_REGEX false, PRINTABLE_ASCII_REGEX true
+        assertFalse(Name.isValidName("John你好")); // VALIDATION_REGEX true, PRINTABLE_ASCII_REGEX false
+        assertFalse(Name.isValidName(" 你好")); // both false
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
