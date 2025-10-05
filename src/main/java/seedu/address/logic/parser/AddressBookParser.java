@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REGEX;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_INPUT_CHARACTERS;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -24,14 +25,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses user input.
  */
 public class AddressBookParser {
-
-    /**
-     * Limit input to be only English characters, numbers, spaces and symbols on a standard English keyboard.
-     * Only accepts characters with ASCII values between 32 and 126 inclusive which are standard printable characters.
-     * This is to prevent potential security issues.
-     */
-    private static final String VALID_INPUT_REGEX = "[\\x20-\\x7E]*";
-
     /**
      * Used for initial separation of command word and args.
      */
@@ -49,7 +42,7 @@ public class AddressBookParser {
     public Command parseCommand(String userInput) throws ParseException {
 
         // Reject any non-standard characters to prevent potential security issues
-        if (!userInput.matches(VALID_INPUT_REGEX)) {
+        if (!userInput.matches(PRINTABLE_ASCII_REGEX)) {
             throw new ParseException(MESSAGE_INVALID_INPUT_CHARACTERS);
         }
 
