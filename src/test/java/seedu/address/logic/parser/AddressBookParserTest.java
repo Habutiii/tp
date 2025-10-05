@@ -98,11 +98,18 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_invalidInputCharacter_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_INVALID_INPUT_CHARACTERS, ()
-                -> parser.parseCommand("List 你好"));
+                -> parser.parseCommand("list 你好"));
+    }
+
+
+    @Test
+    public void parseCommand_invalidCommand_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("li+st"));
     }
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
+                parser.parseCommand("unknownCommand"));
     }
 }
