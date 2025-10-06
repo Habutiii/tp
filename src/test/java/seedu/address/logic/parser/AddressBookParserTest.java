@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_INPUT_CHARACTERS;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -95,7 +96,31 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_invalidInputCharacter_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_INVALID_INPUT_CHARACTERS, ()
+                -> parser.parseCommand("list 你好"));
+    }
+
+
+    @Test
+    public void parseCommand_invalidCommand_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("li+st"));
+    }
+
+    @Test
     public void parseCommand_unknownCommand_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
+                parser.parseCommand("unknownCommand"));
+    }
+
+    @Test
+    public void parseCommand_nonPrintableAsciiInput_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_INVALID_INPUT_CHARACTERS, () -> parser.parseCommand("list \u0007"));
+        assertThrows(ParseException.class, MESSAGE_INVALID_INPUT_CHARACTERS, () -> parser.parseCommand("list\n"));
+    }
+
+    @Test
+    public void parseCommand_commandWordOnlyDash_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("-"));
     }
 }
