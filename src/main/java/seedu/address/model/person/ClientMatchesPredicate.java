@@ -32,7 +32,7 @@ public final class ClientMatchesPredicate implements Predicate<Person> {
             return false;
         }
 
-        final String name  = safeLower(person.getName()  == null ? null : person.getName().fullName);
+        final String name = safeLower(person.getName() == null ? null : person.getName().fullName);
         final String phone = safeLower(person.getPhone() == null ? null : person.getPhone().value);
         final String email = safeLower(person.getEmail() == null ? null : person.getEmail().value);
 
