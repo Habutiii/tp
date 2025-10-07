@@ -112,21 +112,39 @@ Examples:
 
 ### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
-
+Finds clients whose **name, phone number, or email** contain any of the given keywords (case-insensitive, partial matches allowed).
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+**Details:**
+* The search is **case-insensitive**.  
+  e.g. `hans` will match `Hans`, `HANS`, or `Johanssen`
+* **Partial matches** are supported.  
+  e.g. `li` will match `David Li`, `Lina Tan`, and `charlie@gmail.com`
+* The search covers **name**, **phone**, and **email** fields.
+* The order of the keywords does **not** matter.  
+  e.g. `Alex 9123` returns all clients with “Alex” in their name or “9123” in their phone number.
+* Matching uses **OR semantics** – a client is listed if **any** keyword matches any searchable field.
+* Blank or invalid inputs (e.g. only spaces or non-printable Unicode) are safely ignored.
+
+---
+
+**Examples:**
+
+| Command                    | Description / Result                                                      |
+|----------------------------|---------------------------------------------------------------------------|
+| `find alex`                | Returns all clients with “alex” in their name, phone, or email.           |
+| `find 9123`                | Returns clients whose phone number contains `9123`.                       |
+| `find gmail.com`           | Returns clients using Gmail addresses.                                    |
+| `find alex 9123 gmail.com` | Returns any client whose name, phone, or email contains any of the terms. |
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find al` returns `Alex Yeow` and `Roy Balakrishnan`
+    ![result for 'find al'](images/findAlexResult.png)
+
+
+* `find alex 9927` returns `Alex Yeoh`, `Bernice Yu`<br>
+    ![result for 'find alex 9927'](images/findAlexBerniceResult.png)
+
 
 ### Deleting a person : `delete`
 
