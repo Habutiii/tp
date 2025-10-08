@@ -73,7 +73,10 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Provides live feedback for add command.
      */
-    void handleLiveFeedback(String input) {
+    private void handleLiveFeedback(String input) {
+        assert !input.isEmpty() : "Input should not be empty";
+        assert input != null : "Input should not be null";
+
         if (!input.startsWith("add")) {
             // Clear live preview when not typing add command
             livePreviewCallback.accept(new ArrayList<>());

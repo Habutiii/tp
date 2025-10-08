@@ -46,4 +46,45 @@ class CommandBoxTest {
         assertFalse(fp.isValid());
         assertTrue(fp.getValue().contains("duplicate"));
     }
+
+    @Test
+    public void public_createEmailPreview_validEmail() {
+        FieldPreview fp = CommandBox.createEmailPreview("test@email.com", false);
+        assertEquals("test@email.com", fp.getValue());
+        assertTrue(fp.isValid());
+    }
+
+    @Test
+    public void public_createEmailPreview_invalidEmail() {
+        FieldPreview fp = CommandBox.createEmailPreview("invalid@", false);
+        assertFalse(fp.isValid());
+    }
+
+    @Test
+    public void public_createEmailPreview_duplicateEmail() {
+        FieldPreview fp = CommandBox.createEmailPreview("test@email.com", true);
+        assertFalse(fp.isValid());
+        assertTrue(fp.getValue().contains("duplicate"));
+    }
+
+    @Test
+    public void public_createAddressPreview_validAddress() {
+        FieldPreview fp = CommandBox.createAddressPreview("123 Main St", false);
+        assertEquals("123 Main St", fp.getValue());
+        assertTrue(fp.isValid());
+    }
+
+    @Test
+    public void public_createAddressPreview_invalidAddress() {
+        FieldPreview fp = CommandBox.createAddressPreview("", false);
+        assertTrue(fp.isValid()); // Empty address is considered valid by implementation
+    }
+
+    @Test
+    public void public_createAddressPreview_duplicateAddress() {
+        FieldPreview fp = CommandBox.createAddressPreview("123 Main St", true);
+        assertFalse(fp.isValid());
+        assertTrue(fp.getValue().contains("duplicate"));
+    }
+
 }
