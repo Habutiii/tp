@@ -48,11 +48,15 @@ public class CommandBox extends UiPart<Region> {
         });
     }
 
+    public TextField getCommandTextField() {
+        return this.commandTextField;
+    }
+
     /**
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleCommandEntered() {
+    void handleCommandEntered() {
         String commandText = commandTextField.getText();
         if (commandText.equals("")) {
             return;
@@ -69,7 +73,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Provides live feedback for add command.
      */
-    private void handleLiveFeedback(String input) {
+    void handleLiveFeedback(String input) {
         if (!input.startsWith("add")) {
             // Clear live preview when not typing add command
             livePreviewCallback.accept(new ArrayList<>());
@@ -116,7 +120,7 @@ public class CommandBox extends UiPart<Region> {
         livePreviewCallback.accept(fieldPreviews);
     }
 
-    private FieldPreview createNamePreview(String name, boolean duplicate) {
+    static FieldPreview createNamePreview(String name, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Name (n/):", name + " (duplicate)", false);
         } else if (!name.isEmpty()) {
@@ -126,7 +130,7 @@ public class CommandBox extends UiPart<Region> {
         return new FieldPreview("Name (n/):", "", true);
     }
 
-    private FieldPreview createPhonePreview(String phone, boolean duplicate) {
+    static FieldPreview createPhonePreview(String phone, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Phone (p/):", phone + " (duplicate)", false);
         } else if (!phone.isEmpty()) {
@@ -136,7 +140,7 @@ public class CommandBox extends UiPart<Region> {
         return new FieldPreview("Phone (p/):", "", true);
     }
 
-    private FieldPreview createEmailPreview(String email, boolean duplicate) {
+    static FieldPreview createEmailPreview(String email, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Email (e/):", email + " (duplicate)", false);
         } else if (!email.isEmpty()) {
@@ -146,7 +150,7 @@ public class CommandBox extends UiPart<Region> {
         return new FieldPreview("Email (e/):", "", true);
     }
 
-    private FieldPreview createAddressPreview(String address, boolean duplicate) {
+    static FieldPreview createAddressPreview(String address, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Address (a/):", address + " (duplicate)", false);
         } else if (!address.isEmpty()) {
