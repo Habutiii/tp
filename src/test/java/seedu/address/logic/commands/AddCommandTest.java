@@ -149,6 +149,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public int getSize() {
+            return 0;
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
