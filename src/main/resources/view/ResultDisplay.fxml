@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.TextFlow?>
 
 <StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/17"
     xmlns:fx="http://javafx.com/fxml/1">
   <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
+  <ScrollPane fx:id="livePreviewScrollPane" fitToWidth="true" visible="false" managed="false" 
+              style="-fx-background: transparent; -fx-background-color: transparent;">
+    <TextFlow fx:id="livePreviewDisplay" styleClass="result-display" 
+              style="-fx-background-color: #383838; -fx-padding: 5;"/>
+  </ScrollPane>
 </StackPane>
