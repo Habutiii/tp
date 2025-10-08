@@ -13,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.CliSyntax;
+import seedu.address.logic.parser.DuplicateFieldChecker;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -100,16 +101,16 @@ public class CommandBox extends UiPart<Region> {
 
         // Check for duplicate fields
         String name = argMultimap.getValue(CliSyntax.PREFIX_NAME).orElse("");
-        boolean isDuplicateName = argMultimap.getAllValues(CliSyntax.PREFIX_NAME).size() > 1;
+        boolean isDuplicateName = DuplicateFieldChecker.isDuplicateField(argMultimap, CliSyntax.PREFIX_NAME);
 
         String phone = argMultimap.getValue(CliSyntax.PREFIX_PHONE).orElse("");
-        boolean isDuplicatePhone = argMultimap.getAllValues(CliSyntax.PREFIX_PHONE).size() > 1;
+        boolean isDuplicatePhone = DuplicateFieldChecker.isDuplicateField(argMultimap, CliSyntax.PREFIX_PHONE);
 
         String email = argMultimap.getValue(CliSyntax.PREFIX_EMAIL).orElse("");
-        boolean isDuplicateEmail = argMultimap.getAllValues(CliSyntax.PREFIX_EMAIL).size() > 1;
+        boolean isDuplicateEmail = DuplicateFieldChecker.isDuplicateField(argMultimap, CliSyntax.PREFIX_EMAIL);
 
         String address = argMultimap.getValue(CliSyntax.PREFIX_ADDRESS).orElse("");
-        boolean isDuplicateAddress = argMultimap.getAllValues(CliSyntax.PREFIX_ADDRESS).size() > 1;
+        boolean isDuplicateAddress = DuplicateFieldChecker.isDuplicateField(argMultimap, CliSyntax.PREFIX_ADDRESS);
 
         String tags = String.join(", ", argMultimap.getAllValues(CliSyntax.PREFIX_TAG));
 
