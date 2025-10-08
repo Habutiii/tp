@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.Model;
 
+/**
+ * Presents Statistics on Customers in {@code AddressBook}.
+ */
 public class StatsCommand extends Command {
     public static final String COMMAND_WORD = "stats";
 
