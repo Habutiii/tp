@@ -104,6 +104,13 @@ public class UniquePersonList implements Iterable<Person> {
         return internalUnmodifiableList;
     }
 
+    /**
+     * Returns size of this list.
+     */
+    public int size() {
+        return internalList.size();
+    }
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();

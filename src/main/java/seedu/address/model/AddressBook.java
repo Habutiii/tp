@@ -108,6 +108,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asUnmodifiableObservableList();
     }
 
+    /**
+     * Returns number of people in {@code AddressBook}.
+     */
+    public int getSize() {
+        return persons.size();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
