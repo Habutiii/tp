@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -9,41 +9,44 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TagMatchesAllPredicate;
 import seedu.address.model.tag.Tag;
 
-class ListCommandParserTest {
+/**
+ * Unit tests for {@code ListCommandParser}.
+ */
+public class ListCommandParserTest {
 
     private final ListCommandParser parser = new ListCommandParser();
 
     @Test
-    void parse_noArgs_listsAll() throws Exception {
-        ListCommand cmd = parser.parse("   "); // spaces ok
-        // equals() in ListCommand treats both with null predicate as equal
-        assertEquals(new ListCommand(), cmd);
+    public void parse_noArgs_listsAll() {
+        // no tag prefix -> list all persons
+        assertParseSuccess(parser, "   ", new ListCommand());
     }
 
     @Test
-    void parse_singleTag_buildsAllPredicate() throws Exception {
-        ListCommand cmd = parser.parse(" t/friends");
+    public void parse_singleTag_success() {
         Set<Tag> expected = new LinkedHashSet<>();
         expected.add(new Tag("friends"));
-        assertEquals(new ListCommand(new TagMatchesAllPredicate(expected)), cmd);
+        ListCommand expectedCommand = new ListCommand(new TagMatchesAllPredicate(expected));
+
+        assertParseSuccess(parser, " t/friends", expectedCommand);
     }
 
     @Test
-    void parse_multipleTags_buildsAllPredicate() throws Exception {
-        ListCommand cmd = parser.parse(" t/friends t/colleagues");
+    public void parse_multipleTags_success() {
         Set<Tag> expected = new LinkedHashSet<>();
         expected.add(new Tag("friends"));
         expected.add(new Tag("colleagues"));
-        assertEquals(new ListCommand(new TagMatchesAllPredicate(expected)), cmd);
+        ListCommand expectedCommand = new ListCommand(new TagMatchesAllPredicate(expected));
+
+        assertParseSuccess(parser, " t/friends t/colleagues", expectedCommand);
     }
 
     @Test
-    void parse_invalidTag_throwsParseException() {
-        // Non-alnum should fail your Tag validation
-        assertThrows(ParseException.class, () -> parser.parse(" t/invalid!"));
+    public void parse_invalidTag_failure() {
+        // invalid tag name violates Tag constraints
+        assertParseFailure(parser, " t/invalid!", Tag.MESSAGE_CONSTRAINTS);
     }
 }
