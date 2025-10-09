@@ -83,6 +83,18 @@ public class AddressBookTest {
         assertThrows(UnsupportedOperationException.class, () -> addressBook.getPersonList().remove(0));
     }
 
+
+    @Test
+    public void checkSize_emptyList() {
+        assertEquals(addressBook.getPersonList().size(), 0);
+    }
+
+    @Test
+    public void checkSize_onePerson() {
+        addressBook.addPerson(ALICE);
+        assertEquals(addressBook.getPersonList().size(), 1);
+    }
+
     @Test
     public void toStringMethod() {
         String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";

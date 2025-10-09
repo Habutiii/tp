@@ -163,6 +163,17 @@ public class UniquePersonListTest {
     }
 
     @Test
+    public void checkSize_emptyList_returnsTrue() {
+        assertTrue(uniquePersonList.size() == 0);
+    }
+
+    @Test
+    public void checkSize_onePerson_returnsTrue() {
+        uniquePersonList.add(ALICE);
+        assertTrue(uniquePersonList.size() == 1);
+    }
+
+    @Test
     public void asUnmodifiableObservableList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, ()
             -> uniquePersonList.asUnmodifiableObservableList().remove(0));

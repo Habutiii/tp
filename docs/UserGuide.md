@@ -79,6 +79,8 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
+* Another person entry with the same `NAME` and `PHONE_NUMBER` is treated as a duplicate entry.
+
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
@@ -166,6 +168,19 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+### Viewing Summary Statistics: `stats`
+
+Shows Summary Statistics on Customers in the address book.
+
+Format: `stats`
+
+**Example:**
+
+| Command | `stats`                                                 |
+|---------|---------------------------------------------------------|
+| Output  | Number of Customers: 6 <br/> #More stats coming soon... |
+
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -216,3 +231,4 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
+**Stats**| `stats`
