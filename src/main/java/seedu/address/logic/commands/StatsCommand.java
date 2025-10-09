@@ -20,4 +20,9 @@ public class StatsCommand extends Command {
     public CommandResult execute(Model model) {
         return new CommandResult(this.computeStats(model));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof StatsCommand);
+    }
 }

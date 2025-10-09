@@ -150,7 +150,7 @@ public class AddCommandTest {
 
         @Override
         public int getSize() {
-            return 0;
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
