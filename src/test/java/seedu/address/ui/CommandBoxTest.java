@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -77,7 +78,7 @@ class CommandBoxTest {
     @Test
     public void public_createAddressPreview_invalidAddress() {
         FieldPreview fp = CommandBox.createAddressPreview("", false);
-        assertTrue(fp.isValid()); // Empty address is considered valid by implementation
+        assertTrue(fp.isValid());
     }
 
     @Test
@@ -87,4 +88,12 @@ class CommandBoxTest {
         assertTrue(fp.getValue().contains("duplicate"));
     }
 
+    @Test
+    public void handleLiveFeedback_javafxNotInitialized_throwsException() {
+        assertThrows(Throwable.class, () -> {
+            CommandBox box = new CommandBox(cmd -> new seedu.address.logic.commands.CommandResult(""), previews -> {
+            });
+            box.handleLiveFeedback("add n/Alice");
+        });
+    }
 }

@@ -6,6 +6,13 @@ package seedu.address.logic.parser;
  */
 public class DuplicateFieldChecker {
     /**
+     * Constructor for DuplicateFieldChecker
+     */
+    public DuplicateFieldChecker() {
+
+    }
+
+    /**
      * Returns true if the given prefix appears more than once in the
      * ArgumentMultimap.
      */
