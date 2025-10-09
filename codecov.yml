@@ -2,4 +2,3 @@ ignore:
   - "src/main/java/seedu/address/ui/CommandBox.java"
   - "src/main/java/seedu/address/ui/ResultDisplay.java"
   - "src/main/java/seedu/address/ui/MainWindow.java"
-  
