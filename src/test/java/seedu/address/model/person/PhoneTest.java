@@ -31,12 +31,15 @@ public class PhoneTest {
         assertFalse(Phone.isValidPhone("phone")); // non-numeric
         assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
         assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
-        assertFalse(Phone.isValidPhone("911")); // exactly 3 numbers
-        assertFalse(Phone.isValidPhone("124293842033123")); // long phone numbers
+        assertFalse(Phone.isValidPhone("91")); // exactly 2 numbers
         assertFalse(Phone.isValidPhone("一二三四五六七八")); // non-ascii characters
+        assertFalse(Phone.isValidPhone("1234567890123456")); // exactly 16 numbers
 
         // valid phone numbers
-        assertTrue(Phone.isValidPhone("93121534"));
+        assertTrue(Phone.isValidPhone("93121534")); // exactly 8 numbers (Singapore number)
+        assertTrue(Phone.isValidPhone("6593121534")); // exactly 10 numbers (Singapore number with country code)
+        assertTrue(Phone.isValidPhone("999")); // exactly 3 numbers
+        assertTrue(Phone.isValidPhone("123456789012345")); // exactly 15 numbers
     }
 
     @Test

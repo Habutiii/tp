@@ -95,6 +95,12 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
+### Sort list by tag : `list t/<your tag here>`
+
+Sorts and lists only entries with the respective tag(s) entered.
+
+Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
+
 ### Editing a person : `edit`
 
 Edits an existing person in the address book.
@@ -231,4 +237,6 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
+**Sort by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
 **Stats**| `stats`
+
