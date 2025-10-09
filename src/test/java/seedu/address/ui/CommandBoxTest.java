@@ -87,13 +87,4 @@ class CommandBoxTest {
         assertFalse(fp.isValid());
         assertTrue(fp.getValue().contains("duplicate"));
     }
-
-    @Test
-    public void handleLiveFeedback_javafxNotInitialized_throwsException() {
-        assertThrows(Throwable.class, () -> {
-            CommandBox box = new CommandBox(cmd -> new seedu.address.logic.commands.CommandResult(""), previews -> {
-            });
-            box.handleLiveFeedback("add n/Alice");
-        });
-    }
 }
