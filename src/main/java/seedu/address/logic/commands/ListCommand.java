@@ -24,9 +24,13 @@ public class ListCommand extends Command {
 
     private final Predicate<Person> predicate; // null => list all
 
-    public ListCommand() { this.predicate = null; }
+    public ListCommand() {
+        this.predicate = null;
+    }
 
-    public ListCommand(Predicate<Person> predicate) { this.predicate = predicate; }
+    public ListCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
+    }
 
     @Override
     public CommandResult execute(Model model) {
