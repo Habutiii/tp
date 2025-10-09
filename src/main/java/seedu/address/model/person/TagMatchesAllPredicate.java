@@ -7,13 +7,14 @@ import java.util.function.Predicate;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tests whether a {@code Person} has <em>all</em> of a specified set of {@code Tag}s.
- * This predicate returns {@code true} only if every tag in the {@code required} set
- * is present in the person's {@code getTags()} collection.
- * Typical use: filtering the person list to show only those who match multiple tags,
- * such as in a {@code list t/friends t/colleagues} command.
+ * Tests whether a {@code Person} has <em>at least one</em> of a specified set of {@code Tag}s.
+ * This predicate returns {@code true} if the person's {@code getTags()} collection
+ * contains any of the tags in the {@code required} set.
+ * Typical use: filtering the person list to show anyone who matches
+ * one or more tags, such as in a {@code list t/friends t/colleagues} command.
  */
 public class TagMatchesAllPredicate implements Predicate<Person> {
+
     private final Set<Tag> required;
 
     public TagMatchesAllPredicate(Set<Tag> required) {
@@ -22,8 +23,8 @@ public class TagMatchesAllPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        // Person must contain ALL required tags
-        return person.getTags().containsAll(required);
+        // Return true if the person has at least one matching tag
+        return person.getTags().stream().anyMatch(required::contains);
     }
 
     @Override
@@ -35,6 +36,6 @@ public class TagMatchesAllPredicate implements Predicate<Person> {
 
     @Override
     public String toString() {
-        return "has ALL tags: " + required;
+        return "has ANY tag in: " + required;
     }
 }

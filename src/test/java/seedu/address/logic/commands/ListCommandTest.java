@@ -68,7 +68,8 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listByMultipleTags_filtersIntersection() {
+    public void execute_listByMultipleTags_filtersUnion() {
+        // With OR semantics: friends OR colleagues -> Bernice, James, Roy (3)
         AddressBook ab = new AddressBook();
         var bernice = new PersonBuilder().withName("Bernice").withTags("friends", "colleagues").build();
         var james = new PersonBuilder().withName("James").withTags("friends").build();
@@ -81,11 +82,12 @@ public class ListCommandTest {
         Set<Tag> required = new LinkedHashSet<>();
         required.add(new Tag("friends"));
         required.add(new Tag("colleagues"));
-        ListCommand cmd = new ListCommand(new TagMatchesAllPredicate(required));
+        ListCommand cmd = new ListCommand(new TagMatchesAllPredicate(required)); // now "ANY" internally
         cmd.execute(model);
 
-        // Only Bernice has both tags
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(3, model.getFilteredPersonList().size());
         assertEquals("Bernice", model.getFilteredPersonList().get(0).getName().fullName);
+        assertEquals("James", model.getFilteredPersonList().get(1).getName().fullName);
+        assertEquals("Roy", model.getFilteredPersonList().get(2).getName().fullName);
     }
 }

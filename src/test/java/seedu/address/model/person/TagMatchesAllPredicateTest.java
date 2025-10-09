@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,7 +14,7 @@ import seedu.address.testutil.PersonBuilder;
 public class TagMatchesAllPredicateTest {
 
     @Test
-    public void test_personHasAllRequiredTags_returnsTrue() {
+    public void test_personHasAnyRequiredTag_returnsTrue() {
         // Person with friends + colleagues
         Person person = new PersonBuilder()
                 .withName("Bernice Yu")
@@ -29,8 +28,8 @@ public class TagMatchesAllPredicateTest {
     }
 
     @Test
-    public void test_personMissingOneRequiredTag_returnsFalse() {
-        // Person with only friends
+    public void test_personHasOneOfRequiredTags_returnsTrue() {
+        // Person with only friends still matches (ANY semantics)
         Person person = new PersonBuilder()
                 .withName("James Ho")
                 .withTags("friends")
@@ -39,17 +38,14 @@ public class TagMatchesAllPredicateTest {
         TagMatchesAllPredicate predicate =
                 new TagMatchesAllPredicate(Set.of(new Tag("friends"), new Tag("colleagues")));
 
-        assertFalse(predicate.test(person));
+        assertTrue(predicate.test(person));
     }
 
     @Test
     public void equals() {
-        TagMatchesAllPredicate a =
-                new TagMatchesAllPredicate(Set.of(new Tag("friends")));
-        TagMatchesAllPredicate b =
-                new TagMatchesAllPredicate(Set.of(new Tag("friends")));
-        TagMatchesAllPredicate c =
-                new TagMatchesAllPredicate(Set.of(new Tag("colleagues")));
+        TagMatchesAllPredicate a = new TagMatchesAllPredicate(Set.of(new Tag("friends")));
+        TagMatchesAllPredicate b = new TagMatchesAllPredicate(Set.of(new Tag("friends")));
+        TagMatchesAllPredicate c = new TagMatchesAllPredicate(Set.of(new Tag("colleagues")));
 
         assertEquals(a, b); // same values
         assertEquals(a, a); // same object
