@@ -6,7 +6,6 @@ import java.util.List;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -28,10 +27,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Creates an AddressBook using the Persons in the {@code persons} list.
      */
-    public AddressBook(UniquePersonList persons) {
+    public AddressBook(ObservableList<Person> newPersons) {
         // Create a deep copy of persons to ensure immutability
-        requireNonNull(persons);
-        this.persons = persons.copy();
+        requireNonNull(newPersons);
+        persons = new UniquePersonList(newPersons);
     }
 
     /**
