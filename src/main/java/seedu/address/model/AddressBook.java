@@ -76,6 +76,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Inserts a person at the specified index in the address book.
+     * The person must not already exist in the address book.
+     */
+    public void insertPerson(int index, Person p) {
+        persons.insert(index, p);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
