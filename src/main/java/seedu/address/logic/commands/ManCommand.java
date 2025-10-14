@@ -9,10 +9,7 @@ import java.util.Objects;
 import seedu.address.model.Model;
 
 /**
- * Shows inline manuals for commands.
- * Usage:
- *   man
- *   man <command>
+ * Shows manual for a command.
  */
 public class ManCommand extends Command {
 

@@ -8,10 +8,6 @@ import seedu.address.model.Model;
 public class StatsCommand extends Command {
     public static final String COMMAND_WORD = "stats";
 
-    private static final String MESSAGE_USAGE = COMMAND_WORD;
-
-    private static final String MESSAGE_SUCCESS = "%1$s";
-
     public static final String MANUAL = String.join("\n",
             "NAME",
             "  stats — Displays summary statistics of the address book.",
@@ -31,6 +27,10 @@ public class StatsCommand extends Command {
             "SEE MORE",
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#viewing-summary-statistics-stats"
     );
+
+    private static final String MESSAGE_USAGE = COMMAND_WORD;
+
+    private static final String MESSAGE_SUCCESS = "%1$s";
 
     private String computeStats(Model model) {
         return "Number of Customers: " + model.getSize();
