@@ -1,5 +1,6 @@
 package seedu.address.model.tag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -46,4 +47,22 @@ public class TagTest {
         assertFalse(Tag.isValidTagName("你好")); // non-English
         assertFalse(Tag.isValidTagName("tag name")); // space
     }
+
+    @Test
+    public void equals_caseInsensitiveTags_returnsTrue() {
+        Tag tag1 = new Tag("Friend");
+        Tag tag2 = new Tag("friend");
+        assertTrue(tag1.equals(tag2));
+    }
+
+    @Test
+    public void hashCode_caseInsensitive_sameHash() {
+        assertEquals(new Tag("Tag").hashCode(), new Tag("tag").hashCode());
+    }
+
+    @Test
+    public void toString_caseInsensitive_printsLowercase() {
+        assertEquals("[friend]", new Tag("Friend").toString());
+    }
+
 }
