@@ -35,6 +35,27 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
+    public static final String MANUAL = String.join("\n",
+            "NAME",
+            "  add — Adds a person to the address book.",
+            "",
+            "USAGE",
+            "  add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…",
+            "",
+            "PARAMETERS",
+            "  • NAME: non-empty string, may contain spaces but not leading/trailing spaces",
+            "  • PHONE: must be numeric string; can only contain digits",
+            "  • EMAIL: must follow standard email format (with '@')",
+            "  • ADDRESS: non-empty string",
+            "  • TAG (optional): alphanumeric, no spaces; you may have multiple t/TAG fields",
+            "",
+            "EXAMPLES",
+            "  add n/John Doe p/98765432 e/john@example.com a/123, Main Street t/friend t/colleague",
+            "",
+            "SEE MORE",
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#adding-a-person-add"
+    );
+
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
@@ -58,6 +79,11 @@ public class AddCommand extends Command {
 
         model.addPerson(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    @Override
+    public String man() {
+        return MANUAL;
     }
 
     @Override

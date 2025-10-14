@@ -23,6 +23,23 @@ public class DeleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    public static final String MANUAL = String.join("\n",
+            "NAME",
+            "  delete — Deletes a person identified by index from the address book.",
+            "",
+            "USAGE",
+            "  delete INDEX",
+            "",
+            "PARAMETERS",
+            "  • INDEX: positive integer referring to the displayed list index",
+            "",
+            "EXAMPLES",
+            "  delete 3",
+            "",
+            "SEE MORE",
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#deleting-a-person--delete"
+    );
+
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     private final Index targetIndex;
@@ -43,6 +60,11 @@ public class DeleteCommand extends Command {
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+    }
+
+    @Override
+    public String man() {
+        return MANUAL;
     }
 
     @Override

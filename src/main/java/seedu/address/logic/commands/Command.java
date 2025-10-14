@@ -17,4 +17,10 @@ public abstract class Command {
      */
     public abstract CommandResult execute(Model model) throws CommandException;
 
+    /**
+     * Returns a short manual for this command, including usage, parameters, and examples.
+     *
+     * @return command specific manual.
+     */
+    public abstract String man();
 }

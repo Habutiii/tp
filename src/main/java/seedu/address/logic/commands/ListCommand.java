@@ -22,6 +22,20 @@ public class ListCommand extends Command {
     public static final String MESSAGE_LIST_BY_TAG_PREFIX = "Listed persons who ";
     public static final String MESSAGE_SUCCESS = "Listed all persons";
 
+    public static final String MANUAL = String.join("\n",
+            "NAME",
+            "  list — Lists all persons in the address book.",
+            "",
+            "USAGE",
+            "  list",
+            "",
+            "EXAMPLES",
+            "  list",
+            "",
+            "SEE MORE",
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#listing-all-persons--list"
+    );
+
     private final Predicate<Person> predicate; // null => list all
 
     public ListCommand() {
@@ -42,6 +56,11 @@ public class ListCommand extends Command {
             model.updateFilteredPersonList(predicate);
             return new CommandResult(MESSAGE_LIST_BY_TAG_PREFIX + predicate);
         }
+    }
+
+    @Override
+    public String man() {
+        return MANUAL;
     }
 
     @Override
