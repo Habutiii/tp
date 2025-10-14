@@ -88,4 +88,13 @@ public class FindCommandTest {
     private ClientMatchesPredicate preparePredicate(String userInput) {
         return new ClientMatchesPredicate(Arrays.asList(userInput.split("\\s+")));
     }
+
+    @Test
+    public void man_returnsManualString() {
+        ClientMatchesPredicate predicate = new ClientMatchesPredicate(Arrays.asList("keyword")); //random predicate
+        FindCommand cmd = new FindCommand(predicate);
+        String manual = cmd.man();
+        assertTrue(manual.contains("find"));
+        assertTrue(manual.contains("EXAMPLES"));
+    }
 }

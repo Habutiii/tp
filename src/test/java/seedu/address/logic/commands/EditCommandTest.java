@@ -213,4 +213,12 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
         assertTrue(editCommand.isMutable());
     }
+
+    @Test
+    public void man_returnsManualString() {
+        EditCommand cmd = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        String manual = cmd.man();
+        assertTrue(manual.contains("edit"));
+        assertTrue(manual.contains("PARAMETERS"));
+    }
 }
