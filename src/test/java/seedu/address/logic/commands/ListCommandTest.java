@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.logic.commands.ListCommand.MESSAGE_SUCCESS;
@@ -104,5 +105,13 @@ public class ListCommandTest {
         ListCommand listCommand = new ListCommand();
         assertThrows(UnsupportedOperationException.class, () ->
             listCommand.undo(model));
+    }
+
+    @Test
+    public void man_returnsManualString() {
+        ListCommand cmd = new ListCommand();
+        String manual = cmd.man();
+        assertTrue(manual.contains("list"));
+        assertTrue(manual.contains("USAGE"));
     }
 }

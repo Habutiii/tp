@@ -52,4 +52,12 @@ public class ClearCommandTest {
         ClearCommand clearCommand = new ClearCommand();
         assertTrue(clearCommand.isMutable());
     }
+
+    @Test
+    public void man_returnsManualString() {
+        ClearCommand cmd = new ClearCommand();
+        String manual = cmd.man();
+        assertTrue(manual.contains("clear"));
+        assertTrue(manual.contains("USAGE"));
+    }
 }

@@ -109,6 +109,11 @@ public class ModelManagerTest {
             public CommandResult execute(Model model) {
                 return null;
             }
+
+            @Override
+            public String man() {
+                return "";
+            }
         };
 
         // push it to the history stack

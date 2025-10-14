@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.Optional;
@@ -128,6 +129,14 @@ public class StatsCommandTest {
         public Optional<Command> popLastUndoCommand() {
             return Optional.empty();
         }
+    }
+
+    @Test
+    public void man_returnsManualString() {
+        StatsCommand cmd = new StatsCommand();
+        String manual = cmd.man();
+        assertTrue(manual.contains("stats"));
+        assertTrue(manual.contains("SEE MORE"));
     }
 }
 

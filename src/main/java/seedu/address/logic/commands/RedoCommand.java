@@ -16,6 +16,29 @@ public class RedoCommand extends Command {
     public static final String MESSAGE_NON_MUTABLE = "Last command is not mutable, cannot redo.";
     public static final String MESSAGE_SUCCESS = "Redo successful.\n%1$s";
 
+    public static final String MANUAL = String.join("\n",
+            "NAME",
+            "  redo — Reapplies the most recently undone mutable action.",
+            "",
+            "USAGE",
+            "  redo",
+            "",
+            "DESCRIPTION",
+            "  Reapplies the last undone command from the undo history.",
+            "  Only actions that were previously undone using 'undo' can be redone.",
+            "  Performing a new mutable action clears the redo history.",
+            "",
+            "PARAMETERS",
+            "  This command does not take any parameters.",
+            "",
+            "EXAMPLES",
+            "  redo",
+            "    Reapplies the most recently undone add, delete, edit, or clear command.",
+            "",
+            "SEE MORE",
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#redoing-the-last-undone-action--redo"
+    );
+
 
     /**
      * Executes the redo command, which re-executes the last undone command if it is mutable.
@@ -46,5 +69,10 @@ public class RedoCommand extends Command {
         }
 
         throw new CommandException(MESSAGE_EMPTY);
+    }
+
+    @Override
+    public String man() {
+        return MANUAL;
     }
 }
