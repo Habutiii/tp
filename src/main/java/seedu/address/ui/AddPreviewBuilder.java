@@ -65,7 +65,7 @@ public class AddPreviewBuilder {
         return fieldPreviews;
     }
 
-    private static FieldPreview createTagsPreview(List<String> tagList) {
+    static FieldPreview createTagsPreview(List<String> tagList) {
         StringBuilder tagsJoined = new StringBuilder();
         List<Integer> invalidTagIndices = new ArrayList<>();
         for (int i = 0; i < tagList.size(); i++) {
@@ -81,7 +81,7 @@ public class AddPreviewBuilder {
         return new FieldPreview("Tags (t/):", tagsJoined.toString(), invalidTagIndices);
     }
 
-    private static FieldPreview createNamePreview(String name, boolean duplicate) {
+    static FieldPreview createNamePreview(String name, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Name (n/):", name + " (duplicate)", false);
         }
@@ -92,7 +92,7 @@ public class AddPreviewBuilder {
         return new FieldPreview("Name (n/):", name, isValid);
     }
 
-    private static FieldPreview createPhonePreview(String phone, boolean duplicate) {
+    static FieldPreview createPhonePreview(String phone, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Phone (p/):", phone + " (duplicate)", false);
         }
@@ -103,7 +103,7 @@ public class AddPreviewBuilder {
         return new FieldPreview("Phone (p/):", phone, isValid);
     }
 
-    private static FieldPreview createEmailPreview(String email, boolean duplicate) {
+    static FieldPreview createEmailPreview(String email, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Email (e/):", email + " (duplicate)", false);
         }
@@ -114,7 +114,7 @@ public class AddPreviewBuilder {
         return new FieldPreview("Email (e/):", email, isValid);
     }
 
-    private static FieldPreview createAddressPreview(String address, boolean duplicate) {
+    static FieldPreview createAddressPreview(String address, boolean duplicate) {
         if (duplicate) {
             return new FieldPreview("Address (a/):", address + " (duplicate)", false);
         }

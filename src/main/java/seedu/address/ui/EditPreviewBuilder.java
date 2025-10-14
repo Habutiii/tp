@@ -101,7 +101,7 @@ public class EditPreviewBuilder {
         return fieldPreviews;
     }
 
-    private static FieldPreview createNamePreview(Person person, String newName, boolean duplicate) {
+    static FieldPreview createNamePreview(Person person, String newName, boolean duplicate) {
         String oldName = person.getName().fullName;
         if (duplicate) {
             return new FieldPreview("Name (n/):", oldName + " -> " + newName + " (duplicate)", false);
@@ -110,7 +110,7 @@ public class EditPreviewBuilder {
         return new FieldPreview("Name (n/):", oldName + " -> " + newName, isValid);
     }
 
-    private static FieldPreview createPhonePreview(Person person, String newPhone, boolean duplicate) {
+    static FieldPreview createPhonePreview(Person person, String newPhone, boolean duplicate) {
         String oldPhone = person.getPhone().value;
         if (duplicate) {
             return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone + " (duplicate)", false);
@@ -119,7 +119,7 @@ public class EditPreviewBuilder {
         return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone, isValid);
     }
 
-    private static FieldPreview createEmailPreview(Person person, String newEmail, boolean duplicate) {
+    static FieldPreview createEmailPreview(Person person, String newEmail, boolean duplicate) {
         String oldEmail = person.getEmail().value;
         if (duplicate) {
             return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail + " (duplicate)", false);
@@ -128,7 +128,7 @@ public class EditPreviewBuilder {
         return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail, isValid);
     }
 
-    private static FieldPreview createAddressPreview(Person person, String newAddress, boolean duplicate) {
+    static FieldPreview createAddressPreview(Person person, String newAddress, boolean duplicate) {
         String oldAddress = person.getAddress().value;
         if (duplicate) {
             return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress + " (duplicate)", false);
@@ -137,7 +137,7 @@ public class EditPreviewBuilder {
         return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress, isValid);
     }
 
-    private static FieldPreview createTagsPreview(Person person, List<String> newTagsList) {
+    static FieldPreview createTagsPreview(Person person, List<String> newTagsList) {
         String oldTags = String.join(", ",
                 person.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new));
         StringBuilder tagsJoined = new StringBuilder();
@@ -155,7 +155,7 @@ public class EditPreviewBuilder {
         return new FieldPreview("Tags (t/):", oldTags + " -> " + tagsJoined.toString(), invalidTagIndices);
     }
 
-    private static FieldPreview createFieldPreview(
+    static FieldPreview createFieldPreview(
             String label,
             String oldValue,
             String newValue,
