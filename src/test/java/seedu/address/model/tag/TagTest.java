@@ -30,4 +30,20 @@ public class TagTest {
         // Invalid ASCII: matches VALIDATION_REGEX but contains non-ASCII (e.g., Chinese)
         assertFalse(Tag.isValidTagName("你好"));
     }
+
+    @Test
+    public void isValidTagName_validNames_returnsTrue() {
+        assertTrue(Tag.isValidTagName("hello"));
+        assertTrue(Tag.isValidTagName("abc-123"));
+        assertTrue(Tag.isValidTagName("Tag-Name"));
+    }
+
+    @Test
+    public void isValidTagName_invalidNames_returnsFalse() {
+        assertFalse(Tag.isValidTagName("")); // empty
+        assertFalse(Tag.isValidTagName("hello_world")); // underscore not allowed
+        assertFalse(Tag.isValidTagName("!invalid")); // special char
+        assertFalse(Tag.isValidTagName("你好")); // non-English
+        assertFalse(Tag.isValidTagName("tag name")); // space
+    }
 }
