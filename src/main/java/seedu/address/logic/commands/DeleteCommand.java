@@ -41,8 +41,12 @@ public class DeleteCommand extends Command {
     );
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_UNDO_SUCCESS = "Restored last removed person: %1$s";
+    public static final String MESSAGE_UNDO_FAILED = "No person to restore.";
 
     private final Index targetIndex;
+
+    private Person personToDelete = null;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -57,7 +61,7 @@ public class DeleteCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }
@@ -65,6 +69,31 @@ public class DeleteCommand extends Command {
     @Override
     public String man() {
         return MANUAL;
+    }
+
+    public boolean isMutable() {
+        return true;
+    }
+
+    /**
+     * Re-inserts the deleted person back into the model at the original index.
+     * Assumes that the person to delete is not null and that the target index is valid.
+     *
+     * @param model The model to revert the deletion in.
+     * @return A message indicating the person that was restored.
+     * @throws IllegalStateException if there is no person to revert to.
+     */
+    @Override
+    public String undo(Model model) {
+        requireNonNull(model);
+
+        if (personToDelete != null) {
+            // Re-insert the deleted person at the original index
+            model.insertPerson(targetIndex, personToDelete);
+            return String.format(MESSAGE_UNDO_SUCCESS, Messages.format(personToDelete));
+        } else {
+            throw new IllegalStateException(MESSAGE_UNDO_FAILED);
+        }
     }
 
     @Override
