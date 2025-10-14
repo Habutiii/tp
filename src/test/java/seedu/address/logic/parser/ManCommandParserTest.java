@@ -44,4 +44,15 @@ public class ManCommandParserTest {
         assertTrue(msg.toLowerCase().contains("edit"));
     }
 
+    @Test
+    public void parse_nullArgs_showsIndex() throws Exception {
+        ManCommand cmd = parser.parse(null);
+        assertNotNull(cmd);
+
+        Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
+        String msg = cmd.execute(model).getFeedbackToUser();
+
+        assertTrue(msg.contains("Manual index"));
+    }
+
 }
