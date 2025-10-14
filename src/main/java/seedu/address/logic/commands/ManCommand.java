@@ -42,7 +42,7 @@ public class ManCommand extends Command {
             "  man find",
             "",
             "SEE MORE",
-            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#man"
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#viewing-manuals--man"
     );
 
     private final String target; // empty string means "no target"
