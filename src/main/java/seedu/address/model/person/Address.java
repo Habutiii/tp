@@ -35,8 +35,13 @@ public class Address {
      * Returns true if a given string is a valid email.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(PRINTABLE_ASCII_REGEX)
-                && test.matches(VALIDATION_REGEX);
+        if (!test.matches(PRINTABLE_ASCII_REGEX)) {
+            return false; // must be printable ASCII only
+        }
+        if (!test.matches(VALIDATION_REGEX)) {
+            return false; // cannot start with whitespace or be blank
+        }
+        return !test.endsWith(" "); // cannot end with space
     }
 
     @Override

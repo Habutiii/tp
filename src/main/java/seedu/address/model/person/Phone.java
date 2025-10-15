@@ -12,15 +12,12 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Singapore phone numbers should only contain 8 digit numbers";
+            "Singapore phone numbers should only contain exactly 8 digits (0-9), with no spaces or symbols.";
     /*
-        * The phone number must be between 3 and 15 digits long.
-        * Shortcodes are usually 3 to 5 digits long.
-        * International numbers are usually up to 15 digits long by ITU-T E.164 standard.
-        * Thus, we set the minimum length to 3 and maximum length to 15.
-        * The phone number should only contain digits.
+     * A Singapore phone number is exactly 8 digits long.
+     * Only digits (0–9) are allowed.
      */
-    public static final String VALIDATION_REGEX = "\\d{3,15}";
+    public static final String VALIDATION_REGEX = "\\d{8}";
     public final String value;
 
     /**

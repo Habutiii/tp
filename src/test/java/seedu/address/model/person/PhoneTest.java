@@ -24,22 +24,22 @@ public class PhoneTest {
         // null phone number
         assertThrows(NullPointerException.class, () -> Phone.isValidPhone(null));
 
-        // invalid phone numbers
+        // ---------- invalid ----------
         assertFalse(Phone.isValidPhone("")); // empty string
         assertFalse(Phone.isValidPhone(" ")); // spaces only
-        assertFalse(Phone.isValidPhone("91")); // less than 3 numbers
-        assertFalse(Phone.isValidPhone("phone")); // non-numeric
-        assertFalse(Phone.isValidPhone("9011p041")); // alphabets within digits
-        assertFalse(Phone.isValidPhone("9312 1534")); // spaces within digits
-        assertFalse(Phone.isValidPhone("91")); // exactly 2 numbers
-        assertFalse(Phone.isValidPhone("一二三四五六七八")); // non-ascii characters
-        assertFalse(Phone.isValidPhone("1234567890123456")); // exactly 16 numbers
+        assertFalse(Phone.isValidPhone("91")); // less than 8 digits
+        assertFalse(Phone.isValidPhone("1234567")); // 7 digits
+        assertFalse(Phone.isValidPhone("123456789")); // 9 digits
+        assertFalse(Phone.isValidPhone("9312 1534")); // spaces inside
+        assertFalse(Phone.isValidPhone("phone")); // letters
+        assertFalse(Phone.isValidPhone("9011p041")); // alphanumeric
+        assertFalse(Phone.isValidPhone("+6593121534")); // plus sign, country code
+        assertFalse(Phone.isValidPhone("一二三四五六七八")); // non-ASCII
 
-        // valid phone numbers
-        assertTrue(Phone.isValidPhone("93121534")); // exactly 8 numbers (Singapore number)
-        assertTrue(Phone.isValidPhone("6593121534")); // exactly 10 numbers (Singapore number with country code)
-        assertTrue(Phone.isValidPhone("999")); // exactly 3 numbers
-        assertTrue(Phone.isValidPhone("123456789012345")); // exactly 15 numbers
+        // ---------- valid ----------
+        assertTrue(Phone.isValidPhone("93121534")); // valid SG number
+        assertTrue(Phone.isValidPhone("81234567")); // another valid SG number
+        assertTrue(Phone.isValidPhone("69998888")); // valid SG number
     }
 
     @Test
