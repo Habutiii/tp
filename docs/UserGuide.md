@@ -123,10 +123,11 @@ Examples:
 - Valid: Jean-Luc, Tan, Mei Ling, O'Connor, Mary (Ann), Alex @ Home
 - Invalid: John123, Strauß, José, John*, John_
 
-**Phone:** Must be 8 digits as only Singaporean numbers are accepted  
+**Phone:** Must be 3 to 15 digits to account for some special numbers and international numbers.
+Only digits (0–9) are allowed, no spaces, letters, or symbols.
 
 **Example:**
-- Valid: 94567802, 82684533, 66265555
+- Valid: 94567802, 82684533, 66265555, 123456789012345
 - Invalid: +65 98765432, phone123, 9011p041, 9312 1534
 
 **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
@@ -138,6 +139,9 @@ Only printable ASCII characters are allowed.
 **Example:**
 - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
 - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
+
+- **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+  _Example: friend, VIP, family-member, project2025_
 
 
 ### Editing a person : `edit`
