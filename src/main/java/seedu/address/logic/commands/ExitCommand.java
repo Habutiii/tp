@@ -9,7 +9,7 @@ public class ExitCommand extends Command {
 
     public static final String COMMAND_WORD = "exit";
 
-    public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Address Book as requested ...";
+    public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Ethical Insurance as requested ...";
 
     public static final String MANUAL = String.join("\n",
             "NAME",
@@ -19,7 +19,7 @@ public class ExitCommand extends Command {
             "  exit",
             "",
             "DESCRIPTION",
-            "  Closes the Address App window and terminates the program safely.",
+            "  Closes the Ethical Insurance window and terminates the program safely.",
             "  Any unsaved changes are automatically written to storage before exiting.",
             "",
             "EXAMPLES",
