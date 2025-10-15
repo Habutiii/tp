@@ -25,7 +25,7 @@ public class Tag {
     public Tag(String tagName) {
         requireNonNull(tagName);
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName.toLowerCase();
+        this.tagName = tagName;
     }
 
     /**
@@ -52,7 +52,7 @@ public class Tag {
 
     @Override
     public int hashCode() {
-        return tagName.toLowerCase().hashCode();
+        return tagName.hashCode();
     }
 
     /**

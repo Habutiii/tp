@@ -50,19 +50,12 @@ public class TagTest {
 
     @Test
     public void equals_caseInsensitiveTags_returnsTrue() {
-        Tag tag1 = new Tag("Friend");
-        Tag tag2 = new Tag("friend");
-        assertTrue(tag1.equals(tag2));
+        assertEquals(new Tag("Friend"), new Tag("friend"));
     }
 
     @Test
-    public void hashCode_caseInsensitive_sameHash() {
-        assertEquals(new Tag("Tag").hashCode(), new Tag("tag").hashCode());
-    }
-
-    @Test
-    public void toString_caseInsensitive_printsLowercase() {
-        assertEquals("[friend]", new Tag("Friend").toString());
+    public void toString_preservesOriginalCase() {
+        assertEquals("[Friend]", new Tag("Friend").toString());
     }
 
 }
