@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
@@ -131,6 +132,11 @@ public class StatsCommandTest {
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             return new PersonListStub();
+        }
+
+        @Override
+        public ObservableList<Person> getPersonListCopy() {
+            return new FilteredList<>(getFilteredPersonList());
         }
 
         @Override

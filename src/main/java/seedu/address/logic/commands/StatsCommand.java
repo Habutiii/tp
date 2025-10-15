@@ -1,13 +1,17 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.Model;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.TagMatchesAllPredicate;
 import seedu.address.model.tag.Tag;
 
@@ -45,11 +49,13 @@ public class StatsCommand extends Command {
 
     private String computeStats(Model model) {
         requireNonNull(model);
+        FilteredList<Person> filteredPersons =
+                new FilteredList<>(model.getPersonListCopy()).filtered(PREDICATE_SHOW_ALL_PERSONS);
         this.initBusinessTags();
         ArrayList<String> tables = new ArrayList<>();
 
         for (String category : BUSINESS_TAGS.keySet()) {
-            tables.add(this.getFieldStats(model, category));
+            tables.add(this.getFieldStats(filteredPersons, category));
             tables.add("\n");
         }
 
@@ -59,7 +65,7 @@ public class StatsCommand extends Command {
         return String.join("\n\n", overview, summaryTables);
     }
 
-    private String getFieldStats(Model model, String category) {
+    private String getFieldStats(FilteredList<Person> filteredPersons, String category) {
         String[] tags = BUSINESS_TAGS.get(category);
         ArrayList<String> results = new ArrayList<>();
 
@@ -77,9 +83,9 @@ public class StatsCommand extends Command {
         for (String tag : tags) {
             Set<Tag> set = new LinkedHashSet<>();
             set.add(new Tag(tag));
-            model.updateFilteredPersonList(new TagMatchesAllPredicate(set));
-            requireNonNull(model.getFilteredPersonList());
-            int total = model.getFilteredPersonList().size();
+            requireNonNull(filteredPersons);
+            filteredPersons.setPredicate(new TagMatchesAllPredicate(set));
+            int total = filteredPersons.size();
             String stat = String.format("%-" + padding + "s |  %d", tag, total);
             results.add(stat);
         }
@@ -93,6 +99,7 @@ public class StatsCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
+        //this.computeStats(model)
         return new CommandResult(this.computeStats(model));
     }
 
