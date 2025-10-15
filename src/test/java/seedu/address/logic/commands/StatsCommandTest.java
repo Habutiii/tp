@@ -30,10 +30,30 @@ public class StatsCommandTest {
     @Test
     public void execute_stats_success() {
         StatsCommand statsCommand = new StatsCommand();
-        assertEquals(new CommandResult("Number of Customers: 0"),
+        String actualResult = "Total Number of Customers: 10" +
+                "\n\n" +
+                "Gender   |  Number of people\n" +
+                "Male     |  3\n" +
+                "Female   |  3\n" +
+                "Other    |  3\n" +
+                "\n\n" +
+                "Plan   |  Number of people\n" +
+                "A      |  3\n" +
+                "B      |  3\n" +
+                "C      |  3\n\n";
+        assertEquals(new CommandResult(actualResult),
                 statsCommand.execute(new ModelStub()));
 
     }
+
+    @Test
+    public void man_returnsManualString() {
+        StatsCommand cmd = new StatsCommand();
+        String manual = cmd.man();
+        assertTrue(manual.contains("stats"));
+        assertTrue(manual.contains("SEE MORE"));
+    }
+
 
     /**
      * A Stub for Model class for unit testing of StatsCommand.
@@ -105,12 +125,12 @@ public class StatsCommandTest {
 
         @Override
         public int getSize() {
-            return 0;
+            return 10;
         }
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
-            return new PersonList();
+            return new PersonListStub();
         }
 
         @Override
@@ -137,18 +157,10 @@ public class StatsCommandTest {
         }
     }
 
-    @Test
-    public void man_returnsManualString() {
-        StatsCommand cmd = new StatsCommand();
-        String manual = cmd.man();
-        assertTrue(manual.contains("stats"));
-        assertTrue(manual.contains("SEE MORE"));
-    }
-
     /**
      * Stub for ObservableList<Person> Object in ModelStub for unit testing.
      */
-    private class PersonList implements ObservableList<Person> {
+    private class PersonListStub implements ObservableList<Person> {
 
         @Override
         public void addListener(ListChangeListener<? super Person> listener) {
