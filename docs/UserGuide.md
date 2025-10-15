@@ -189,10 +189,18 @@ Shows Summary Statistics on Customers in the address book.
 Format: `stats`
 
 **Example:**
+Total Number of Customers: 6
 
-| Command | `stats`                                                 |
-|---------|---------------------------------------------------------|
-| Output  | Number of Customers: 6 <br/> #More stats coming soon... |
+Gender  | Number of people
+Male   | 0
+Female  | 0
+Other  | 0
+
+Plan | Number of people
+A   | 1
+B   | 0
+C   | 0
+
 
 ### Undoing the last action : `undo`
 
