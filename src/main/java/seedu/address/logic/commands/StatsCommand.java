@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.TagMatchesAllPredicate;
 import seedu.address.model.tag.Tag;
@@ -39,7 +37,7 @@ public class StatsCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#viewing-summary-statistics-stats"
     );
 
-    private static final HashMap<String, String[]> BUSINESS_TAGS =  new HashMap<>();
+    private static final HashMap<String, String[]> BUSINESS_TAGS = new HashMap<>();
 
     private static final String MESSAGE_USAGE = COMMAND_WORD;
 
