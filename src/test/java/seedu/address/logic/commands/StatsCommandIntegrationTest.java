@@ -26,7 +26,7 @@ public class StatsCommandIntegrationTest {
         model.addPerson(TypicalPersons.CARL);
     }
     @Test
-    public void execute_stats_success_integration() {
+    public void execute_statsIntegration_success() {
         StatsCommand statsCommand = new StatsCommand();
         String actualResult = "Total Number of Customers: 3"
                 + "\n\n"

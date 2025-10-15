@@ -158,12 +158,22 @@ public class StatsCommandTest {
     }
 
     /**
-     * Stub for ObservableList<Person> Object in ModelStub for unit testing.
+     * Stub for {@code ObservableList Person} Object in ModelStub for unit testing.
      */
     private class PersonListStub implements ObservableList<Person> {
 
         @Override
         public void addListener(ListChangeListener<? super Person> listener) {
+
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
 
         }
 
@@ -174,6 +184,16 @@ public class StatsCommandTest {
 
         @Override
         public boolean addAll(Person... elements) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Person> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Person> c) {
             return false;
         }
 
@@ -193,13 +213,33 @@ public class StatsCommandTest {
         }
 
         @Override
+        public boolean removeAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
         public boolean retainAll(Person... elements) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
             return false;
         }
 
         @Override
         public void remove(int from, int to) {
 
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return false;
+        }
+
+        @Override
+        public Person remove(int index) {
+            return null;
         }
 
         @Override
@@ -238,32 +278,12 @@ public class StatsCommandTest {
         }
 
         @Override
-        public boolean remove(Object o) {
-            return false;
+        public void add(int index, Person element) {
+
         }
 
         @Override
         public boolean containsAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends Person> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, Collection<? extends Person> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> c) {
             return false;
         }
 
@@ -279,16 +299,6 @@ public class StatsCommandTest {
 
         @Override
         public Person set(int index, Person element) {
-            return null;
-        }
-
-        @Override
-        public void add(int index, Person element) {
-
-        }
-
-        @Override
-        public Person remove(int index) {
             return null;
         }
 
@@ -315,16 +325,6 @@ public class StatsCommandTest {
         @Override
         public List<Person> subList(int fromIndex, int toIndex) {
             return List.of();
-        }
-
-        @Override
-        public void addListener(InvalidationListener listener) {
-
-        }
-
-        @Override
-        public void removeListener(InvalidationListener listener) {
-
         }
     }
 }
