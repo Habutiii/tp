@@ -29,7 +29,7 @@ public class AddressTest {
         assertFalse(Address.isValidAddress(" ")); // spaces only
         assertFalse(Address.isValidAddress("你好")); //  contains non-ASCII
         assertFalse(Address.isValidAddress(" Blk 456, Den Road, #01-355")); // Starts with space
-        assertFalse(Address.isValidAddress("Blk 456, Den Road, #01-355 ")); // ends with space
+        assertFalse(Address.isValidAddress("Blk 123 Clementi Ave 3 "));
 
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));
