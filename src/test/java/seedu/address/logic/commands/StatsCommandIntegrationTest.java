@@ -28,17 +28,17 @@ public class StatsCommandIntegrationTest {
     @Test
     public void execute_stats_success_integration() {
         StatsCommand statsCommand = new StatsCommand();
-        String actualResult = "Total Number of Customers: 3" +
-                "\n\n" +
-                "Gender   |  Number of people\n" +
-                "Male     |  1\n" +
-                "Female   |  1\n" +
-                "Other    |  0\n" +
-                "\n\n" +
-                "Plan   |  Number of people\n" +
-                "A      |  2\n" +
-                "B      |  0\n" +
-                "C      |  0\n\n";
+        String actualResult = "Total Number of Customers: 3"
+                + "\n\n"
+                + "Gender   |  Number of people\n"
+                + "Male     |  1\n"
+                + "Female   |  1\n"
+                + "Other    |  0\n"
+                + "\n\n"
+                + "Plan   |  Number of people\n"
+                + "A      |  2\n"
+                + "B      |  0\n"
+                + "C      |  0\n\n";
         assertEquals(new CommandResult(actualResult),
                 statsCommand.execute(model));
     }

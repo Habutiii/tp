@@ -30,17 +30,17 @@ public class StatsCommandTest {
     @Test
     public void execute_stats_success() {
         StatsCommand statsCommand = new StatsCommand();
-        String actualResult = "Total Number of Customers: 10" +
-                "\n\n" +
-                "Gender   |  Number of people\n" +
-                "Male     |  3\n" +
-                "Female   |  3\n" +
-                "Other    |  3\n" +
-                "\n\n" +
-                "Plan   |  Number of people\n" +
-                "A      |  3\n" +
-                "B      |  3\n" +
-                "C      |  3\n\n";
+        String actualResult = "Total Number of Customers: 10"
+                + "\n\n"
+                + "Gender   |  Number of people\n"
+                + "Male     |  3\n"
+                + "Female   |  3\n"
+                + "Other    |  3\n"
+                + "\n\n"
+                + "Plan   |  Number of people\n"
+                + "A      |  3\n"
+                + "B      |  3\n"
+                + "C      |  3\n\n";
         assertEquals(new CommandResult(actualResult),
                 statsCommand.execute(new ModelStub()));
 
