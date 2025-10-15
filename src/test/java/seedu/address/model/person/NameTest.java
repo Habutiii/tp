@@ -33,13 +33,21 @@ public class NameTest {
         assertFalse(Name.isValidName(" John")); // VALIDATION_REGEX false, PRINTABLE_ASCII_REGEX true
         assertFalse(Name.isValidName("John你好")); // VALIDATION_REGEX true, PRINTABLE_ASCII_REGEX false
         assertFalse(Name.isValidName(" 你好")); // both false
+        assertFalse(Name.isValidName("12345")); // numbers only
+        assertFalse(Name.isValidName("peter the 2nd")); // alphanumeric characters
+        assertFalse(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
-        assertTrue(Name.isValidName("12345")); // numbers only
-        assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
-        assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.isValidName("O'Connor")); // apostrophe
+        assertTrue(Name.isValidName("Jean-Luc")); // hyphen
+        assertTrue(Name.isValidName("Tan, Mei Ling")); // comma
+        assertTrue(Name.isValidName("Mary (Ann)")); // parentheses
+        assertTrue(Name.isValidName("John / Mary")); // slash
+        assertTrue(Name.isValidName("Dr. Ray")); // period
+        assertTrue(Name.isValidName("Alex @ Home")); //@
+        assertTrue(Name.isValidName("A.B (C-D), E/F @ G-H' I")); // stress test with allowed chars
     }
 
     @Test

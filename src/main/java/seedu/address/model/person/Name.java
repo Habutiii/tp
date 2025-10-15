@@ -11,13 +11,19 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names may only contain English letters (A–Z, a–z), spaces, and these special characters: , ( ) / . @ - '\n"
+                    + "Names must not contain numbers and must not start with a space.";
 
     /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
+     * First char cannot be a space.
+     * Only the allowed ASCII set is permitted. Digits are excluded.
      */
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    // Allowed special characters need escaping in regex where applicable.
+    private static final String ALLOWED_FIRST_CHAR_CLASS = "[A-Za-z(),/\\.@\\-']";
+    private static final String ALLOWED_REST_CLASS = "[A-Za-z(),/\\.@\\-' ]";
+
+    public static final String VALIDATION_REGEX =
+            "^" + ALLOWED_FIRST_CHAR_CLASS + ALLOWED_REST_CLASS + "*$";
 
     public final String fullName;
 
