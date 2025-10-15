@@ -17,6 +17,28 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_NON_MUTABLE = "Last command is not mutable, cannot undo.";
     public static final String MESSAGE_SUCCESS = "Undo successful.\n%1$s";
 
+    public static final String MANUAL = String.join("\n",
+            "NAME",
+            "  undo — Reverts the most recent mutable action performed in the current session.",
+            "",
+            "USAGE",
+            "  undo",
+            "",
+            "DESCRIPTION",
+            "  Reverts the last action that modified the address book, such as add, delete, clear, or edit.",
+            "  Only actions performed since the application started (current runtime) can be undone.",
+            "  Non-mutable commands (e.g., find, list, help) cannot be undone.",
+            "",
+            "PARAMETERS",
+            "  This command does not take any parameters.",
+            "",
+            "EXAMPLES",
+            "  undo",
+            "    Reverts the last add, edit, delete, or clear command executed.",
+            "",
+            "SEE MORE",
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#undoing-the-last-action--undo"
+    );
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
@@ -39,5 +61,10 @@ public class UndoCommand extends Command {
         } else {
             throw new CommandException(MESSAGE_EMPTY);
         }
+    }
+
+    @Override
+    public String man() {
+        return MANUAL;
     }
 }

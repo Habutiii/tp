@@ -12,7 +12,7 @@ public class Phone {
 
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Singapore phone numbers should only contain 8 digit numbers";
+            "Phone numbers should be 3 to 15 digits.";
     /*
         * The phone number must be between 3 and 15 digits long.
         * Shortcodes are usually 3 to 5 digits long.

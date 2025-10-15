@@ -99,4 +99,11 @@ public class AddCommandTest {
         assertTrue(clearCommand.isMutable());
     }
 
+    @Test
+    public void man_returnsManualString() {
+        AddCommand cmd = new AddCommand(ALICE);
+        String manual = cmd.man();
+        assertTrue(manual.contains("add"));
+        assertTrue(manual.contains("USAGE"));
+    }
 }

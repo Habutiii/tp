@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -67,6 +68,11 @@ public class UndoCommandTest {
             }
 
             @Override
+            public String man() {
+                return "";
+            }
+
+            @Override
             public boolean isMutable() {
                 return false;
             }
@@ -103,5 +109,13 @@ public class UndoCommandTest {
             }
             return Optional.of(undoStack.pop());
         }
+    }
+
+    @Test
+    public void man_returnsManualString() {
+        UndoCommand cmd = new UndoCommand();
+        String manual = cmd.man();
+        assertTrue(manual.contains("undo"));
+        assertTrue(manual.contains("USAGE"));
     }
 }

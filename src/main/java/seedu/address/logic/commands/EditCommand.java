@@ -48,6 +48,26 @@ public class EditCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
+    public static final String MANUAL = String.join("\n",
+            "NAME",
+            "  edit — Edits details of an existing person.",
+            "",
+            "USAGE",
+            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…",
+            "",
+            "PARAMETERS",
+            "  • INDEX: positive integer referring to displayed list index",
+            "  • Any of NAME, PHONE, EMAIL, ADDRESS, TAG fields may be provided",
+            "  • TAG fields replace the existing tag set if provided",
+            "",
+            "EXAMPLES",
+            "  edit 2 p/91234567 e/new@example.com",
+            "  edit 1 n/Alice Bob a/55, New Road t/friends",
+            "",
+            "SEE MORE",
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#editing-a-person--edit"
+    );
+
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
@@ -94,6 +114,10 @@ public class EditCommand extends Command {
     }
 
     @Override
+    public String man() {
+        return MANUAL;
+    }
+
     public boolean isMutable() {
         return true;
     }

@@ -18,6 +18,13 @@ public abstract class Command {
     public abstract CommandResult execute(Model model) throws CommandException;
 
     /**
+     * Returns a short manual for this command, including usage, parameters, and examples.
+     *
+     * @return command specific manual.
+     */
+    public abstract String man();
+
+    /**
      * Returns true if the command is mutable, false otherwise.
      * A mutable command is one that changes the state of the application.
      */
@@ -37,5 +44,4 @@ public abstract class Command {
     public String undo(Model model) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("This command does not support undo.");
     }
-
 }

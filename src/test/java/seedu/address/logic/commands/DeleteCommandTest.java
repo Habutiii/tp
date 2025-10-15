@@ -156,4 +156,12 @@ public class DeleteCommandTest {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
         assertTrue(deleteCommand.isMutable());
     }
+
+    @Test
+    public void man_returnsManualString() {
+        DeleteCommand cmd = new DeleteCommand(INDEX_FIRST_PERSON);
+        String manual = cmd.man();
+        assertTrue(manual.contains("delete"));
+        assertTrue(manual.contains("EXAMPLES"));
+    }
 }
