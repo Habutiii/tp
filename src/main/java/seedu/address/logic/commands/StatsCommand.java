@@ -51,7 +51,7 @@ public class StatsCommand extends Command {
         ArrayList<String> tables = new ArrayList<>();
 
         for (String category : BUSINESS_TAGS.keySet()) {
-            tables.add(this.getCategoryStats(model, category));
+            tables.add(this.getFieldStats(model, category));
             tables.add("\n");
         }
 
@@ -61,7 +61,7 @@ public class StatsCommand extends Command {
         return String.join("\n\n", overview, summary_tables);
     }
 
-    private String getCategoryStats(Model model, String category) {
+    private String getFieldStats(Model model, String category) {
         String[] tags = BUSINESS_TAGS.get(category);
         ArrayList<String> results = new ArrayList<>();
 
