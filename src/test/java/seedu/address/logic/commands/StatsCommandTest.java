@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -23,6 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains unit tests for StatsCommand.
@@ -35,13 +37,13 @@ public class StatsCommandTest {
                 + "\n\n"
                 + "Gender   |  Number of people\n"
                 + "Male     |  3\n"
-                + "Female   |  3\n"
-                + "Other    |  3\n"
+                + "Female   |  0\n"
+                + "Other    |  0\n"
                 + "\n\n"
                 + "Plan   |  Number of people\n"
                 + "A      |  3\n"
-                + "B      |  3\n"
-                + "C      |  3\n\n";
+                + "B      |  0\n"
+                + "C      |  0\n\n";
         assertEquals(new CommandResult(actualResult),
                 statsCommand.execute(new ModelStub()));
 
@@ -136,7 +138,8 @@ public class StatsCommandTest {
 
         @Override
         public ObservableList<Person> getPersonListCopy() {
-            return getFilteredPersonList();
+            Person dummy = new PersonBuilder().withTags("A", "Male").build();
+            return FXCollections.observableArrayList(dummy, dummy, dummy);
         }
 
         @Override
@@ -265,7 +268,7 @@ public class StatsCommandTest {
 
         @Override
         public Iterator<Person> iterator() {
-            return null;
+            return List.<Person>of().iterator();
         }
 
         @Override
@@ -320,12 +323,12 @@ public class StatsCommandTest {
 
         @Override
         public ListIterator<Person> listIterator() {
-            return null;
+            return List.<Person>of().listIterator();
         }
 
         @Override
         public ListIterator<Person> listIterator(int index) {
-            return null;
+            return List.<Person>of().listIterator(index);
         }
 
         @Override
