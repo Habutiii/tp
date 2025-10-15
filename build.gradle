@@ -36,9 +36,11 @@ task coverage(type: JacocoReport) {
     }
     reports {
         html.required = true
+        xml.outputLocation = file("$buildDir/reports/jacoco/test/jacoco.xml")
         xml.required = true
     }
 }
+
 
 dependencies {
     String jUnitVersion = '5.4.0'
