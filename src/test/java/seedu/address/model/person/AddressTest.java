@@ -56,4 +56,33 @@ public class AddressTest {
         // different values -> returns false
         assertFalse(address.equals(new Address("Other Valid Address")));
     }
+
+    @Test
+    public void isValidAddress_nonPrintableAsciiControlChar_false() {
+        // Contains a TAB -> not printable ASCII, should fail first predicate
+        assertFalse(Address.isValidAddress("Unit\t12"));
+    }
+
+    @Test
+    public void isValidAddress_nonAsciiButNoLeadingSpace_false() {
+        // Non-ASCII, but doesn't start with whitespace -> VALIDATION_REGEX would be true,
+        // first predicate false (PRINTABLE_ASCII), ensures short-circuit path is covered
+        assertFalse(Address.isValidAddress("你好街道12号"));
+    }
+
+    @Test
+    public void toString_returnsOriginalValue() {
+        Address a = new Address("123 Main St #05-05");
+        assertTrue(a.toString().equals("123 Main St #05-05"));
+    }
+
+    @Test
+    public void hashCode_consistency() {
+        Address a1 = new Address("123 Main St #05-05");
+        Address a2 = new Address("123 Main St #05-05");
+        // equals implies same hashCode
+        assertTrue(a1.equals(a2));
+        org.junit.jupiter.api.Assertions.assertEquals(a1.hashCode(), a2.hashCode());
+    }
+
 }
