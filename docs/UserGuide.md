@@ -82,6 +82,19 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
+### Listing all persons : `list`
+
+Shows a list of all persons in the address book.
+
+Format: `list`
+
+### Filtered list by tag : `list t/<your tag here>`
+
+Sorts and lists only entries with the respective tag(s) entered.
+
+Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
+
+
 ### Adding a person: `add`
 
 Adds a person to the address book.
@@ -98,17 +111,19 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-### Listing all persons : `list`
+**Parameter restrictions:**
+***All parameters contains only printable ASCII characters***
+- **Name:** Must start with a letter or number, and can contain letters, numbers, and spaces. It cannot be empty.  
+  _Example: John Doe, Alice2, 3rd Avenue_
+- **Phone:** Must be 3 to 15 digits.  
+  _Example: 98765432, 123, 123456789012345_
+- **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
+  _Example: johndoe@example.com, alice.smith-99@mail.co, user+test@abc-def.com_
+- **Address:** Must not be blank and must start with a non-space character.  
+  _Example: 123 Main St, Block 5, #01-01; 42 Wallaby Way; 7th Avenue, Apt 3_
+- **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+  _Example: friend, VIP, family-member, project2025_
 
-Shows a list of all persons in the address book.
-
-Format: `list`
-
-### Sort list by tag : `list t/<your tag here>`
-
-Sorts and lists only entries with the respective tag(s) entered.
-
-Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 
 ### Editing a person : `edit`
 
@@ -126,6 +141,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+Parameter restrictions: Same as `add` command.
 
 ### Locating persons by name: `find`
 
@@ -278,9 +295,8 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
+**List by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
 **Help** | `help`
-**Sort by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
 **Stats**| `stats`
 **Undo** | `undo`
 **Redo** | `redo`
-
