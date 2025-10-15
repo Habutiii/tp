@@ -113,16 +113,31 @@ Examples:
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Name:** Must start with a letter or number, and can contain letters, numbers, and spaces. It cannot be empty.  
-  _Example: John Doe, Alice2, 3rd Avenue_
-- **Phone:** Must be 3 to 15 digits.  
-  _Example: 98765432, 123, 123456789012345_
-- **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
+
+- **Name:** Must start with a letter or number
+- Can contain letters, spaces, and the following special characters only:
+  (space) , ( ) / . @ - '
+- Names cannot contain numbers or any other special symbols.
+
+**Example:** 
+- Valid: Jean-Luc, Tan, Mei Ling, O'Connor, Mary (Ann), Alex @ Home
+- Invalid: John123, Strauß, José, John*, John_
+
+**Phone:** Must be 8 digits as only Singaporean numbers are accepted  
+
+**Example:**
+- Valid: 94567802, 82684533, 66265555
+- Invalid: +65 98765432, phone123, 9011p041, 9312 1534
+
+**Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
   _Example: johndoe@example.com, alice.smith-99@mail.co, user+test@abc-def.com_
-- **Address:** Must not be blank and must start with a non-space character.  
-  _Example: 123 Main St, Block 5, #01-01; 42 Wallaby Way; 7th Avenue, Apt 3_
-- **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
-  _Example: friend, VIP, family-member, project2025_
+
+**Address:** Must not be blank, must start with a non-space character, and must not end with a space.
+Only printable ASCII characters are allowed.
+
+**Example:**
+- Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
+- Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
 
 ### Editing a person : `edit`
