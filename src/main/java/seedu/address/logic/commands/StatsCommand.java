@@ -1,6 +1,17 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.person.TagMatchesAllPredicate;
+import seedu.address.model.tag.Tag;
 
 /**
  * Presents Statistics on Customers in {@code AddressBook}.
@@ -28,12 +39,45 @@ public class StatsCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#viewing-summary-statistics-stats"
     );
 
+    private static final HashMap<String, String[]> BUSINESS_TAGS =  new HashMap<>();
+
     private static final String MESSAGE_USAGE = COMMAND_WORD;
 
     private static final String MESSAGE_SUCCESS = "%1$s";
 
     private String computeStats(Model model) {
-        return "Number of Customers: " + model.getSize();
+        requireNonNull(model);
+        this.initBusinessTags();
+        ArrayList<String> tables = new ArrayList<>();
+
+        for (String category : BUSINESS_TAGS.keySet()) {
+            tables.add(String.format("%s | Number of people", category));
+            tables.add(this.getCategoryStats(model, category));
+        }
+
+        String summary_tables = String.join("\n", tables);
+        String overview = "Total Number of Customers: " + model.getSize();
+
+        return String.join("\n", overview, summary_tables);
+    }
+
+    private String getCategoryStats(Model model, String category) {
+        String[] tags = BUSINESS_TAGS.get(category);
+        ArrayList<String> results = new ArrayList<>();
+        for (String tag : tags) {
+            Set<Tag> set = new LinkedHashSet<>();
+            set.add(new Tag(tag));
+            model.updateFilteredPersonList(new TagMatchesAllPredicate(set));
+            int total = model.getFilteredPersonList().size();
+            String stat = String.format("%s | %d", tag, total);
+            results.add(stat);
+        }
+        return String.join("\n", results);
+    }
+
+    private void initBusinessTags() {
+        BUSINESS_TAGS.put("Plan", new String[]{"A", "B", "C"});
+        BUSINESS_TAGS.put("Gender", new String[]{"Male", "Female", "Other"});
     }
 
     @Override
