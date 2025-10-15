@@ -10,8 +10,10 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
  */
 public class Tag {
 
-    public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CONSTRAINTS =
+            "Tag names should only contain English letters, digits, or '-' (dash), and must not be empty.";
+
+    public static final String VALIDATION_REGEX = "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$";
 
     public final String tagName;
 
