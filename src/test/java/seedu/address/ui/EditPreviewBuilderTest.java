@@ -100,8 +100,20 @@ public class EditPreviewBuilderTest {
 
         assertEquals("Tags (t/):", previews.get(4).getLabel());
         assertEquals("friend -> colleague, ", previews.get(4).getValue());
-        assertFalse(previews.get(4).isValid());
-        assertTrue(previews.get(4).getInvalidTagIndices().contains(1));
+        assertTrue(previews.get(4).isValid()); // Now valid if t/ is empty
+    }
+
+    @Test
+    public void buildPreview_emptyTag_valid() {
+        List<Person> personList = Arrays.asList(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend")))));
+        String input = "edit 1 t/";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        assertEquals("Tags (t/):", previews.get(4).getLabel());
+        assertEquals("friend -> ", previews.get(4).getValue());
+        assertTrue(previews.get(4).isValid());
     }
 
     @Test
@@ -159,10 +171,10 @@ public class EditPreviewBuilderTest {
         assertEquals("friend -> colleague, family", preview.getValue());
         assertTrue(preview.isValid());
 
-        List<String> invalidTags = Arrays.asList("colleague", "");
+        List<String> invalidTags = Arrays.asList("colleague", "!!!");
         FieldPreview invalidPreview = EditPreviewBuilder.createTagsPreview(person, invalidTags);
         assertEquals("Tags (t/):", invalidPreview.getLabel());
-        assertEquals("friend -> colleague, ", invalidPreview.getValue());
+        assertEquals("friend -> colleague, !!!", invalidPreview.getValue());
         assertFalse(invalidPreview.isValid());
     }
 }

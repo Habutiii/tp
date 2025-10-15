@@ -144,7 +144,8 @@ public class EditPreviewBuilder {
         List<Integer> invalidTagIndices = new ArrayList<>();
         for (int i = 0; i < newTagsList.size(); i++) {
             String tag = newTagsList.get(i);
-            if (tag.isEmpty() || !Tag.isValidTagName(tag)) {
+            // Allow empty string for tags in edit preview (t/ is valid)
+            if (!tag.isEmpty() && !Tag.isValidTagName(tag)) {
                 invalidTagIndices.add(i);
             }
             tagsJoined.append(tag);
