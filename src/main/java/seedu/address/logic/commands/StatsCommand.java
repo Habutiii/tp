@@ -78,6 +78,7 @@ public class StatsCommand extends Command {
             Set<Tag> set = new LinkedHashSet<>();
             set.add(new Tag(tag));
             model.updateFilteredPersonList(new TagMatchesAllPredicate(set));
+            requireNonNull(model.getFilteredPersonList());
             int total = model.getFilteredPersonList().size();
             String stat = String.format("%-" + padding + "s |  %d", tag, total);
             results.add(stat);
