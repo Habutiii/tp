@@ -28,9 +28,11 @@ public class ListCommand extends Command {
             "",
             "USAGE",
             "  list",
+            "  list t/TAG",
             "",
             "EXAMPLES",
             "  list",
+            "  list t/TAG",
             "",
             "SEE MORE",
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#listing-all-persons--list"
