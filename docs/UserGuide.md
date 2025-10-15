@@ -186,6 +186,14 @@ Format: `clear`
 
 Shows Summary Statistics on Customers in the address book.
 
+Statistics have been summarised according to preset, trial fields and categories as examples.
+In a future update, these fields will be set by the user using other commands.
+
+Key - Fields: Categories
+* Plan: A, B, C
+* Gender: Male, Female, Other
+
+
 Format: `stats`
 
 **Example:**
