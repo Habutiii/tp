@@ -136,7 +136,7 @@ public class StatsCommandTest {
 
         @Override
         public ObservableList<Person> getPersonListCopy() {
-            return new FilteredList<>(getFilteredPersonList());
+            return getFilteredPersonList();
         }
 
         @Override

@@ -49,7 +49,8 @@ public class StatsCommand extends Command {
     private String computeStats(Model model) {
         requireNonNull(model);
         FilteredList<Person> filteredPersons =
-                new FilteredList<>(model.getPersonListCopy()).filtered(PREDICATE_SHOW_ALL_PERSONS);
+                new FilteredList<>(model.getPersonListCopy());
+        //filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
         this.initBusinessTags();
         ArrayList<String> tables = new ArrayList<>();
 
