@@ -51,25 +51,37 @@ public class StatsCommand extends Command {
         ArrayList<String> tables = new ArrayList<>();
 
         for (String category : BUSINESS_TAGS.keySet()) {
-            tables.add(String.format("%s | Number of people", category));
             tables.add(this.getCategoryStats(model, category));
+            tables.add("\n");
         }
 
         String summary_tables = String.join("\n", tables);
         String overview = "Total Number of Customers: " + model.getSize();
 
-        return String.join("\n", overview, summary_tables);
+        return String.join("\n\n", overview, summary_tables);
     }
 
     private String getCategoryStats(Model model, String category) {
         String[] tags = BUSINESS_TAGS.get(category);
         ArrayList<String> results = new ArrayList<>();
+
+        // Find the longest tag for proper alignment
+        int maxTagLength = 0;
+        for (String tag : tags) {
+            maxTagLength = Math.max(maxTagLength, tag.length());
+        }
+        maxTagLength = Math.max(maxTagLength, category.length());
+
+        int padding = maxTagLength + 2;
+
+        results.add(String.format("%-" + padding + "s |  Number of people", category));
+
         for (String tag : tags) {
             Set<Tag> set = new LinkedHashSet<>();
             set.add(new Tag(tag));
             model.updateFilteredPersonList(new TagMatchesAllPredicate(set));
             int total = model.getFilteredPersonList().size();
-            String stat = String.format("%s | %d", tag, total);
+            String stat = String.format("%-" + padding + "s |  %d", tag, total);
             results.add(stat);
         }
         return String.join("\n", results);
