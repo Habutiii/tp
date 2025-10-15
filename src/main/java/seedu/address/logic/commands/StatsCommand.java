@@ -55,10 +55,10 @@ public class StatsCommand extends Command {
             tables.add("\n");
         }
 
-        String summary_tables = String.join("\n", tables);
+        String summaryTables = String.join("\n", tables);
         String overview = "Total Number of Customers: " + model.getSize();
 
-        return String.join("\n\n", overview, summary_tables);
+        return String.join("\n\n", overview, summaryTables);
     }
 
     private String getFieldStats(Model model, String category) {
