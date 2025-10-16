@@ -143,6 +143,10 @@ Only printable ASCII characters are allowed.
 - **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
   _Example: friend, VIP, family-member, project2025_
 
+**Criteria for Same Person:**
+* Two persons are considered the same if they have the same `NAME` (case-insensitive) and `PHONE_NUMBER`.
+* There should not be duplicate persons in the address book.
+
 
 ### Editing a person : `edit`
 
