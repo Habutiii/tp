@@ -11,14 +11,15 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
 public class Phone {
 
 
+
     public static final String MESSAGE_CONSTRAINTS =
             "Phone numbers should be 3 to 15 digits.";
     /*
-        * The phone number must be between 3 and 15 digits long.
-        * Shortcodes are usually 3 to 5 digits long.
-        * International numbers are usually up to 15 digits long by ITU-T E.164 standard.
-        * Thus, we set the minimum length to 3 and maximum length to 15.
-        * The phone number should only contain digits.
+     * The phone number must be between 3 and 15 digits long.
+     * Shortcodes are usually 3 to 5 digits long.
+     * International numbers are usually up to 15 digits long by ITU-T E.164 standard.
+     * Thus, we set the minimum length to 3 and maximum length to 15.
+     * The phone number should only contain digits.
      */
     public static final String VALIDATION_REGEX = "\\d{3,15}";
     public final String value;

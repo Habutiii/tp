@@ -4,11 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
@@ -16,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains unit tests for StatsCommand.
@@ -24,10 +32,30 @@ public class StatsCommandTest {
     @Test
     public void execute_stats_success() {
         StatsCommand statsCommand = new StatsCommand();
-        assertEquals(new CommandResult("Number of Customers: 0"),
+        String actualResult = "Total Number of Customers: 10"
+                + "\n\n"
+                + "Gender   |  Number of people\n"
+                + "Male     |  3\n"
+                + "Female   |  0\n"
+                + "Other    |  0\n"
+                + "\n\n"
+                + "Plan   |  Number of people\n"
+                + "A      |  3\n"
+                + "B      |  0\n"
+                + "C      |  0\n\n";
+        assertEquals(new CommandResult(actualResult),
                 statsCommand.execute(new ModelStub()));
 
     }
+
+    @Test
+    public void man_returnsManualString() {
+        StatsCommand cmd = new StatsCommand();
+        String manual = cmd.man();
+        assertTrue(manual.contains("stats"));
+        assertTrue(manual.contains("SEE MORE"));
+    }
+
 
     /**
      * A Stub for Model class for unit testing of StatsCommand.
@@ -99,12 +127,18 @@ public class StatsCommandTest {
 
         @Override
         public int getSize() {
-            return 0;
+            return 10;
         }
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
-            return null;
+            return new PersonListStub();
+        }
+
+        @Override
+        public ObservableList<Person> getPersonListCopy() {
+            Person dummy = new PersonBuilder().withTags("A", "Male").build();
+            return FXCollections.observableArrayList(dummy, dummy, dummy);
         }
 
         @Override
@@ -131,12 +165,175 @@ public class StatsCommandTest {
         }
     }
 
-    @Test
-    public void man_returnsManualString() {
-        StatsCommand cmd = new StatsCommand();
-        String manual = cmd.man();
-        assertTrue(manual.contains("stats"));
-        assertTrue(manual.contains("SEE MORE"));
+    /**
+     * Stub for {@code ObservableList Person} Object in ModelStub for unit testing.
+     */
+    private class PersonListStub implements ObservableList<Person> {
+
+        @Override
+        public void addListener(ListChangeListener<? super Person> listener) {
+
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+
+        }
+
+        @Override
+        public void removeListener(ListChangeListener<? super Person> listener) {
+
+        }
+
+        @Override
+        public boolean addAll(Person... elements) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Person> c) {
+            return false;
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Person> c) {
+            return false;
+        }
+
+        @Override
+        public boolean setAll(Person... elements) {
+            return false;
+        }
+
+        @Override
+        public boolean setAll(Collection<? extends Person> col) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(Person... elements) {
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(Person... elements) {
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void remove(int from, int to) {
+
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            return false;
+        }
+
+        @Override
+        public Person remove(int index) {
+            return null;
+        }
+
+        @Override
+        public int size() {
+            return 3;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            return false;
+        }
+
+        @Override
+        public Iterator<Person> iterator() {
+            return List.<Person>of().iterator();
+        }
+
+        @Override
+        public Object[] toArray() {
+            return new Object[0];
+        }
+
+        @Override
+        public <T> T[] toArray(T[] a) {
+            return null;
+        }
+
+        @Override
+        public boolean add(Person person) {
+            return false;
+        }
+
+        @Override
+        public void add(int index, Person element) {
+
+        }
+
+        @Override
+        public boolean containsAll(Collection<?> c) {
+            return false;
+        }
+
+        @Override
+        public void clear() {
+
+        }
+
+        @Override
+        public Person get(int index) {
+            return null;
+        }
+
+        @Override
+        public Person set(int index, Person element) {
+            return null;
+        }
+
+        @Override
+        public int indexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public int lastIndexOf(Object o) {
+            return 0;
+        }
+
+        @Override
+        public ListIterator<Person> listIterator() {
+            return List.<Person>of().listIterator();
+        }
+
+        @Override
+        public ListIterator<Person> listIterator(int index) {
+            return List.<Person>of().listIterator(index);
+        }
+
+        @Override
+        public List<Person> subList(int fromIndex, int toIndex) {
+            return List.of();
+        }
     }
 }
 
