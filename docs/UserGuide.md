@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-Ethical Insurance is a lightweight desktop contact management tool optimized for independent insurance agents.
+Ethical Insurance is a lightweight desktop contact management tool optimized for independent insurance agents managing 0~1000 customers entries.
 
 
 * Table of Contents
@@ -18,9 +18,9 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F13-2/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your Ethical Insurance.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar Ethical-Insurance.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -115,30 +115,30 @@ Examples:
 ***All parameters contains only printable ASCII characters***
 
 - **Name:** Must start with a letter or number
-- Can contain letters, spaces, and the following special characters only:
+  - Can contain letters, spaces, and the following special characters only:
   (space) , ( ) / . @ - '
-- Names cannot contain numbers or any other special symbols.
+  - Names cannot contain numbers or any other special symbols.
 
-**Example:** 
-- Valid: Jean-Luc, Tan, Mei Ling, O'Connor, Mary (Ann), Alex @ Home
-- Invalid: John123, Strauß, José, John*, John_
+  **Example:** 
+  - Valid: Jean-Luc, Tan, Mei Ling, O'Connor, Mary (Ann), Alex @ Home
+  - Invalid: John123, Strauß, José, John*, John_
 
-**Phone:** Must be 3 to 15 digits to account for some special numbers and international numbers.
+- **Phone:** Must be 3 to 15 digits to account for some special numbers and international numbers.
 Only digits (0–9) are allowed, no spaces, letters, or symbols.
 
-**Example:**
-- Valid: 94567802, 82684533, 66265555, 123456789012345
-- Invalid: +65 98765432, phone123, 9011p041, 9312 1534
+  **Example:**
+  - Valid: 94567802, 82684533, 66265555, 123456789012345
+  - Invalid: +65 98765432, phone123, 9011p041, 9312 1534
 
-**Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
+- **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
   _Example: johndoe@example.com, alice.smith-99@mail.co, user+test@abc-def.com_
 
-**Address:** Must not be blank, must start with a non-space character, and must not end with a space.
+- **Address:** Must not be blank, must start with a non-space character, and must not end with a space.
 Only printable ASCII characters are allowed.
 
-**Example:**
-- Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
-- Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
+  **Example:**
+  - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
+  - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
 - **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
   _Example: friend, VIP, family-member, project2025_
@@ -293,15 +293,15 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Ethical Insurance address book data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+Ethical Insurance address book data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, Ethical Insurance will discard all data and start with an empty data file at the next run, *without any warning*. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause Ethical Insurance to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
@@ -313,7 +313,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Ethical Insurance home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -328,6 +328,7 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
+**Manual** | `man [COMMAND]` <br> e.g., `man add`
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
@@ -339,3 +340,4 @@ Action | Format, Examples
 **Stats**| `stats`
 **Undo** | `undo`
 **Redo** | `redo`
+**Exit** | `exit`
