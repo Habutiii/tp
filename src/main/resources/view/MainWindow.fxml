@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Ethical Insurance" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="Ethical Insurance" minWidth="1300" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -33,25 +33,45 @@
           </Menu>
         </MenuBar>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+          <SplitPane orientation="HORIZONTAL" VBox.vgrow="ALWAYS">
+              <items>
+                  <!-- Left area for tag display -->
+                  <StackPane VBox.vgrow="NEVER" fx:id="tagDisplayPlaceholder" styleClass="pane-with-border"
+                             minHeight="150" prefHeight="150" minWidth="200" prefWidth="200">
+                      <padding>
+                          <Insets top="5" right="10" bottom="5" left="10" />
+                      </padding>
+                  </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="150" prefHeight="150">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+<!--                  Center area split into command box on top and person list below-->
+                  <VBox minWidth="600" prefWidth="600">
+                    <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" minHeight="100" styleClass="pane-with-border">
+                      <padding>
+                        <Insets top="5" right="10" bottom="5" left="10" />
+                      </padding>
+                    </StackPane>
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="200" prefWidth="200" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+
+
+                    <VBox fx:id="personList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                      <padding>
+                        <Insets top="10" right="10" bottom="10" left="10" />
+                      </padding>
+                      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                    </VBox>
+                  </VBox>
+
+<!--                  Right area for result display-->
+                  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+                             minHeight="150" prefHeight="150" minWidth="400" prefWidth="400">
+                      <padding>
+                          <Insets top="5" right="10" bottom="5" left="10" />
+                      </padding>
+                  </StackPane>
+
+
+              </items>
+          </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
