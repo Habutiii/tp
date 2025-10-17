@@ -19,9 +19,6 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final String FXML = "ResultDisplay.fxml";
 
-    // Insert soft breaks into long words so TextFlow can wrap them.
-    private static final int SOFT_BREAK_INTERVAL = 40; // chars
-
     @FXML
     private TextArea resultDisplay;
 
@@ -30,7 +27,6 @@ public class ResultDisplay extends UiPart<Region> {
 
     @FXML
     private TextFlow livePreviewDisplay;
-
 
     public ResultDisplay() {
         super(FXML);
@@ -71,17 +67,12 @@ public class ResultDisplay extends UiPart<Region> {
             // Add label in white (Default color)
             Text labelText = new Text(field.getLabel() + " ");
             labelText.setFill(Color.WHITE);
-            // Bind wrapping width so long words wrap according to the preview width
-            labelText.wrappingWidthProperty().bind(livePreviewDisplay.widthProperty().subtract(10));
             livePreviewDisplay.getChildren().add(labelText);
 
             // If invalid, display text in red
             if (!field.getValue().isEmpty()) {
-                // Insert soft breaks for very long unbroken tokens so TextFlow can wrap
-                String processedValue = insertSoftBreaksIntoLongWords(field.getValue());
-                Text valueText = new Text(processedValue);
+                Text valueText = new Text(field.getValue());
                 valueText.setFill(field.isValid() ? Color.WHITE : Color.RED);
-                valueText.wrappingWidthProperty().bind(livePreviewDisplay.widthProperty().subtract(10));
                 livePreviewDisplay.getChildren().add(valueText);
             }
 
@@ -98,39 +89,6 @@ public class ResultDisplay extends UiPart<Region> {
         resultDisplay.setManaged(false);
         livePreviewScrollPane.setVisible(true);
         livePreviewScrollPane.setManaged(true);
-    }
-
-    /**
-     * Inserts zero-width space characters into long continuous tokens to allow
-     * TextFlow to break them. Keeps existing whitespace intact.
-     */
-    private String insertSoftBreaksIntoLongWords(String text) {
-        if (text == null || text.isEmpty()) {
-            return text;
-        }
-        StringBuilder out = new StringBuilder(text.length() + (text.length() / SOFT_BREAK_INTERVAL));
-        int limit = SOFT_BREAK_INTERVAL;
-        // Split while retaining whitespace tokens
-        String[] tokens = text.split("(?<=\\s)|(?=\\s)");
-        for (String token : tokens) {
-            if (token.trim().isEmpty()) {
-                // whitespace token (spaces, tabs, etc.) - keep as-is
-                out.append(token);
-                continue;
-            }
-            if (token.length() <= limit) {
-                out.append(token);
-            } else {
-                for (int i = 0; i < token.length(); i += limit) {
-                    int end = Math.min(i + limit, token.length());
-                    out.append(token, i, end);
-                    if (end < token.length()) {
-                        out.append('\u200B'); // zero-width space
-                    }
-                }
-            }
-        }
-        return out.toString();
     }
 
 }
