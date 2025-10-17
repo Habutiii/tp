@@ -7,7 +7,7 @@
 
 <StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/17"
     xmlns:fx="http://javafx.com/fxml/1">
-  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
+  <TextArea fx:id="resultDisplay" editable="false" wrapText="true" styleClass="result-display"/>
   <ScrollPane fx:id="livePreviewScrollPane" fitToWidth="true" visible="false" managed="false"
               style="-fx-background: transparent; -fx-background-color: transparent;">
     <TextFlow fx:id="livePreviewDisplay" styleClass="result-display"
