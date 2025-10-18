@@ -4,7 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -16,6 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -26,6 +31,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final HashMap<Tag, Set<Tag>> bizTags;
 
     // Stacks for undo and redo functionality
     private final Stack<Command> undoStack = new Stack<>();
@@ -42,6 +48,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.bizTags = new HashMap<>();
     }
 
     public ModelManager() {
@@ -151,6 +158,20 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void addBizTags(Tag Field, Set<Tag> tags) {
+        this.bizTags.put(Field, tags);
+    }
+
+    @Override
+    public HashMap<Tag, Set<Tag>> getBizTags() {
+        HashMap<Tag, Set<Tag>> deepCopy = new HashMap<>();
+        for (Map.Entry<Tag, Set<Tag>> entry : bizTags.entrySet()) {
+            deepCopy.put(entry.getKey(), new LinkedHashSet<>(entry.getValue()));
+        }
+        return deepCopy;
     }
 
     @Override
