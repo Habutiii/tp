@@ -223,21 +223,34 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+### Declaring Fields and Categories for Statistics
+
+Declares Fields, and Tags as Categories for statistics. Adding those Categories as tags to People will allow them to be considered for statistics.
+
+Format: `biz f/<your field here. t/<category 1> t/<category 2>`
+
+* Add multiple tags to aggregate for multiple categories in a Field.
+
+Examples: [See result in 'Viewing Summary Statistics']
+* `biz f/Plan t/A t/B t/C` declares the Field "Plan" and the Categories "A", "B" and "C" for statistics. 
+* 'biz f/Gender t/Male t/Female t/Other' declares these Field and Categories.
+
 ### Viewing Summary Statistics: `stats`
 
 Shows Summary Statistics on Customers in the address book.
 
-Statistics have been summarised according to preset, trial fields and categories as examples.
-In a future update, these fields will be set by the user using other commands.
-
-Key - Fields: Categories
-* Plan: A, B, C
-* Gender: Male, Female, Other
+Statistics will be summarized according to Fields and Tags declared by User using the `biz` command.
 
 
 Format: `stats`
 
 **Example:**
+If the following was declared in `biz` command, 
+
+Key - Fields: Categories
+* Plan: A, B, C
+* Gender: Male, Female, Other
+
 Total Number of Customers: 6
 
 Gender  | Number of people
