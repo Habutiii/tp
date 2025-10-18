@@ -11,7 +11,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
-public class BizTagCommand extends Command{
+/**
+ * Declares Fields, and Tags to be used as Categories.
+ */
+public class BizTagCommand extends Command {
     public static final String COMMAND_WORD = "biz";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Declares Fields, and Tags as Categories for Statistics.\n"
@@ -44,6 +47,11 @@ public class BizTagCommand extends Command{
     private final Tag field;
     private final Set<Tag> tags;
 
+    /**
+     * Creates a BizTagCommand to declare the specified {@code Field} and {@code Categories}
+     * @param field Field
+     * @param tags to be used as Categories in statistics
+     */
     public BizTagCommand(Tag field, Set<Tag> tags) {
         this.field = field;
         this.tags = tags;

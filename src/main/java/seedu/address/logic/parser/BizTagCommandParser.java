@@ -25,9 +25,9 @@ public class BizTagCommandParser implements Parser<BizTagCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BizTagCommand.MESSAGE_USAGE));
         }
 
-        Tag Field = ParserUtil.parseTag(argMultimap.getValue(PREFIX_FIELD).get());
+        Tag field = ParserUtil.parseTag(argMultimap.getValue(PREFIX_FIELD).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        return new BizTagCommand(Field, tagList);
+        return new BizTagCommand(field, tagList);
     }
 
     /**
