@@ -109,7 +109,7 @@ public interface Model {
     /**
      * Updates the {@code bizTags} inside Model.
      */
-    void addBizTags(Tag Field, Set<Tag> tags);
+    void addBizTags(Tag field, Set<Tag> tags);
 
     /**
      * Returns a copy of all the {@code bizTags} inside Model.

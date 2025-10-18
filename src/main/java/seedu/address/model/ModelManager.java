@@ -161,8 +161,8 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addBizTags(Tag Field, Set<Tag> tags) {
-        this.bizTags.put(Field, tags);
+    public void addBizTags(Tag field, Set<Tag> tags) {
+        this.bizTags.put(field, tags);
     }
 
     @Override
