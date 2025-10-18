@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -35,9 +39,9 @@ public class StatsCommandTest {
         String actualResult = "Total Number of Customers: 10"
                 + "\n\n"
                 + "Gender   |  Number of people\n"
-                + "Male     |  3\n"
-                + "Female   |  0\n"
                 + "Other    |  0\n"
+                + "Female   |  0\n"
+                + "Male     |  3\n"
                 + "\n\n"
                 + "Plan   |  Number of people\n"
                 + "A      |  3\n"
@@ -144,6 +148,28 @@ public class StatsCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
 
+        }
+
+        @Override
+        public void addBizTags(Tag field, Set<Tag> tags) {
+
+        }
+
+        @Override
+        public HashMap<Tag, Set<Tag>> getBizTags() {
+            // Hardcode dummy bizTags
+            HashMap<Tag, Set<Tag>> bizTags = new HashMap<>();
+            Set<Tag> plans = new HashSet<>();
+            plans.add(new Tag("A"));
+            plans.add(new Tag("B"));
+            plans.add(new Tag("C"));
+            Set<Tag> genders = new HashSet<>();
+            genders.add(new Tag("Male"));
+            genders.add(new Tag("Female"));
+            genders.add(new Tag("Other"));
+            bizTags.put(new Tag("Plan"), plans);
+            bizTags.put(new Tag("Gender"), genders);
+            return bizTags;
         }
 
         @Override

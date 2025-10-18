@@ -25,6 +25,8 @@ public class BizTagCommandParser implements Parser<BizTagCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BizTagCommand.MESSAGE_USAGE));
         }
 
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FIELD);
+
         Tag field = ParserUtil.parseTag(argMultimap.getValue(PREFIX_FIELD).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         return new BizTagCommand(field, tagList);

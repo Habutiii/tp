@@ -53,8 +53,23 @@ public class BizTagCommand extends Command {
      * @param tags to be used as Categories in statistics
      */
     public BizTagCommand(Tag field, Set<Tag> tags) {
+        requireNonNull(field);
+        requireNonNull(tags);
         this.field = field;
         this.tags = tags;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof BizTagCommand)) {
+            return false;
+        }
+        BizTagCommand e = (BizTagCommand) other;
+        return field.equals(e.field)
+                && tags.equals(e.tags);
     }
 
     @Override
