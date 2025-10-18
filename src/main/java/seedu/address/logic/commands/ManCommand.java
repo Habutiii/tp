@@ -98,6 +98,7 @@ public class ManCommand extends Command {
         m.put(FindCommand.COMMAND_WORD, FindCommand.MANUAL);
         m.put(ClearCommand.COMMAND_WORD, ClearCommand.MANUAL);
         m.put(StatsCommand.COMMAND_WORD, StatsCommand.MANUAL);
+        m.put(BizTagCommand.COMMAND_WORD, BizTagCommand.MANUAL);
         m.put(RedoCommand.COMMAND_WORD, RedoCommand.MANUAL);
         m.put(UndoCommand.COMMAND_WORD, UndoCommand.MANUAL);
         m.put(ExitCommand.COMMAND_WORD, ExitCommand.MANUAL);
