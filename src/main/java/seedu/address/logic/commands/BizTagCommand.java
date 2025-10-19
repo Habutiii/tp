@@ -113,7 +113,7 @@ public class BizTagCommand extends Command {
     public String undo(Model model) {
         requireNonNull(model);
         model.removeBizFeature(feature);
-        if  (isExistingFeature) {
+        if (isExistingFeature) {
             model.addBizTags(feature, previousTags);
             return String.format(UNDO_SUCCESS_RESTORE, feature.toString());
         }
