@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -24,7 +23,7 @@ public class BizUntagCommandParser implements Parser<BizUntagCommand> {
 
         Set<Tag> fields = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_FIELD));
 
-        return  new BizUntagCommand(fields);
+        return new BizUntagCommand(fields);
     }
 
     /**

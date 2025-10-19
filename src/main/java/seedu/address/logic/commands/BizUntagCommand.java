@@ -11,6 +11,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Undeclares Fields, and their corresponding Tags from Statistics.
+ */
 public class BizUntagCommand extends Command {
     public static final String COMMAND_WORD = "unbiz";
     public static final String MESSAGE_USAGE = COMMAND_WORD
