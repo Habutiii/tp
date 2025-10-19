@@ -2,13 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_DECLARED_BIZ_TAGS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FEATURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -19,10 +20,10 @@ public class BizTagCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Declares Fields, and Tags as Categories for Statistics.\n"
             + "Parameters: "
-            + PREFIX_FIELD + "FIELD "
+            + PREFIX_FEATURE + "FIELD "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_FIELD + "Plan "
+            + PREFIX_FEATURE + "Plan "
             + PREFIX_TAG + "A "
             + PREFIX_TAG + "B";
 
@@ -46,18 +47,18 @@ public class BizTagCommand extends Command {
 
     public static final String UNDO_SUCCESS = "The following Field(s) have been undeclared:\n%s";
 
-    private final Tag field;
+    private final FeatureTag feature;
     private final Set<Tag> tags;
 
     /**
      * Creates a BizTagCommand to declare the specified {@code Field} and {@code Categories}
-     * @param field Field
+     * @param feature Field
      * @param tags to be used as Categories in statistics
      */
-    public BizTagCommand(Tag field, Set<Tag> tags) {
-        requireNonNull(field);
+    public BizTagCommand(FeatureTag feature, Set<Tag> tags) {
+        requireNonNull(feature);
         requireNonNull(tags);
-        this.field = field;
+        this.feature = feature;
         this.tags = tags;
     }
 
@@ -70,15 +71,15 @@ public class BizTagCommand extends Command {
             return false;
         }
         BizTagCommand e = (BizTagCommand) other;
-        return field.equals(e.field)
+        return feature.equals(e.feature)
                 && tags.equals(e.tags);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.addBizTags(field, tags);
-        return new CommandResult(String.format(MESSAGE_DECLARED_BIZ_TAGS, field.toString(), tags.toString()));
+        model.addBizTags(feature, tags);
+        return new CommandResult(String.format(MESSAGE_DECLARED_BIZ_TAGS, feature.toString(), tags.toString()));
     }
 
     @Override
@@ -94,7 +95,7 @@ public class BizTagCommand extends Command {
     @Override
     public String undo(Model model) {
         requireNonNull(model);
-        model.removeBizField(field);
-        return String.format(UNDO_SUCCESS, field.toString());
+        model.removeBizField(feature);
+        return String.format(UNDO_SUCCESS, feature.toString());
     }
 }

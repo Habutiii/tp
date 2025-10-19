@@ -2,38 +2,39 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_MISSING_BIZ_TAGS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FEATURE;
 
 import java.util.HashMap;
 import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
- * Undeclares Fields, and their corresponding Tags from Statistics.
+ * Undeclares Fields a.k.a. Features, and their corresponding Tags from Statistics.
  */
 public class BizUntagCommand extends Command {
     public static final String COMMAND_WORD = "unbiz";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Undeclares Fields, and their Tags as Categories from Statistics.\n"
+            + ": Undeclares Features, and their grouped Tags from Statistics.\n"
             + "Parameters: "
-            + "[" + PREFIX_FIELD + "FIELD]...\n"
+            + "[" + PREFIX_FEATURE + "FEATURE]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_FIELD + "Plan "
-            + PREFIX_FIELD + "Gender";
-    public static final String MESSAGE_SUCCESS = "The following Field(s) have been undeclared:\n";
-    public static final String UNDO_SUCCESS = "The following Field(s) have been redeclared:\n%s";
+            + PREFIX_FEATURE + "Plan "
+            + PREFIX_FEATURE + "Gender";
+    public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared:\n";
+    public static final String UNDO_SUCCESS = "The following Feature(s) have been redeclared:\n%s";
     public static final String MANUAL = String.join("\n",
             "NAME",
-            "  unbiz — Undeclares Field(s), and their Tags as Categories from Statistics.",
+            "  unbiz — Undeclares Feature(s), and their grouped Tags from Statistics.",
             "",
             "USAGE",
-            "  biz [f/FIELD] ...",
+            "  biz [f/FEATURE] ...",
             "",
             "PARAMETERS",
-            "  • FIELD: non-empty string, may contain spaces but not leading/trailing spaces",
+            "  • FEATURE: non-empty string, may contain spaces but not leading/trailing spaces",
             "",
             "EXAMPLES",
             "  unbiz f/Plan f/Gender",
@@ -42,25 +43,25 @@ public class BizUntagCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#adding-a-person-add"
     );
 
-    private final Set<Tag> fields;
-    private HashMap<Tag, Set<Tag>> bizTags = new HashMap<>();
+    private final Set<FeatureTag> features;
+    private HashMap<FeatureTag, Set<Tag>> bizTags = new HashMap<>();
 
     /**
      * Creates an BizUntagCommand to undeclare specified {@code fields} in Statistics.
-     * @param fields Fields currently declared in Statistics
+     * @param features Features currently declared in Statistics
      */
-    public BizUntagCommand(Set<Tag> fields) {
-        requireNonNull(fields);
-        this.fields = fields;
+    public BizUntagCommand(Set<FeatureTag> features) {
+        requireNonNull(features);
+        this.features = features;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         StringBuilder missingFields = new StringBuilder();
-        for (Tag field : fields) {
-            if (!model.isBizField(field)) {
-                missingFields.append(field.toString()).append(" ");
+        for (FeatureTag feature : features) {
+            if (!model.isBizField(feature)) {
+                missingFields.append(feature.toString()).append(" ");
             }
         }
 
@@ -73,9 +74,9 @@ public class BizUntagCommand extends Command {
         this.bizTags = model.getBizTags(); // Save
 
         StringBuilder unTaggedFields = new StringBuilder();
-        for (Tag field : fields) {
-            model.removeBizField(field);
-            unTaggedFields.append(field.toString()).append(" ");
+        for (FeatureTag feature : features) {
+            model.removeBizField(feature);
+            unTaggedFields.append(feature.toString()).append(" ");
         }
 
         return new CommandResult(
@@ -91,7 +92,7 @@ public class BizUntagCommand extends Command {
             return false;
         }
         BizUntagCommand e = (BizUntagCommand) other;
-        return fields.equals(e.fields);
+        return features.equals(e.features);
     }
 
     @Override
@@ -108,11 +109,11 @@ public class BizUntagCommand extends Command {
     public String undo(Model model) {
         requireNonNull(model);
         StringBuilder reTaggedFields = new StringBuilder();
-        for (Tag field : fields) {
-            Set<Tag> cats = bizTags.get(field);
-            model.addBizTags(field, cats);
+        for (FeatureTag feature : features) {
+            Set<Tag> cats = bizTags.get(feature);
+            model.addBizTags(feature, cats);
             reTaggedFields
-                    .append(field.toString())
+                    .append(feature.toString())
                     .append(" ").append(cats.toString());
         }
         return String.format(UNDO_SUCCESS, reTaggedFields.toString());

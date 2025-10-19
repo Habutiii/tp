@@ -25,6 +25,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ClientMatchesPredicate;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 
@@ -101,17 +102,17 @@ public class ModelManagerTest {
     @Test
     public void manipulate_bizTags_successful() throws CommandException {
         modelManager.addPerson(ALICE);
-        Tag field = new Tag(VALID_FIELD);
+        FeatureTag feature = new FeatureTag(VALID_FIELD);
         Tag category = new Tag(VALID_TAG_CATEGORY);
         Set<Tag> tags = new HashSet<>(List.of(category));
-        modelManager.addBizTags(field, tags);
+        modelManager.addBizTags(feature, tags);
 
-        assertTrue(modelManager.isBizField(field));
-        assertEquals(tags, modelManager.getBizTags().get(field));
+        assertTrue(modelManager.isBizField(feature));
+        assertEquals(tags, modelManager.getBizTags().get(feature));
 
-        modelManager.removeBizField(field);
-        assertFalse(modelManager.isBizField(field));
-        assertNull(modelManager.getBizTags().get(field));
+        modelManager.removeBizField(feature);
+        assertFalse(modelManager.isBizField(feature));
+        assertNull(modelManager.getBizTags().get(feature));
     }
 
     @Test

@@ -13,6 +13,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
@@ -32,12 +33,12 @@ public class StatsCommandIntegrationTest {
         plans.add(new Tag("A"));
         plans.add(new Tag("B"));
         plans.add(new Tag("C"));
-        model.addBizTags(new Tag("Plan"), plans);
+        model.addBizTags(new FeatureTag("Plan"), plans);
         Set<Tag> genders = new HashSet<>();
         genders.add(new Tag("Male"));
         genders.add(new Tag("Female"));
         genders.add(new Tag("Other"));
-        model.addBizTags(new Tag("Gender"), genders);
+        model.addBizTags(new FeatureTag("Gender"), genders);
     }
     @Test
     public void execute_statsIntegration_success() {

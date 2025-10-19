@@ -20,6 +20,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +32,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
-    private final HashMap<Tag, Set<Tag>> bizTags;
+    private final HashMap<FeatureTag, Set<Tag>> bizTags;
 
     // Stacks for undo and redo functionality
     private final Stack<Command> undoStack = new Stack<>();
@@ -161,24 +162,24 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean isBizField(Tag field) {
+    public boolean isBizField(FeatureTag field) {
         return bizTags.containsKey(field);
     }
 
     @Override
-    public void addBizTags(Tag field, Set<Tag> tags) {
+    public void addBizTags(FeatureTag field, Set<Tag> tags) {
         this.bizTags.put(field, tags);
     }
 
     @Override
-    public void removeBizField(Tag field) {
+    public void removeBizField(FeatureTag field) {
         this.bizTags.remove(field);
     }
 
     @Override
-    public HashMap<Tag, Set<Tag>> getBizTags() {
-        HashMap<Tag, Set<Tag>> deepCopy = new HashMap<>();
-        for (Map.Entry<Tag, Set<Tag>> entry : bizTags.entrySet()) {
+    public HashMap<FeatureTag, Set<Tag>> getBizTags() {
+        HashMap<FeatureTag, Set<Tag>> deepCopy = new HashMap<>();
+        for (Map.Entry<FeatureTag, Set<Tag>> entry : bizTags.entrySet()) {
             deepCopy.put(entry.getKey(), new LinkedHashSet<>(entry.getValue()));
         }
         return deepCopy;

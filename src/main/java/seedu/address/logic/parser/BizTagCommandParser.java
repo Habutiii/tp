@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FEATURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.BizTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -18,18 +19,18 @@ public class BizTagCommandParser implements Parser<BizTagCommand> {
     @Override
     public BizTagCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_FIELD, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_FEATURE, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_FIELD, PREFIX_TAG)
+        if (!arePrefixesPresent(argMultimap, PREFIX_FEATURE, PREFIX_TAG)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BizTagCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FIELD);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_FEATURE);
 
-        Tag field = ParserUtil.parseTag(argMultimap.getValue(PREFIX_FIELD).get());
+        FeatureTag feature = ParserUtil.parseFeatureTag(argMultimap.getValue(PREFIX_FEATURE).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        return new BizTagCommand(field, tagList);
+        return new BizTagCommand(feature, tagList);
     }
 
     /**

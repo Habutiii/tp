@@ -11,6 +11,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -109,23 +110,23 @@ public interface Model {
     /**
      * Returns True if Field is present inside the {@code bizTags} in Model.
      */
-    boolean isBizField(Tag field);
+    boolean isBizField(FeatureTag field);
 
     /**
      * Declares the {@code bizTags} inside Model.
      */
-    void addBizTags(Tag field, Set<Tag> tags);
+    void addBizTags(FeatureTag feature, Set<Tag> tags);
 
     /**
      * Undeclares the {@code Field} from the {@code bizTags} inside Model.
      * @param field Field to undeclare
      */
-    void removeBizField(Tag field);
+    void removeBizField(FeatureTag field);
 
     /**
      * Returns a copy of all the {@code bizTags} inside Model.
      */
-    HashMap<Tag, Set<Tag>> getBizTags();
+    HashMap<FeatureTag, Set<Tag>> getBizTags();
 
     /**
      * Saves the mutable command history to support undo.

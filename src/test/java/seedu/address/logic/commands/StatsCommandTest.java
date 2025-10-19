@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -151,24 +152,24 @@ public class StatsCommandTest {
         }
 
         @Override
-        public boolean isBizField(Tag field) {
+        public boolean isBizField(FeatureTag field) {
             return false;
         }
 
         @Override
-        public void addBizTags(Tag field, Set<Tag> tags) {
+        public void addBizTags(FeatureTag field, Set<Tag> tags) {
 
         }
 
         @Override
-        public void removeBizField(Tag field) {
+        public void removeBizField(FeatureTag field) {
 
         }
 
         @Override
-        public HashMap<Tag, Set<Tag>> getBizTags() {
+        public HashMap<FeatureTag, Set<Tag>> getBizTags() {
             // Hardcode dummy bizTags
-            HashMap<Tag, Set<Tag>> bizTags = new HashMap<>();
+            HashMap<FeatureTag, Set<Tag>> bizTags = new HashMap<>();
             Set<Tag> plans = new HashSet<>();
             plans.add(new Tag("A"));
             plans.add(new Tag("B"));
@@ -177,8 +178,8 @@ public class StatsCommandTest {
             genders.add(new Tag("Male"));
             genders.add(new Tag("Female"));
             genders.add(new Tag("Other"));
-            bizTags.put(new Tag("Plan"), plans);
-            bizTags.put(new Tag("Gender"), genders);
+            bizTags.put(new FeatureTag("Plan"), plans);
+            bizTags.put(new FeatureTag("Gender"), genders);
             return bizTags;
         }
 

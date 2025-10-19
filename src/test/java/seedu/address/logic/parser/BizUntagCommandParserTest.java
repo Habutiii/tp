@@ -13,30 +13,30 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.BizUntagCommand;
-import seedu.address.model.tag.Tag;
+    import seedu.address.model.tag.FeatureTag;
 
 public class BizUntagCommandParserTest {
-    private static final Tag FIELD = new Tag(VALID_FIELD);
-    private static final Tag DIFF_FIELD = new Tag(VALID_FIELD + "diff");
+            private static final FeatureTag FIELD = new FeatureTag(VALID_FIELD);
+            private static final FeatureTag DIFF_FIELD = new FeatureTag(VALID_FIELD + "diff");
 
     private BizUntagCommandParser parser = new BizUntagCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Set<Tag> fields = new HashSet<>();
-        fields.add(FIELD);
+            Set<FeatureTag> features = new HashSet<>();
+        features.add(FIELD);
 
         // Single field
         assertParseSuccess(parser,
                 PREAMBLE_WHITESPACE
-                        + FIELD_DESC, new BizUntagCommand(fields));
+                        + FIELD_DESC, new BizUntagCommand(features));
 
-        // Multiple fields
-        fields.add(DIFF_FIELD);
+        // Multiple features
+        features.add(DIFF_FIELD);
 
         assertParseSuccess(parser,
                 PREAMBLE_WHITESPACE
-                + FIELD_DESC + FIELD_DESC + "diff", new BizUntagCommand(fields));
+                + FIELD_DESC + FIELD_DESC + "diff", new BizUntagCommand(features));
 
     }
 

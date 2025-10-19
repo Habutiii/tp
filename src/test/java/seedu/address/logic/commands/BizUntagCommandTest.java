@@ -17,10 +17,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 public class BizUntagCommandTest {
-    private static final Tag FIELD = new Tag(VALID_TAG_CATEGORY);
+    private static final FeatureTag FEATURE = new FeatureTag(VALID_TAG_CATEGORY);
     private static final Tag CATEGORY = new Tag(VALID_TAG_CATEGORY);
 
     @Test
@@ -34,15 +35,15 @@ public class BizUntagCommandTest {
 
         Set<Tag> categories = new HashSet<>();
         categories.add(CATEGORY);
-        model.addBizTags(FIELD, categories);
+        model.addBizTags(FEATURE, categories);
 
-        Set<Tag> fields = new HashSet<>();
-        fields.add(FIELD);
-        BizUntagCommand command = new BizUntagCommand(fields);
+        Set<FeatureTag> features = new HashSet<>();
+        features.add(FEATURE);
+        BizUntagCommand command = new BizUntagCommand(features);
 
         StringBuilder unTaggedFields = new StringBuilder();
-        for (Tag f : fields) {
-            unTaggedFields.append(FIELD.toString()).append(" ");
+        for (Tag f : features) {
+            unTaggedFields.append(f.toString()).append(" ");
         }
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -55,9 +56,9 @@ public class BizUntagCommandTest {
 
     @Test
     public void execute_invalidFields_throwsCommandException() {
-        Set<Tag> fields = new HashSet<>();
-        fields.add(FIELD);
-        BizUntagCommand command = new BizUntagCommand(fields);
+        Set<FeatureTag> features = new HashSet<>();
+        features.add(FEATURE);
+        BizUntagCommand command = new BizUntagCommand(features);
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertThrows(CommandException.class, () -> command.execute(model));
     }
@@ -67,29 +68,29 @@ public class BizUntagCommandTest {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Set<Tag> categories = new HashSet<>();
         categories.add(CATEGORY);
-        model.addBizTags(FIELD, categories);
+        model.addBizTags(FEATURE, categories);
 
-        Set<Tag> fields = new HashSet<>();
-        fields.add(FIELD);
+        Set<FeatureTag> features = new HashSet<>();
+        features.add(FEATURE);
 
-        BizUntagCommand command = new BizUntagCommand(fields);
+        BizUntagCommand command = new BizUntagCommand(features);
         command.execute(model);
-        assertFalse(model.isBizField(FIELD));
+        assertFalse(model.isBizField(FEATURE));
         command.undo(model);
-        assertTrue(model.isBizField(FIELD));
+        assertTrue(model.isBizField(FEATURE));
     }
 
     @Test
     public void equals() {
-        Tag diffField = new Tag(VALID_FIELD + "diff");
+        FeatureTag diffField = new FeatureTag(VALID_FIELD + "diff");
 
-        Set<Tag> fields = new HashSet<>();
-        fields.add(FIELD);
-        Set<Tag> diffFields = new HashSet<>();
+        Set<FeatureTag> features = new HashSet<>();
+        features.add(FEATURE);
+        Set<FeatureTag> diffFields = new HashSet<>();
         diffFields.add(diffField);
 
-        BizUntagCommand firstCommand = new BizUntagCommand(fields);
-        BizUntagCommand secondCommand = new BizUntagCommand(fields);
+        BizUntagCommand firstCommand = new BizUntagCommand(features);
+        BizUntagCommand secondCommand = new BizUntagCommand(features);
         BizUntagCommand thirdCommand = new BizUntagCommand(diffFields);
 
         // same object -> returns true

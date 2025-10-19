@@ -18,10 +18,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 public class BizTagCommandTest {
-    private final Tag field = new Tag(VALID_FIELD);
+    private final FeatureTag feature = new FeatureTag(VALID_FIELD);
     private final Tag category = new Tag(VALID_TAG_CATEGORY);
 
     @Test
@@ -36,13 +37,13 @@ public class BizTagCommandTest {
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
 
-        BizTagCommand command = new BizTagCommand(field, categories);
+        BizTagCommand command = new BizTagCommand(feature, categories);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addBizTags(field, categories);
+        expectedModel.addBizTags(feature, categories);
 
         String expectedMessage = String.format(
-                Messages.MESSAGE_DECLARED_BIZ_TAGS, field.toString(), categories.toString());
+                Messages.MESSAGE_DECLARED_BIZ_TAGS, feature.toString(), categories.toString());
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -52,16 +53,16 @@ public class BizTagCommandTest {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
-        BizTagCommand command = new BizTagCommand(field, categories);
+        BizTagCommand command = new BizTagCommand(feature, categories);
         command.execute(model);
-        assertTrue(model.isBizField(field));
+        assertTrue(model.isBizField(feature));
         command.undo(model);
-        assertFalse(model.isBizField(field));
+        assertFalse(model.isBizField(feature));
     }
 
     @Test
     public void equals() {
-        Tag diffField = new Tag(VALID_FIELD + "diff");
+        FeatureTag diffField = new FeatureTag(VALID_FIELD + "diff");
         Tag diffCategory = new Tag(VALID_TAG_CATEGORY + "diff");
 
         Set<Tag> categories = new HashSet<>();
@@ -72,10 +73,10 @@ public class BizTagCommandTest {
         diffCategories.add(diffCategory);
 
 
-        BizTagCommand firstCommand = new BizTagCommand(field, categories);
-        BizTagCommand secondCommand = new BizTagCommand(field, categories);
+        BizTagCommand firstCommand = new BizTagCommand(feature, categories);
+        BizTagCommand secondCommand = new BizTagCommand(feature, categories);
         BizTagCommand thirdCommand = new BizTagCommand(diffField, categories);
-        BizTagCommand fourthCommand = new BizTagCommand(field, diffCategories);
+        BizTagCommand fourthCommand = new BizTagCommand(feature, diffCategories);
 
         // same object -> returns true
         assertTrue(firstCommand.equals(firstCommand));
@@ -97,12 +98,10 @@ public class BizTagCommandTest {
 
     @Test
     public void man_returnsManualString() {
-        Tag field = new Tag(VALID_FIELD);
-        Tag category = new Tag(VALID_TAG_CATEGORY);
         Set<Tag> categories = new HashSet<>();
 
         categories.add(category);
-        BizTagCommand cmd = new BizTagCommand(field, categories);
+        BizTagCommand cmd = new BizTagCommand(feature, categories);
         String manual = cmd.man();
         assertTrue(manual.contains("biz"));
         assertTrue(manual.contains("EXAMPLES"));

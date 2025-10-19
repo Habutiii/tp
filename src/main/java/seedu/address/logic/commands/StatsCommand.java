@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.TagMatchesAllPredicate;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -48,7 +49,7 @@ public class StatsCommand extends Command {
 
     private String computeStats(Model model) {
         requireNonNull(model);
-        HashMap<Tag, Set<Tag>> bizTags = model.getBizTags();
+        HashMap<FeatureTag, Set<Tag>> bizTags = model.getBizTags();
 
         FilteredList<Person> filteredPersons =
                 new FilteredList<>(model.getPersonListCopy());
@@ -68,7 +69,7 @@ public class StatsCommand extends Command {
     }
 
     private String getFieldStats(
-            FilteredList<Person> filteredPersons, HashMap<Tag, Set<Tag>> bizTags, Tag category) {
+            FilteredList<Person> filteredPersons, HashMap<FeatureTag, Set<Tag>> bizTags, Tag category) {
         Set<Tag> tags = bizTags.get(category);
         ArrayList<String> results = new ArrayList<>();
 
