@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_MISSING_BIZ_TAGS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FIELD;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -20,6 +21,7 @@ public class BizUntagCommand extends Command {
             + PREFIX_FIELD + "Plan "
             + PREFIX_FIELD + "Gender";
     public static final String MESSAGE_SUCCESS = "The following Fields have been undeclared:\n";
+    public static final String UNDO_SUCCESS = "The following Fields have been redeclared:\n%s";
     public static final String MANUAL = String.join("\n",
             "NAME",
             "  unbiz — Undeclares Field(s), and their Tags as Categories from Statistics.",
@@ -38,6 +40,7 @@ public class BizUntagCommand extends Command {
     );
 
     private final Set<Tag> fields;
+    private HashMap<Tag, Set<Tag>> bizTags = new HashMap<>();
 
     /**
      * Creates an BizUntagCommand to undeclare specified {@code fields} in Statistics.
@@ -69,6 +72,8 @@ public class BizUntagCommand extends Command {
             unTaggedFields.append(field.toString()).append(" ");
         }
 
+        this.bizTags = model.getBizTags();
+
         return new CommandResult(
                 String.join("\n", MESSAGE_SUCCESS, unTaggedFields.toString()));
     }
@@ -88,5 +93,21 @@ public class BizUntagCommand extends Command {
     @Override
     public String man() {
         return MANUAL;
+    }
+
+    @Override
+    public boolean isMutable() {
+        return true;
+    }
+
+    @Override
+    public String undo(Model model) {
+        requireNonNull(model);
+        StringBuilder reTaggedFields = new StringBuilder();
+        for (Tag field : fields) {
+            Set<Tag> cats = bizTags.get(field);
+            model.addBizTags(field, cats);
+        }
+        return String.format(UNDO_SUCCESS, reTaggedFields.toString());
     }
 }
