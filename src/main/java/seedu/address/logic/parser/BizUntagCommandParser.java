@@ -10,6 +10,9 @@ import seedu.address.logic.commands.BizUntagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Parses input arguments and creates a new BizUntagCommand object
+ */
 public class BizUntagCommandParser implements Parser<BizUntagCommand> {
     @Override
     public BizUntagCommand parse(String args) throws ParseException {
