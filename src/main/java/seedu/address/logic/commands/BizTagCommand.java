@@ -115,7 +115,8 @@ public class BizTagCommand extends Command {
         model.removeBizFeature(feature);
         if (isExistingFeature) {
             model.addBizTags(feature, previousTags);
-            return String.format(UNDO_SUCCESS_RESTORE, feature.toString());
+            return String.format(UNDO_SUCCESS_RESTORE,
+                    String.join(" ", feature.toString(), previousTags.toString()));
         }
         return String.format(UNDO_SUCCESS, feature.toString());
     }
