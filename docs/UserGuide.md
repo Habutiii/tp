@@ -223,23 +223,39 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### Declaring Fields and Categories for Statistics
+### Declaring Features and Tags for Statistics
 
-Declares Fields, and Tags as Categories for statistics. Adding those Categories as tags to People will allow them to be considered for statistics.
+Declares Features and Tags to group Tags by Features for statistics. Adding those Categories as tags to People will allow them to be considered for statistics.
+Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable.
 
-Format: `biz f/<your field here. t/<category 1> t/<category 2>`
+Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
-* Add multiple tags to aggregate for multiple categories in a Field.
+* Add multiple tags fro aggregation of a Feature.
 
 Examples: [See result in 'Viewing Summary Statistics']
-* `biz f/Plan t/A t/B t/C` declares the Field "Plan" and the Categories "A", "B" and "C" for statistics. 
-* 'biz f/Gender t/Male t/Female t/Other' declares these Field and Categories.
+* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics. 
+* `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
+
+
+### Undeclaring Features and Tags from Statistics
+
+Undeclares Features and their corresponding Tags. 
+This command is undoable.
+
+Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
+
+* Undeclare multiple Features by chaining `t\` prefixes together.
+
+Examples: 
+* `biz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
+* `biz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
+
 
 ### Viewing Summary Statistics: `stats`
 
 Shows Summary Statistics on Customers in the address book.
 
-Statistics will be summarized according to Fields and Tags declared by User using the `biz` command.
+Statistics will be summarized according to Features and Tags declared by User using the `biz` command.
 
 
 Format: `stats`
@@ -247,7 +263,7 @@ Format: `stats`
 **Example:**
 If the following was declared in `biz` command, 
 
-Key - Fields: Categories
+Key - Features: Tags
 * Plan: A, B, C
 * Gender: Male, Female, Other
 
@@ -270,7 +286,7 @@ Reverts the most recent mutable action (add, delete, clear, or edit) performed d
 
 Format: `undo`
 
-* Only actions that change the address book (add, delete, clear, edit) can be undone.
+* Only actions that change the address book (add, delete, clear, edit, biz, unbiz) can be undone.
 * Multiple undo operations can be performed in sequence to revert several actions, as long as they are all mutable actions from the current session.
 * Undo is only available for actions performed since the application was started (current runtime).
 
