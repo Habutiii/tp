@@ -16,7 +16,7 @@ public class BizUntagCommandParser implements Parser<BizUntagCommand> {
     public BizUntagCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_FIELD);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_FIELD, PREFIX_TAG)
+        if (!arePrefixesPresent(argMultimap, PREFIX_FIELD)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, BizUntagCommand.MESSAGE_USAGE));

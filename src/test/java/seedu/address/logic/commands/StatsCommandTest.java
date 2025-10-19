@@ -151,7 +151,17 @@ public class StatsCommandTest {
         }
 
         @Override
+        public boolean isBizField(Tag field) {
+            return false;
+        }
+
+        @Override
         public void addBizTags(Tag field, Set<Tag> tags) {
+
+        }
+
+        @Override
+        public void removeBizField(Tag field) {
 
         }
 
