@@ -63,7 +63,7 @@ public class BizUntagCommandTest {
     }
 
     @Test
-    public void execute_undoCommand_unbizCommand_success() throws CommandException {
+    public void execute_undoCommandUnbizCommand_success() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Set<Tag> categories = new HashSet<>();
         categories.add(CATEGORY);
