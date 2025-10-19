@@ -49,7 +49,11 @@ public class BizTagCommand extends Command {
     public static final String MESSAGE_DECLARED_BIZ_TAGS =
             "The following Feature(s) and Tags have been declared for Stats:\n%S";
 
-    public static final String UNDO_SUCCESS = "The following Feature(s) have been undeclared:\n%s";
+    public static final String UNDO_SUCCESS =
+            "The following Feature(s) have been undeclared:\n%s";
+    public static final String UNDO_SUCCESS_RESTORE =
+            "The following Feature(s) have been restored to original:\n%s";
+
 
     private final FeatureTag feature;
     private final Set<Tag> tags;
@@ -111,6 +115,7 @@ public class BizTagCommand extends Command {
         model.removeBizFeature(feature);
         if  (isExistingFeature) {
             model.addBizTags(feature, previousTags);
+            return String.format(UNDO_SUCCESS_RESTORE, feature.toString());
         }
         return String.format(UNDO_SUCCESS, feature.toString());
     }

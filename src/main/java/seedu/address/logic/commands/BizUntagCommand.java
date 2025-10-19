@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_MISSING_BIZ_TAGS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FEATURE;
 
 import java.util.HashMap;
@@ -26,6 +25,7 @@ public class BizUntagCommand extends Command {
             + PREFIX_FEATURE + "Gender";
     public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared:\n";
     public static final String UNDO_SUCCESS = "The following Feature(s) have been redeclared:\n%s";
+    public static final String MESSAGE_INVALID_MISSING_BIZ_TAGS = "Field(s) missing in Statistics! \n%s";
     public static final String MANUAL = String.join("\n",
             "NAME",
             "  unbiz — Undeclares Feature(s), and their grouped Tags from Statistics.",

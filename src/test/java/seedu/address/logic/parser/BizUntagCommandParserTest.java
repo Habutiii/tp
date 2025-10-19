@@ -13,17 +13,17 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.BizUntagCommand;
-    import seedu.address.model.tag.FeatureTag;
+import seedu.address.model.tag.FeatureTag;
 
 public class BizUntagCommandParserTest {
-            private static final FeatureTag FIELD = new FeatureTag(VALID_FIELD);
-            private static final FeatureTag DIFF_FIELD = new FeatureTag(VALID_FIELD + "diff");
+    private static final FeatureTag FIELD = new FeatureTag(VALID_FIELD);
+    private static final FeatureTag DIFF_FIELD = new FeatureTag(VALID_FIELD + "diff");
 
     private BizUntagCommandParser parser = new BizUntagCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-            Set<FeatureTag> features = new HashSet<>();
+        Set<FeatureTag> features = new HashSet<>();
         features.add(FIELD);
 
         // Single field
