@@ -75,9 +75,9 @@ public class BizUntagCommandTest {
 
         BizUntagCommand command = new BizUntagCommand(features);
         command.execute(model);
-        assertFalse(model.isBizField(FEATURE));
+        assertFalse(model.isBizFeature(FEATURE));
         command.undo(model);
-        assertTrue(model.isBizField(FEATURE));
+        assertTrue(model.isBizFeature(FEATURE));
     }
 
     @Test

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FEATURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -52,6 +53,8 @@ public class BizTagCommand extends Command {
 
     private final FeatureTag feature;
     private final Set<Tag> tags;
+    private boolean isExistingFeature;
+    private Set<Tag> previousTags;
 
     /**
      * Creates a BizTagCommand to declare the specified {@code Feature} and {@code Tags}
@@ -63,6 +66,8 @@ public class BizTagCommand extends Command {
         requireNonNull(tags);
         this.feature = feature;
         this.tags = tags;
+        this.isExistingFeature = false;
+        this.previousTags = new HashSet<>();
     }
 
     @Override
@@ -81,8 +86,13 @@ public class BizTagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        if (model.isBizFeature(feature)) {
+            isExistingFeature = true;
+            previousTags = model.getBizTags().get(feature);
+        }
         model.addBizTags(feature, tags);
-        return new CommandResult(String.format(MESSAGE_DECLARED_BIZ_TAGS, feature.toString(), tags.toString()));
+        return new CommandResult(String.format(MESSAGE_DECLARED_BIZ_TAGS,
+                String.join(" ", feature.toString(), tags.toString())));
     }
 
     @Override
@@ -99,6 +109,9 @@ public class BizTagCommand extends Command {
     public String undo(Model model) {
         requireNonNull(model);
         model.removeBizFeature(feature);
+        if  (isExistingFeature) {
+            model.addBizTags(feature, previousTags);
+        }
         return String.format(UNDO_SUCCESS, feature.toString());
     }
 }

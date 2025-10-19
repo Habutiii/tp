@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FIELD;
@@ -43,7 +44,8 @@ public class BizTagCommandTest {
         expectedModel.addBizTags(feature, categories);
 
         String expectedMessage = String.format(
-                Messages.MESSAGE_DECLARED_BIZ_TAGS, feature.toString(), categories.toString());
+                    BizTagCommand.MESSAGE_DECLARED_BIZ_TAGS,
+                String.join(" ", feature.toString(), categories.toString()));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -51,13 +53,28 @@ public class BizTagCommandTest {
     @Test
     public void undoCommand_bizCommand_successfulUndo() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+        // Undoing for Non-overwrite
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
         BizTagCommand command = new BizTagCommand(feature, categories);
         command.execute(model);
-        assertTrue(model.isBizField(feature));
+        assertTrue(model.isBizFeature(feature));
         command.undo(model);
-        assertFalse(model.isBizField(feature));
+        assertFalse(model.isBizFeature(feature));
+
+        // Undoing for overwrite
+        Set<Tag> newCategories = new HashSet<>();
+        Tag newCategory = new Tag(VALID_TAG_CATEGORY + "different");
+        newCategories.add(newCategory);
+        newCategories.add(category);
+        model.addBizTags(feature, newCategories);
+        command.execute(model);
+        assertTrue(model.isBizFeature(feature));
+        assertEquals(model.getBizTags().get(feature), categories);
+        command.undo(model);
+        assertTrue(model.isBizFeature(feature));
+        assertEquals(model.getBizTags().get(feature), newCategories);
     }
 
     @Test
