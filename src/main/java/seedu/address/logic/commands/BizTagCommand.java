@@ -44,6 +44,8 @@ public class BizTagCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#adding-a-person-add"
     );
 
+    public static final String UNDO_SUCCESS = "The following Field(s) have been undeclared:\n%s";
+
     private final Tag field;
     private final Set<Tag> tags;
 
@@ -82,5 +84,17 @@ public class BizTagCommand extends Command {
     @Override
     public String man() {
         return MANUAL;
+    }
+
+    @Override
+    public boolean isMutable() {
+        return true;
+    }
+
+    @Override
+    public String undo(Model model) {
+        requireNonNull(model);
+        model.removeBizField(field);
+        return String.format(UNDO_SUCCESS, field.toString());
     }
 }

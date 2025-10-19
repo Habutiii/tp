@@ -20,8 +20,8 @@ public class BizUntagCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FIELD + "Plan "
             + PREFIX_FIELD + "Gender";
-    public static final String MESSAGE_SUCCESS = "The following Fields have been undeclared:\n";
-    public static final String UNDO_SUCCESS = "The following Fields have been redeclared:\n%s";
+    public static final String MESSAGE_SUCCESS = "The following Field(s) have been undeclared:\n";
+    public static final String UNDO_SUCCESS = "The following Field(s) have been redeclared:\n%s";
     public static final String MANUAL = String.join("\n",
             "NAME",
             "  unbiz — Undeclares Field(s), and their Tags as Categories from Statistics.",
@@ -66,13 +66,13 @@ public class BizUntagCommand extends Command {
                             "[" + missingFields + "]"));
         }
 
+        this.bizTags = model.getBizTags(); // Save
+
         StringBuilder unTaggedFields = new StringBuilder();
         for (Tag field : fields) {
             model.removeBizField(field);
             unTaggedFields.append(field.toString()).append(" ");
         }
-
-        this.bizTags = model.getBizTags();
 
         return new CommandResult(
                 String.join("\n", MESSAGE_SUCCESS, unTaggedFields.toString()));
@@ -107,6 +107,9 @@ public class BizUntagCommand extends Command {
         for (Tag field : fields) {
             Set<Tag> cats = bizTags.get(field);
             model.addBizTags(field, cats);
+            reTaggedFields
+                    .append(field.toString())
+                    .append(" ").append(cats.toString());
         }
         return String.format(UNDO_SUCCESS, reTaggedFields.toString());
     }
