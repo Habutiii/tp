@@ -16,13 +16,14 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.BizTagCommand;
+import seedu.address.model.tag.FieldTag;
 import seedu.address.model.tag.Tag;
 
 public class BizTagCommandParserTest {
     private BizTagCommandParser parser = new BizTagCommandParser();
     @Test
     public void parse_allFieldsPresent_success() {
-        Tag field = new Tag(VALID_FIELD);
+        FieldTag field = new FieldTag(VALID_FIELD);
         Tag category = new Tag(VALID_TAG_CATEGORY);
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
@@ -43,7 +44,6 @@ public class BizTagCommandParserTest {
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
-        Tag field = new Tag(VALID_FIELD);
         Tag category = new Tag(VALID_TAG_CATEGORY);
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
@@ -52,7 +52,7 @@ public class BizTagCommandParserTest {
         assertParseFailure(parser, TAG_DESC_CATEGORY,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, BizTagCommand.MESSAGE_USAGE));
 
-        //Missing Tags
+        // Missing Tags
         assertParseFailure(parser, FIELD_DESC,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, BizTagCommand.MESSAGE_USAGE));
     }
