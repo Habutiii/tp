@@ -8,9 +8,11 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.tag.Tag;
 
 public class BizUntagCommandParserTest {
-    private BizUntagCommandParser parser = new BizUntagCommandParser();
     private static final Tag FIELD = new Tag(VALID_FIELD);
     private static final Tag CATEGORY = new Tag(VALID_TAG_CATEGORY);
+
+    private BizUntagCommandParser parser = new BizUntagCommandParser();
+
     @Test
     public void parse_allFieldsPresent_success() {
 

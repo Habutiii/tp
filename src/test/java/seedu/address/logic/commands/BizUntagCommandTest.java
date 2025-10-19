@@ -58,12 +58,12 @@ public class BizUntagCommandTest {
         Set<Tag> fields = new HashSet<>();
         fields.add(FIELD);
         BizUntagCommand command = new BizUntagCommand(fields);
-        Model  model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertThrows(CommandException.class, () -> command.execute(model));
     }
 
     @Test
-    public void execute_UndoCommand_unbizCommand_successfulUndo() throws CommandException {
+    public void execute_UndoCommand_unbizCommand_success() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Set<Tag> categories = new HashSet<>();
         categories.add(CATEGORY);
