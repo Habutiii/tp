@@ -47,7 +47,7 @@ public class BizUntagCommand extends Command {
     private HashMap<FeatureTag, Set<Tag>> bizTags = new HashMap<>();
 
     /**
-     * Creates an BizUntagCommand to undeclare specified {@code fields} in Statistics.
+     * Creates an BizUntagCommand to undeclare specified {@code features} in Statistics.
      * @param features Features currently declared in Statistics
      */
     public BizUntagCommand(Set<FeatureTag> features) {

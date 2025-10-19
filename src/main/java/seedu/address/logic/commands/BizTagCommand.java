@@ -12,14 +12,14 @@ import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
- * Declares Fields, and Tags to be used as Tags.
+ * Declares Features for grouping Tags to be used as categories.
  */
 public class BizTagCommand extends Command {
     public static final String COMMAND_WORD = "biz";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Declares Fields, and Tags as Tags for Statistics.\n"
+            + ": Declares Features, and Tags as categories for Statistics.\n"
             + "Parameters: "
-            + PREFIX_FEATURE + "FIELD "
+            + PREFIX_FEATURE + "FEATURE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FEATURE + "Plan "
@@ -28,14 +28,15 @@ public class BizTagCommand extends Command {
 
     public static final String MANUAL = String.join("\n",
             "NAME",
-            "  biz — Declares Fields, and Tags as Tags for Statistics.",
+            "  biz — Declares Features to use for grouping Tags for Statistics.",
+            "        Using biz with the same Feature name overwrites the existing Feature - Tags combination.",
             "",
             "USAGE",
-            "  biz f/FIELD [t/TAG]…",
+            "  biz f/FEATURE [t/TAG]…",
             "",
             "PARAMETERS",
-            "  • FIELD: non-empty string, may contain spaces but not leading/trailing spaces",
-            "  • TAG: alphanumeric, no spaces; you may have multiple t/TAG categories for the FIELD",
+            "  • FEATURE: non-empty string, may contain spaces but not leading/trailing spaces",
+            "  • TAG: alphanumeric, no spaces; you may have multiple t/TAG categories for the FEATURE",
             "",
             "EXAMPLES",
             "  biz f/Plan t/A t/B",
