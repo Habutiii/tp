@@ -2,7 +2,10 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_FIELD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_CATEGORY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -11,13 +14,18 @@ import static seedu.address.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ClientMatchesPredicate;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -88,6 +96,22 @@ public class ModelManagerTest {
     public void hasPerson_personInAddressBook_returnsTrue() {
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
+    }
+
+    @Test
+    public void manipulate_bizTags_successful() throws CommandException {
+        modelManager.addPerson(ALICE);
+        Tag field = new Tag(VALID_FIELD);
+        Tag category = new Tag(VALID_TAG_CATEGORY);
+        Set<Tag> tags = new HashSet<>(List.of(category));
+        modelManager.addBizTags(field, tags);
+
+        assertTrue(modelManager.isBizField(field));
+        assertEquals(tags, modelManager.getBizTags().get(field));
+
+        modelManager.removeBizField(field);
+        assertFalse(modelManager.isBizField(field));
+        assertNull(modelManager.getBizTags().get(field));
     }
 
     @Test

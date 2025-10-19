@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BizTagCommand;
+import seedu.address.logic.commands.BizUntagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -30,6 +31,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ClientMatchesPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -102,6 +104,14 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_biz() throws Exception {
         assertTrue(parser.parseCommand(BizTagCommand.COMMAND_WORD + " f/Field t/Cat") instanceof BizTagCommand);
+    }
+
+    @Test
+    public void parseCommand_unbiz() throws Exception {
+        assertTrue(parser.parseCommand(BizUntagCommand.COMMAND_WORD + " f/Field") instanceof BizUntagCommand);
+        assertThrows(ParseException.class, () ->
+                parser.parseCommand(BizUntagCommand.COMMAND_WORD + " f/Field t/Cat"));
+
     }
 
     @Test

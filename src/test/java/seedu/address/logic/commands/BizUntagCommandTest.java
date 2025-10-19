@@ -20,62 +20,78 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.tag.Tag;
 
-public class BizTagCommandTest {
-    private final Tag field = new Tag(VALID_FIELD);
+public class BizUntagCommandTest {
+    private final Tag field = new Tag(VALID_TAG_CATEGORY);
     private final Tag category = new Tag(VALID_TAG_CATEGORY);
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new BizTagCommand(null, null));
+        assertThrows(NullPointerException.class, () -> new BizUntagCommand(null));
     }
 
     @Test
-    public void execute_validFieldAndTags_success() {
+    public void execute_validFields_success() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
+        model.addBizTags(field, categories);
 
-        BizTagCommand command = new BizTagCommand(field, categories);
+        Set<Tag> fields = new HashSet<>();
+        fields.add(field);
+        BizUntagCommand command = new BizUntagCommand(fields);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addBizTags(field, categories);
+        StringBuilder unTaggedFields = new StringBuilder();
+        for (Tag f : fields) {
+            unTaggedFields.append(field.toString()).append(" ");
+        }
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         String expectedMessage = String.format(
-                Messages.MESSAGE_DECLARED_BIZ_TAGS, field.toString(), categories.toString());
+                String.join("\n", BizUntagCommand.MESSAGE_SUCCESS, unTaggedFields.toString()));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void undoCommand_bizCommand_successfulUndo() throws CommandException {
+    public void execute_invalidFields_throwsCommandException() {
+        Set<Tag> fields = new HashSet<>();
+        fields.add(field);
+        BizUntagCommand command = new BizUntagCommand(fields);
+        Model  model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertThrows(CommandException.class, () -> command.execute(model));
+    }
+
+    @Test
+    public void execute_UndoCommand_unbizCommand_successfulUndo() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Set<Tag> categories = new HashSet<>();
         categories.add(category);
-        BizTagCommand command = new BizTagCommand(field, categories);
+        model.addBizTags(field, categories);
+
+        Set<Tag> fields = new HashSet<>();
+        fields.add(field);
+
+        BizUntagCommand command = new BizUntagCommand(fields);
         command.execute(model);
-        assertTrue(model.isBizField(field));
-        command.undo(model);
         assertFalse(model.isBizField(field));
+        command.undo(model);
+        assertTrue(model.isBizField(field));
     }
 
     @Test
     public void equals() {
         Tag diffField = new Tag(VALID_FIELD + "diff");
-        Tag diffCategory = new Tag(VALID_TAG_CATEGORY + "diff");
 
-        Set<Tag> categories = new HashSet<>();
-        categories.add(category);
+        Set<Tag> fields = new HashSet<>();
+        fields.add(field);
+        Set<Tag> diffFields = new HashSet<>();
+        diffFields.add(diffField);
 
-        Set<Tag> diffCategories = new HashSet<>();
-        diffCategories.add(category);
-        diffCategories.add(diffCategory);
-
-
-        BizTagCommand firstCommand = new BizTagCommand(field, categories);
-        BizTagCommand secondCommand = new BizTagCommand(field, categories);
-        BizTagCommand thirdCommand = new BizTagCommand(diffField, categories);
-        BizTagCommand fourthCommand = new BizTagCommand(field, diffCategories);
+        BizUntagCommand firstCommand = new BizUntagCommand(fields);
+        BizUntagCommand secondCommand = new BizUntagCommand(fields);
+        BizUntagCommand thirdCommand = new BizUntagCommand(diffFields);
 
         // same object -> returns true
         assertTrue(firstCommand.equals(firstCommand));
@@ -89,22 +105,10 @@ public class BizTagCommandTest {
         // null -> returns false
         assertFalse(firstCommand.equals(null));
 
-        // different Field and Tags -> returns false
+        // different Fields -> returns false
         assertFalse(firstCommand.equals(thirdCommand));
-        assertFalse(firstCommand.equals(fourthCommand));
-        assertFalse(thirdCommand.equals(fourthCommand));
-    }
 
-    @Test
-    public void man_returnsManualString() {
-        Tag field = new Tag(VALID_FIELD);
-        Tag category = new Tag(VALID_TAG_CATEGORY);
-        Set<Tag> categories = new HashSet<>();
 
-        categories.add(category);
-        BizTagCommand cmd = new BizTagCommand(field, categories);
-        String manual = cmd.man();
-        assertTrue(manual.contains("biz"));
-        assertTrue(manual.contains("EXAMPLES"));
+
     }
 }
