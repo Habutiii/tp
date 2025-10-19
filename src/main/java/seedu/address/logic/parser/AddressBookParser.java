@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BizTagCommand;
+import seedu.address.logic.commands.BizUntagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -98,6 +99,9 @@ public class AddressBookParser {
 
         case BizTagCommand.COMMAND_WORD:
             return new BizTagCommandParser().parse(arguments);
+
+        case BizUntagCommand.COMMAND_WORD:
+            return new BizUntagCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();

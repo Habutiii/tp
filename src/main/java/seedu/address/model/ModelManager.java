@@ -169,7 +169,7 @@ public class ModelManager implements Model {
     public void addBizTags(Tag field, Set<Tag> tags) {
         this.bizTags.put(field, tags);
     }
-    
+
     @Override
     public void removeBizField(Tag field) {
         this.bizTags.remove(field);
