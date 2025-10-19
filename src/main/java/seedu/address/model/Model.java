@@ -107,9 +107,20 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Updates the {@code bizTags} inside Model.
+     * Returns True if Field is present inside the {@code bizTags} in Model.
+     */
+    boolean isBizField(Tag field);
+
+    /**
+     * Declares the {@code bizTags} inside Model.
      */
     void addBizTags(Tag field, Set<Tag> tags);
+
+    /**
+     * Undeclares the {@code Field} from the {@code bizTags} inside Model.
+     * @param field Field to undeclare
+     */
+    void removeBizField(Tag field);
 
     /**
      * Returns a copy of all the {@code bizTags} inside Model.

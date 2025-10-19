@@ -161,8 +161,18 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean isBizField(Tag field) {
+        return bizTags.containsKey(field);
+    }
+
+    @Override
     public void addBizTags(Tag field, Set<Tag> tags) {
         this.bizTags.put(field, tags);
+    }
+    
+    @Override
+    public void removeBizField(Tag field) {
+        this.bizTags.remove(field);
     }
 
     @Override
