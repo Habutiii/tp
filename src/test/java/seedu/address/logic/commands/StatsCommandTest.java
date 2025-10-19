@@ -152,7 +152,7 @@ public class StatsCommandTest {
         }
 
         @Override
-        public boolean isBizField(FeatureTag field) {
+        public boolean isBizFeature(FeatureTag field) {
             return false;
         }
 
@@ -162,7 +162,7 @@ public class StatsCommandTest {
         }
 
         @Override
-        public void removeBizField(FeatureTag field) {
+        public void removeBizFeature(FeatureTag field) {
 
         }
 

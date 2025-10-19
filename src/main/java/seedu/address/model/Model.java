@@ -110,7 +110,7 @@ public interface Model {
     /**
      * Returns True if Field is present inside the {@code bizTags} in Model.
      */
-    boolean isBizField(FeatureTag field);
+    boolean isBizFeature(FeatureTag feature);
 
     /**
      * Declares the {@code bizTags} inside Model.
@@ -119,9 +119,9 @@ public interface Model {
 
     /**
      * Undeclares the {@code Field} from the {@code bizTags} inside Model.
-     * @param field Field to undeclare
+     * @param feature Field to undeclare
      */
-    void removeBizField(FeatureTag field);
+    void removeBizFeature(FeatureTag feature);
 
     /**
      * Returns a copy of all the {@code bizTags} inside Model.

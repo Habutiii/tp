@@ -162,7 +162,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean isBizField(FeatureTag field) {
+    public boolean isBizFeature(FeatureTag field) {
         return bizTags.containsKey(field);
     }
 
@@ -172,7 +172,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void removeBizField(FeatureTag field) {
+    public void removeBizFeature(FeatureTag field) {
         this.bizTags.remove(field);
     }
 

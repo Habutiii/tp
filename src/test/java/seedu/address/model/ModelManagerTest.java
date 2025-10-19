@@ -107,11 +107,11 @@ public class ModelManagerTest {
         Set<Tag> tags = new HashSet<>(List.of(category));
         modelManager.addBizTags(feature, tags);
 
-        assertTrue(modelManager.isBizField(feature));
+        assertTrue(modelManager.isBizFeature(feature));
         assertEquals(tags, modelManager.getBizTags().get(feature));
 
-        modelManager.removeBizField(feature);
-        assertFalse(modelManager.isBizField(feature));
+        modelManager.removeBizFeature(feature);
+        assertFalse(modelManager.isBizFeature(feature));
         assertNull(modelManager.getBizTags().get(feature));
     }
 

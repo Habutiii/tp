@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_DECLARED_BIZ_TAGS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FEATURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -13,12 +12,12 @@ import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
- * Declares Fields, and Tags to be used as Categories.
+ * Declares Fields, and Tags to be used as Tags.
  */
 public class BizTagCommand extends Command {
     public static final String COMMAND_WORD = "biz";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Declares Fields, and Tags as Categories for Statistics.\n"
+            + ": Declares Fields, and Tags as Tags for Statistics.\n"
             + "Parameters: "
             + PREFIX_FEATURE + "FIELD "
             + "[" + PREFIX_TAG + "TAG]...\n"
@@ -29,7 +28,7 @@ public class BizTagCommand extends Command {
 
     public static final String MANUAL = String.join("\n",
             "NAME",
-            "  biz — Declares Fields, and Tags as Categories for Statistics.",
+            "  biz — Declares Fields, and Tags as Tags for Statistics.",
             "",
             "USAGE",
             "  biz f/FIELD [t/TAG]…",
@@ -45,15 +44,18 @@ public class BizTagCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#adding-a-person-add"
     );
 
-    public static final String UNDO_SUCCESS = "The following Field(s) have been undeclared:\n%s";
+    public static final String MESSAGE_DECLARED_BIZ_TAGS =
+            "The following Feature(s) and Tags have been declared for Stats:\n%S";
+
+    public static final String UNDO_SUCCESS = "The following Feature(s) have been undeclared:\n%s";
 
     private final FeatureTag feature;
     private final Set<Tag> tags;
 
     /**
-     * Creates a BizTagCommand to declare the specified {@code Field} and {@code Categories}
-     * @param feature Field
-     * @param tags to be used as Categories in statistics
+     * Creates a BizTagCommand to declare the specified {@code Feature} and {@code Tags}
+     * @param feature Feature
+     * @param tags to be used for grouping Tags in statistics
      */
     public BizTagCommand(FeatureTag feature, Set<Tag> tags) {
         requireNonNull(feature);
@@ -95,7 +97,7 @@ public class BizTagCommand extends Command {
     @Override
     public String undo(Model model) {
         requireNonNull(model);
-        model.removeBizField(feature);
+        model.removeBizFeature(feature);
         return String.format(UNDO_SUCCESS, feature.toString());
     }
 }

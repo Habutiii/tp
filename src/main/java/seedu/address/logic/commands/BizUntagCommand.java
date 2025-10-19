@@ -13,7 +13,7 @@ import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
- * Undeclares Fields a.k.a. Features, and their corresponding Tags from Statistics.
+ * Undeclares Features, and their corresponding Tags from Statistics.
  */
 public class BizUntagCommand extends Command {
     public static final String COMMAND_WORD = "unbiz";
@@ -58,29 +58,29 @@ public class BizUntagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        StringBuilder missingFields = new StringBuilder();
+        StringBuilder missingFeatures = new StringBuilder();
         for (FeatureTag feature : features) {
-            if (!model.isBizField(feature)) {
-                missingFields.append(feature.toString()).append(" ");
+            if (!model.isBizFeature(feature)) {
+                missingFeatures.append(feature.toString()).append(" ");
             }
         }
 
-        if (!missingFields.isEmpty()) {
+        if (!missingFeatures.isEmpty()) {
             throw new CommandException(
                     String.format(MESSAGE_INVALID_MISSING_BIZ_TAGS,
-                            "[" + missingFields + "]"));
+                            "[" + missingFeatures + "]"));
         }
 
         this.bizTags = model.getBizTags(); // Save
 
-        StringBuilder unTaggedFields = new StringBuilder();
+        StringBuilder unTaggedFeatures = new StringBuilder();
         for (FeatureTag feature : features) {
-            model.removeBizField(feature);
-            unTaggedFields.append(feature.toString()).append(" ");
+            model.removeBizFeature(feature);
+            unTaggedFeatures.append(feature.toString()).append(" ");
         }
 
         return new CommandResult(
-                String.join("\n", MESSAGE_SUCCESS, unTaggedFields.toString()));
+                String.join("\n", MESSAGE_SUCCESS, unTaggedFeatures.toString()));
     }
 
     @Override
