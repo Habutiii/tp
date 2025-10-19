@@ -50,6 +50,7 @@ public class BizUntagCommand extends Command {
      * @param fields Fields currently declared in Statistics
      */
     public BizUntagCommand(Set<Tag> fields) {
+        requireNonNull(fields);
         this.fields = fields;
     }
 
