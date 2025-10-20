@@ -36,7 +36,6 @@ task coverage(type: JacocoReport) {
     }
     reports {
         html.required = true
-        xml.outputLocation = file("$buildDir/reports/jacoco/test/jacoco.xml")
         xml.required = true
     }
 }
