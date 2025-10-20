@@ -23,7 +23,7 @@ public class BizUntagCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FEATURE + "Plan "
             + PREFIX_FEATURE + "Gender";
-    public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared from Statistics:\n";
+    public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared from Statistics:\n%s";
     public static final String UNDO_SUCCESS = "The following Feature(s) have been redeclared for Statistics:\n%s";
     public static final String MESSAGE_INVALID_MISSING_BIZ_TAGS = "Feature(s) missing in Statistics! \n%s";
     public static final String MANUAL = String.join("\n",
@@ -78,13 +78,11 @@ public class BizUntagCommand extends Command {
         for (FeatureTag feature : features) {
             Set<Tag> tags = bizTags.get(feature);
             model.removeBizFeature(feature);
-            unTaggedFeatures.append(feature.toString())
-                    .append(" ")
-                    .append(tags.toString());
+            unTaggedFeatures.append(feature.toString() + " " + tags.toString() + "\n");
         }
 
         return new CommandResult(
-                String.join("\n", MESSAGE_SUCCESS, unTaggedFeatures.toString()));
+                String.format(MESSAGE_SUCCESS, unTaggedFeatures));
     }
 
     @Override
@@ -118,7 +116,7 @@ public class BizUntagCommand extends Command {
             model.addBizTags(feature, cats);
             reTaggedFields
                     .append(feature.toString())
-                    .append(" ").append(cats.toString());
+                    .append(" ").append(cats.toString()).append("\n");
         }
         return String.format(UNDO_SUCCESS, reTaggedFields.toString());
     }

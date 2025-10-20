@@ -49,8 +49,9 @@ public class BizUntagCommandTest {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         String expectedMessage = String.format(
-                String.join("\n", BizUntagCommand.MESSAGE_SUCCESS,
-                        unTaggedFields.toString() + categories.toString()));
+                BizUntagCommand.MESSAGE_SUCCESS,
+                unTaggedFields.toString() + categories.toString() + "\n"
+        );
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
