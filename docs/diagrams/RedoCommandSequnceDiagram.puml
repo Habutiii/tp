@@ -1,0 +1,109 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "redoCommand\n:Command" as RedoCommand LOGIC_COLOR
+participant "clearCommand\n:Command" as clearCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+participant "undoStack\n:Stack<Command>" as undoStack MODEL_COLOR
+participant "redoStack\n:Stack<Command>" as redoStack MODEL_COLOR
+end box
+
+[-> LogicManager : execute("redo")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("redo")
+activate AddressBookParser
+
+create RedoCommand
+AddressBookParser -> RedoCommand
+activate RedoCommand
+
+RedoCommand --> AddressBookParser
+deactivate RedoCommand
+
+AddressBookParser --> LogicManager
+deactivate AddressBookParser
+
+LogicManager -> RedoCommand : execute(m)
+activate RedoCommand
+
+RedoCommand -> Model : popLastUndoCommand()
+activate Model
+
+Model -> redoStack : pop()
+activate redoStack
+
+redoStack --> Model
+deactivate redoStack
+
+Model --> RedoCommand : command
+deactivate Model
+
+RedoCommand -> clearCommand : isMutable()
+activate clearCommand
+
+clearCommand --> RedoCommand : true
+deactivate clearCommand
+
+opt command is mutable
+    RedoCommand -> clearCommand : execute(m)
+    activate clearCommand
+
+    clearCommand -> Model : getAddressBook().getPersonList()
+    activate Model
+
+    Model --> clearCommand
+    deactivate Model
+
+    clearCommand -> Model : setAddressBook(new AddressBook())
+    activate Model
+
+    Model --> clearCommand
+    deactivate Model
+
+    create CommandResult
+    clearCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> clearCommand
+    deactivate CommandResult
+
+    clearCommand --> RedoCommand
+    deactivate clearCommand
+
+    RedoCommand -> Model : pushMutableCommandHistory(command)
+    activate Model
+
+    Model -> undoStack : push(command)
+    activate undoStack
+
+    undoStack --> Model
+    deactivate undoStack
+
+    Model --> RedoCommand
+    deactivate Model
+
+    create CommandResult
+    RedoCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> RedoCommand
+    deactivate CommandResult
+
+end
+
+RedoCommand --> LogicManager
+deactivate RedoCommand
+
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
