@@ -69,8 +69,8 @@ public class StatsCommand extends Command {
     }
 
     private String getFeatureStats(
-            FilteredList<Person> filteredPersons, HashMap<FeatureTag, Set<Tag>> bizTags, FeatureTag category) {
-        Set<Tag> tags = bizTags.get(category);
+            FilteredList<Person> filteredPersons, HashMap<FeatureTag, Set<Tag>> bizTags, FeatureTag feature) {
+        Set<Tag> tags = bizTags.get(feature);
         ArrayList<String> results = new ArrayList<>();
 
         // Find the longest tag for proper alignment
@@ -78,11 +78,11 @@ public class StatsCommand extends Command {
         for (Tag tag : tags) {
             maxTagLength = Math.max(maxTagLength, tag.toString().length());
         }
-        maxTagLength = Math.max(maxTagLength, category.toString().length());
+        maxTagLength = Math.max(maxTagLength, feature.toString().length());
 
         int padding = maxTagLength + 2;
 
-        results.add(String.format("%-" + padding + "s |  Number of people", category));
+        results.add(String.format("%-" + padding + "s |  Number of people", feature));
 
         for (Tag tag : tags) {
             Set<Tag> set = new LinkedHashSet<>();
