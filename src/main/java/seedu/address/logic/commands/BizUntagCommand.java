@@ -34,7 +34,8 @@ public class BizUntagCommand extends Command {
             "  biz [f/FEATURE] ...",
             "",
             "PARAMETERS",
-            "  FEATURE: non-empty string, alphanumeric, no spaces;",
+            "  FEATURE: non-empty string, alphanumeric, no spaces;"
+                + "you may have multiple f/ FEATURE for multiple features",
             "",
             "EXAMPLES",
             "  unbiz f/Plan f/Gender",

@@ -366,6 +366,8 @@ Action | Format, Examples
 **List** | `list`
 **List by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
 **Help** | `help`
+**Declare Features and Tags** | `biz f/[FEATURE] t/[TAG]...` <br> e.g. `biz f/Plan t/A t/B`
+**Undeclare Features and Tags** | `unbiz f/[FEATURE]...` <br> e.g. `unbiz f/Plan f/Gender`
 **Stats**| `stats`
 **Undo** | `undo`
 **Redo** | `redo`
