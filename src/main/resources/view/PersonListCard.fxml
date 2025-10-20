@@ -8,8 +8,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" prefWidth="500" minWidth="500" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -25,12 +27,29 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="name" wrapText="true" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+      <VBox spacing="10">
+          <FlowPane fx:id="tags" prefWrapLength="300" />
+          <!-- Phone row -->
+          <HBox spacing="5" alignment="CENTER_LEFT">
+              <SVGPath content="M6.62 10.79C8.06 13.62 10.38 15.94 13.21 17.38L15.41 15.17C15.79 14.79 16.37 14.66 16.82 14.85C18.27 15.42 19.84 15.68 21.43 15.63C21.88 15.62 22.25 16 22.25 16.45V21.45C22.25 21.78 21.97 22.05 21.64 22.05C11.16 22.05 2.95 13.84 2.95 3.36C2.95 3.03 3.22 2.75 3.55 2.75H8.55C9 2.75 9.38 3.12 9.37 3.57C9.32 5.16 9.58 6.73 10.15 8.18C10.34 8.63 10.21 9.21 9.83 9.59L6.62 10.79Z
+" fill="WHITE"/>
+              <Label fx:id="phone" wrapText="true" styleClass="cell_small_label" text="$phone"/>
+          </HBox>
+
+          <!-- Address row -->
+          <HBox spacing="5" alignment="CENTER_LEFT">
+              <SVGPath content="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="WHITE"/> <!-- replace with your SVG path -->
+              <Label fx:id="address" wrapText="true" styleClass="cell_small_label" text="$address"/>
+          </HBox>
+
+          <!-- Email row -->
+          <HBox spacing="5" alignment="CENTER_LEFT">
+              <SVGPath content="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="WHITE"/> <!-- replace with your SVG path -->
+              <Label fx:id="email" wrapText="true" styleClass="cell_small_label" text="$email"/>
+          </HBox>
+      </VBox>
     </VBox>
   </GridPane>
 </HBox>
