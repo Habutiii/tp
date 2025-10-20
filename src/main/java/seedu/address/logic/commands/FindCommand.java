@@ -31,7 +31,7 @@ public class FindCommand extends Command {
             "",
             "PARAMETERS",
             "  • Keywords are case-insensitive; order doesn’t matter.",
-            "  • Matches full words only. Partial matches are not supported.",
+            "  • Partial matches is now supported.",
             "",
             "EXAMPLES",
             "  find Alice",

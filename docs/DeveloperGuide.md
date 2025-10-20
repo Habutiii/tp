@@ -154,6 +154,53 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Find command
+
+#### Overview
+The `find` feature enables insurance agents to search for clients flexibly using multiple keywords and attributes.  
+It extends the base AB3 `FindCommand` by supporting **case-insensitive**, **partial matching** across multiple fields: **name**, **phone**, and **email**.
+
+#### Key classes
+* `FindCommand` — Executes the search by calling `Model#updateFilteredPersonList(predicate)`.
+* `FindCommandParser` — Tokenizes user input and constructs the predicate.
+* `ClientMatchesPredicate` — Implements `Predicate<Person>` and encapsulates all matching logic.
+
+#### Behavior
+1. User inputs a command such as `find alex 9223`.
+2. `LogicManager#execute()` delegates the command string to `AddressBookParser`.
+3. `AddressBookParser` recognizes the command word `find` and instantiates a `FindCommandParser`.
+4. `FindCommandParser` tokenizes the keywords (`["alex", "9223"]`) and constructs a `ClientMatchesPredicate` object (`p`) that:
+    - Ignores blank keywords.
+    - Performs **null-safe** access to person fields.
+    - Returns `true` if **any** keyword appears in the person's name, phone, or email.
+5. A new `FindCommand` object is created with `p` and executed by the `LogicManager`.
+6. During execution, `Model#updateFilteredPersonList(p)` is invoked.
+7. The model filters the in-memory client list using `ClientMatchesPredicate#test(Person)`, returning all clients that match any of the keywords.
+
+#### Sequence diagram
+The following diagram illustrates how the `find` command is processed when a user inputs `find alex 9223`.
+
+![Interactions Inside the Logic Component for the `find` Command](images/FindSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:**  
+The `ClientMatchesPredicate` instance (`p`) is created once and passed to both the `FindCommand` and `Model`.  
+This design ensures predictable, stateless filtering and encapsulates all keyword-matching logic within a single class.
+</div>
+
+#### Example
+| User Input       | Description                                                                    |
+|------------------|--------------------------------------------------------------------------------|
+| `find alex`      | Lists all clients whose name, phone, or email contains “alex”                  |
+| `find alex 9223` | Lists all clients whose name, phone, or email contains either “alex” or “9223” |
+| `find @gmail`    | Lists all clients with a Gmail address                                         |
+
+#### Design considerations
+**Aspect: Matching strategy**
+* Use a single `ClientMatchesPredicate` that internally loops through keywords and fields.
+    * Pros: Simpler to maintain, easy to test, less object overhead.
+
+---
+
 ### Clear feature
 
 Clear feature is implemented via `ClearCommand` class. When the user issues the `clear` command, an instance of `ClearCommand` is created and its `execute` method is called. This method interacts with the `Model` component to remove all entries from the address book. The `Model` provides a method `clearAddressBook()` which is invoked by the `ClearCommand` to perform the actual clearing of data. After clearing, a confirmation message is returned to inform the user that the address book has been successfully cleared.
