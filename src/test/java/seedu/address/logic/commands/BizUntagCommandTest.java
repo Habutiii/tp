@@ -42,14 +42,15 @@ public class BizUntagCommandTest {
         BizUntagCommand command = new BizUntagCommand(features);
 
         StringBuilder unTaggedFields = new StringBuilder();
-        for (Tag f : features) {
+        for (FeatureTag f : features) {
             unTaggedFields.append(f.toString()).append(" ");
         }
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         String expectedMessage = String.format(
-                String.join("\n", BizUntagCommand.MESSAGE_SUCCESS, unTaggedFields.toString()));
+                String.join("\n", BizUntagCommand.MESSAGE_SUCCESS,
+                        unTaggedFields.toString() + categories.toString()));
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }

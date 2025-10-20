@@ -57,7 +57,7 @@ public class StatsCommand extends Command {
 
         ArrayList<String> tables = new ArrayList<>();
 
-        for (Tag category : bizTags.keySet()) {
+        for (FeatureTag category : bizTags.keySet()) {
             tables.add(this.getFeatureStats(filteredPersons, bizTags, category));
             tables.add("\n");
         }
@@ -69,7 +69,7 @@ public class StatsCommand extends Command {
     }
 
     private String getFeatureStats(
-            FilteredList<Person> filteredPersons, HashMap<FeatureTag, Set<Tag>> bizTags, Tag category) {
+            FilteredList<Person> filteredPersons, HashMap<FeatureTag, Set<Tag>> bizTags, FeatureTag category) {
         Set<Tag> tags = bizTags.get(category);
         ArrayList<String> results = new ArrayList<>();
 

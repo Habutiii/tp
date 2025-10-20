@@ -223,7 +223,7 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### Declaring Features and Tags for Statistics
+### Declaring Features and Tags for Statistics `biz`
 
 Declares Features and Tags to group Tags by Features for statistics. Adding those Categories as tags to People will allow them to be considered for statistics.
 Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable.

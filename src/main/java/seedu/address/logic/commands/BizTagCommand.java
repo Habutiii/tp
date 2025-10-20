@@ -36,23 +36,23 @@ public class BizTagCommand extends Command {
             "  biz f/FEATURE [t/TAG]…",
             "",
             "PARAMETERS",
-            "  • FEATURE: non-empty string, may contain spaces but not leading/trailing spaces",
-            "  • TAG: alphanumeric, no spaces; you may have multiple t/TAG categories for the FEATURE",
+            "  • FEATURE: non-empty string, alphanumeric, no spaces;",
+            "  • TAG: non-empty string, alphanumeric, no spaces; you may have multiple t/TAG categories for the FEATURE",
             "",
             "EXAMPLES",
             "  biz f/Plan t/A t/B",
             "",
             "SEE MORE",
-            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#adding-a-person-add"
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#declaring-features-and-tags-for-statistics-biz"
     );
 
     public static final String MESSAGE_DECLARED_BIZ_TAGS =
-            "The following Feature(s) and Tags have been declared for Stats:\n%S";
+            "The following Feature(s) and Tag(s) have been declared for Statistics:\n%s";
 
     public static final String UNDO_SUCCESS =
-            "The following Feature(s) have been undeclared:\n%s";
+            "The following Feature(s) and Tag(s) have been undeclared from Statistics:\n%s";
     public static final String UNDO_SUCCESS_RESTORE =
-            "The following Feature(s) have been restored to original:\n%s";
+            "The following Feature(s) and Tag(s) have been restored to original:\n%s";
 
 
     private final FeatureTag feature;
@@ -118,6 +118,7 @@ public class BizTagCommand extends Command {
             return String.format(UNDO_SUCCESS_RESTORE,
                     String.join(" ", feature.toString(), previousTags.toString()));
         }
-        return String.format(UNDO_SUCCESS, feature.toString());
+        return String.format(UNDO_SUCCESS,
+                String.join(" ", feature.toString(),tags.toString()));
     }
 }

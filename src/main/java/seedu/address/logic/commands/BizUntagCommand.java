@@ -23,9 +23,9 @@ public class BizUntagCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FEATURE + "Plan "
             + PREFIX_FEATURE + "Gender";
-    public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared:\n";
-    public static final String UNDO_SUCCESS = "The following Feature(s) have been redeclared:\n%s";
-    public static final String MESSAGE_INVALID_MISSING_BIZ_TAGS = "Field(s) missing in Statistics! \n%s";
+    public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared from Statistics:\n";
+    public static final String UNDO_SUCCESS = "The following Feature(s) have been redeclared for Statistics:\n%s";
+    public static final String MESSAGE_INVALID_MISSING_BIZ_TAGS = "Feature(s) missing in Statistics! \n%s";
     public static final String MANUAL = String.join("\n",
             "NAME",
             "  unbiz — Undeclares Feature(s), and their grouped Tags from Statistics.",
@@ -75,8 +75,11 @@ public class BizUntagCommand extends Command {
 
         StringBuilder unTaggedFeatures = new StringBuilder();
         for (FeatureTag feature : features) {
+            Set<Tag> tags = bizTags.get(feature);
             model.removeBizFeature(feature);
-            unTaggedFeatures.append(feature.toString()).append(" ");
+            unTaggedFeatures.append(feature.toString())
+                    .append(" ")
+                    .append(tags.toString());
         }
 
         return new CommandResult(
