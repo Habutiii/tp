@@ -9,8 +9,8 @@ public class FeatureTag extends Tag {
     // Field is known as Feature Names for better understanding for the User.
 
     /**
-     * Constructs a {@code FieldTag}
-     * @param tagName A valid field name.
+     * Constructs a {@code FeatureTag}
+     * @param tagName A valid feature name.
      */
     public FeatureTag(String tagName) {
         super(tagName);
