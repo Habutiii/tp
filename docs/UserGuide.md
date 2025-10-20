@@ -236,6 +236,11 @@ Examples: [See result in 'Viewing Summary Statistics']
 * `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics. 
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
 
+**Parameter restrictions:**
+***All parameters contains only printable ASCII characters***
+- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+  _Example: friend, VIP, family-member, project2025_
+
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`
 
@@ -249,6 +254,11 @@ Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
 Examples: 
 * `biz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
 * `biz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
+
+**Parameter restrictions:**
+***All parameters contains only printable ASCII characters***
+- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+  _Example: friend, VIP, family-member, project2025_
 
 
 ### Viewing Summary Statistics: `stats`

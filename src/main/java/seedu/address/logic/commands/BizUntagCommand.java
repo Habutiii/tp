@@ -23,8 +23,8 @@ public class BizUntagCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FEATURE + "Plan "
             + PREFIX_FEATURE + "Gender";
-    public static final String MESSAGE_SUCCESS = "The following Feature(s) have been undeclared from Statistics:\n%s";
-    public static final String UNDO_SUCCESS = "The following Feature(s) have been redeclared for Statistics:\n%s";
+    public static final String MESSAGE_SUCCESS = "The following Feature(s) and Tag(s) have been undeclared from Statistics:\n%s";
+    public static final String UNDO_SUCCESS = "The following Feature(s) and Tag(s) have been redeclared for Statistics:\n%s";
     public static final String MESSAGE_INVALID_MISSING_BIZ_TAGS = "Feature(s) missing in Statistics! \n%s";
     public static final String MANUAL = String.join("\n",
             "NAME",
