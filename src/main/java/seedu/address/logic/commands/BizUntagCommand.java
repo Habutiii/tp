@@ -40,7 +40,8 @@ public class BizUntagCommand extends Command {
             "  unbiz f/Plan f/Gender",
             "",
             "SEE MORE",
-            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#undeclaring-features-and-tags-from-statistics-unbiz"
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html"
+                    + "#undeclaring-features-and-tags-from-statistics-unbiz"
     );
 
     private final Set<FeatureTag> features;

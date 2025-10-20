@@ -37,13 +37,15 @@ public class BizTagCommand extends Command {
             "",
             "PARAMETERS",
             "  • FEATURE: non-empty string, alphanumeric, no spaces;",
-            "  • TAG: non-empty string, alphanumeric, no spaces; you may have multiple t/TAG categories for the FEATURE",
+            "  • TAG: non-empty string, alphanumeric, no spaces; "
+                    + "you may have multiple t/TAG categories for the FEATURE",
             "",
             "EXAMPLES",
             "  biz f/Plan t/A t/B",
             "",
             "SEE MORE",
-            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#declaring-features-and-tags-for-statistics-biz"
+            "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html"
+                    + "#declaring-features-and-tags-for-statistics-biz"
     );
 
     public static final String MESSAGE_DECLARED_BIZ_TAGS =
@@ -119,6 +121,6 @@ public class BizTagCommand extends Command {
                     String.join(" ", feature.toString(), previousTags.toString()));
         }
         return String.format(UNDO_SUCCESS,
-                String.join(" ", feature.toString(),tags.toString()));
+                String.join(" ", feature.toString(), tags.toString()));
     }
 }
