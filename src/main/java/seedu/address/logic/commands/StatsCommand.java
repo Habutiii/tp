@@ -71,6 +71,7 @@ public class StatsCommand extends Command {
     private String getFeatureStats(
             FilteredList<Person> filteredPersons, HashMap<FeatureTag, Set<Tag>> bizTags, FeatureTag feature) {
         Set<Tag> tags = bizTags.get(feature);
+        assert tags != null;
         ArrayList<String> results = new ArrayList<>();
 
         // Find the longest tag for proper alignment

@@ -95,6 +95,7 @@ public class BizTagCommand extends Command {
         if (model.isBizFeature(feature)) {
             isExistingFeature = true;
             previousTags = model.getBizTags().get(feature);
+            assert previousTags != null;
         }
         model.addBizTags(feature, tags);
         return new CommandResult(String.format(MESSAGE_DECLARED_BIZ_TAGS,

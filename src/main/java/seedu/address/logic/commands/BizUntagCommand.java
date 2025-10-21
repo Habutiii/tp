@@ -80,6 +80,7 @@ public class BizUntagCommand extends Command {
         StringBuilder unTaggedFeatures = new StringBuilder();
         for (FeatureTag feature : features) {
             Set<Tag> tags = bizTags.get(feature);
+            assert tags != null;
             model.removeBizFeature(feature);
             unTaggedFeatures.append(feature.toString() + " " + tags.toString() + "\n");
         }
@@ -116,6 +117,7 @@ public class BizUntagCommand extends Command {
         StringBuilder reTaggedFields = new StringBuilder();
         for (FeatureTag feature : features) {
             Set<Tag> cats = bizTags.get(feature);
+            assert cats != null;
             model.addBizTags(feature, cats);
             reTaggedFields
                     .append(feature.toString())
