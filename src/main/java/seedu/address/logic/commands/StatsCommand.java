@@ -101,7 +101,7 @@ public class StatsCommand extends Command {
             filteredPersons.setPredicate(new TagMatchesAllPredicate(set));
             int total = filteredPersons.size();
             catTotal += total;
-            catCount ++;
+            catCount++;
 
             if (total > catMax) {
                 catMax = total;
