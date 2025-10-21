@@ -12,10 +12,10 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute(biz)
+[-> LogicManager : execute(unbiz)
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand(biz)
+LogicManager -> AddressBookParser : parseCommand(unbiz)
 activate AddressBookParser
 
 create BizUntagCommand
@@ -31,17 +31,51 @@ deactivate AddressBookParser
 LogicManager -> BizUntagCommand : execute()
 activate BizUntagCommand
 
-BizUntagCommand -> Model : isBizFeature(feature)
-activate Model
+loop for (feature in features)
+    BizUntagCommand -> Model : isBizFeature(feature)
+    activate Model
 
-Model --> BizUntagCommand
-deactivate Model
+    Model --> BizUntagCommand :
+    deactivate Model
 
-BizUntagCommand -> Model : removeBizFeature()
-activate Model
+    opt isBizFeature == false
+            BizUntagCommand -> BizUntagCommand : missingFeatures.append(feature)
+            activate BizUntagCommand
+            BizUntagCommand --> BizUntagCommand
+            deactivate BizUntagCommand
+    end
+end
 
-Model --> BizUntagCommand
-deactivate Model
+
+alt missingFeatures.empty == False
+    loop for (feature in features)
+        BizUntagCommand -> Model : removeBizFeature()
+        activate Model
+
+        Model --> BizUntagCommand
+        deactivate Model
+
+        BizUntagCommand -> BizUntagCommand : untaggedFeatures.append(feature)
+        activate BizUntagCommand
+
+        BizUntagCommand --> BizUntagCommand
+        deactivate BizUntagCommand
+    end
+
+    BizUntagCommand -> BizUntagCommand : result = untaggedFeatures
+    activate BizUntagCommand
+
+    BizUntagCommand --> BizUntagCommand
+    deactivate BizUntagCommand
+
+else
+    BizUntagCommand -> BizUntagCommand : result = missingFeatures
+    activate BizUntagCommand
+
+    BizUntagCommand --> BizUntagCommand
+    deactivate BizUntagCommand
+end
+
 
 BizUntagCommand --> LogicManager : result
 deactivate BizUntagCommand

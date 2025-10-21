@@ -1,0 +1,56 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "s:StatsCommand" as StatsCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(stats)
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand(stats)
+activate AddressBookParser
+
+create StatsCommand
+AddressBookParser -> StatsCommand
+activate StatsCommand
+
+StatsCommand --> AddressBookParser
+deactivate StatsCommand
+
+AddressBookParser --> LogicManager : s
+deactivate AddressBookParser
+
+LogicManager -> StatsCommand : execute()
+activate StatsCommand
+
+StatsCommand -> Model : getBizTags()
+activate Model
+
+Model --> StatsCommand : b
+deactivate Model
+
+loop for (feature in b)
+    StatsCommand -> StatsCommand : getFeatureStats(feature)
+    activate StatsCommand
+    StatsCommand --> StatsCommand
+    deactivate StatsCommand
+end
+
+
+StatsCommand --> LogicManager : result
+deactivate StatsCommand
+StatsCommand -[hidden]-> LogicManager : result
+destroy StatsCommand
+
+[<--LogicManager
+deactivate LogicManager
+
+@enduml
