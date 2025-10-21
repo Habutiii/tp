@@ -66,7 +66,7 @@ public class StatsCommand extends Command {
         }
 
         String summaryTables = String.join("\n", tables);
-        String overview = "Total Number of Customers in Addressbook: " + model.getSize() + "\n\n" + barOutput;
+        String overview = "Total Number of Customers in AddressBook: " + model.getSize() + "\n\n" + barOutput;
 
         return String.join("\n\n", overview, summaryTables);
     }
@@ -89,10 +89,10 @@ public class StatsCommand extends Command {
         int catTotal = 0;
         int catCount = 0;
         int catMax = 0;
-        int catMin = catTotal;
+        int catMin = filteredPersons.size();
 
-        String catMaxTag = "";
-        String catMinTag = "";
+        StringBuilder catMaxTag = new StringBuilder();
+        StringBuilder catMinTag = new StringBuilder();
 
         for (String tag : tags) {
             Set<Tag> set = new LinkedHashSet<>();
@@ -103,14 +103,22 @@ public class StatsCommand extends Command {
             catTotal += total;
             catCount++;
 
-            if (total > catMax) {
-                catMax = total;
-                catMaxTag = tag;
+            if (total == catMax) {
+                catMaxTag.append(catMaxTag.isEmpty() ? tag : " & " + tag);
             }
 
-            if (total < catMin) {
+            else if (total > catMax) {
+                catMax = total;
+                catMaxTag = new StringBuilder(tag);
+            }
+
+            else if (total == catMin) {
+                catMinTag.append(catMinTag.isEmpty() ? tag : " & " + tag);
+            }
+
+            else if (total < catMin) {
                 catMin = total;
-                catMinTag = tag;
+                catMinTag = new StringBuilder(tag);
             }
 
             String stat = String.format("%-" + padding + "s |  %d", tag, total);

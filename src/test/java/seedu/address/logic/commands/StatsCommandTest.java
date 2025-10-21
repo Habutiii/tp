@@ -32,17 +32,28 @@ public class StatsCommandTest {
     @Test
     public void execute_stats_success() {
         StatsCommand statsCommand = new StatsCommand();
-        String actualResult = "Total Number of Customers: 10"
-                + "\n\n"
+        String barOutput = "==================================";
+        String barTable = "------------------------------------------------";
+        String actualResult = "Total Number of Customers in AddressBook: 10"
+                + "\n\n" + barOutput + "\n\n"
                 + "Gender   |  Number of people\n"
                 + "Male     |  3\n"
                 + "Female   |  0\n"
-                + "Other    |  0\n"
-                + "\n\n"
+                + "Other    |  0\n\n"
+                + "Total for Feature: 3\n"
+                + "Average: 1.00\n"
+                + "Max Tag: Male (3 people)\n"
+                + "Min Tag: Female & Other (0 people)\n"
+                + barTable + "\n\n\n"
                 + "Plan   |  Number of people\n"
                 + "A      |  3\n"
                 + "B      |  0\n"
-                + "C      |  0\n\n";
+                + "C      |  0\n\n"
+                + "Total for Feature: 3\n"
+                + "Average: 1.00\n"
+                + "Max Tag: A (3 people)\n"
+                + "Min Tag: B & C (0 people)\n"
+                + barTable + "\n\n";
         assertEquals(new CommandResult(actualResult),
                 statsCommand.execute(new ModelStub()));
 
