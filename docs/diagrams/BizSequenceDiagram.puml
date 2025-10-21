@@ -1,0 +1,48 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "b:BizTagCommand" as BizTagCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(biz)
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand(biz)
+activate AddressBookParser
+
+create BizTagCommand
+AddressBookParser -> BizTagCommand
+activate BizTagCommand
+
+BizTagCommand --> AddressBookParser
+deactivate BizTagCommand
+
+AddressBookParser --> LogicManager : b
+deactivate AddressBookParser
+
+LogicManager -> BizTagCommand : execute()
+activate BizTagCommand
+
+BizTagCommand -> Model : addBizTag()
+activate Model
+
+Model --> BizTagCommand
+deactivate Model
+
+BizTagCommand --> LogicManager : result
+deactivate BizTagCommand
+BizTagCommand -[hidden]-> LogicManager : result
+destroy BizTagCommand
+
+[<--LogicManager
+deactivate LogicManager
+
+@enduml
