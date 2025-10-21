@@ -56,13 +56,17 @@ public class StatsCommand extends Command {
         this.initBusinessTags();
         ArrayList<String> tables = new ArrayList<>();
 
+        String barOutput = "==================================";
+        String barTable = "------------------------------------------------";
+
         for (String category : BUSINESS_TAGS.keySet()) {
             tables.add(this.getFieldStats(filteredPersons, category));
+            tables.add(barTable);
             tables.add("\n");
         }
 
         String summaryTables = String.join("\n", tables);
-        String overview = "Total Number of Customers: " + model.getSize();
+        String overview = "Total Number of Customers in Addressbook: " + model.getSize() + "\n\n" + barOutput;
 
         return String.join("\n\n", overview, summaryTables);
     }
@@ -82,15 +86,48 @@ public class StatsCommand extends Command {
 
         results.add(String.format("%-" + padding + "s |  Number of people", category));
 
+        int catTotal = 0;
+        int catCount = 0;
+        int catMax = 0;
+        int catMin = catTotal;
+
+        String catMaxTag = "";
+        String catMinTag = "";
+
         for (String tag : tags) {
             Set<Tag> set = new LinkedHashSet<>();
             set.add(new Tag(tag));
             requireNonNull(filteredPersons);
             filteredPersons.setPredicate(new TagMatchesAllPredicate(set));
             int total = filteredPersons.size();
+            catTotal += total;
+            catCount ++;
+
+            if (total > catMax) {
+                catMax = total;
+                catMaxTag = tag;
+            }
+
+            if (total < catMin) {
+                catMin = total;
+                catMinTag = tag;
+            }
+
             String stat = String.format("%-" + padding + "s |  %d", tag, total);
             results.add(stat);
         }
+
+        float mean = catCount > 0 ? (float) catTotal / catCount : -1;
+
+        String catSummary = String.join("\n",
+                "\nTotal for Feature: " + catTotal,
+                "Average: " + (mean >= 0 ? String.format("%.2f", mean) : "N/A"),
+                "Max Tag: " + catMaxTag + " (" + catMax + String.format(" %s)", catMax != 1 ? "people" : "person"),
+                "Min Tag: " + catMinTag + " (" + catMin + String.format(" %s)", catMin != 1 ? "people" : "person")
+        );
+
+        results.add(String.join("\n", catSummary));
+
         return String.join("\n", results);
     }
 
