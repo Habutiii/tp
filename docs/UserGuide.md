@@ -238,18 +238,31 @@ Key - Fields: Categories
 Format: `stats`
 
 **Example:**
-Total Number of Customers: 6
+Total Number of Customers in AddressBook: 6
+
+============================================
 
 Gender  | Number of people
 Male   | 0
 Female  | 0
 Other  | 0
 
+Total for Feature: 0
+Average: 0.00
+Max Tag: Male & Female & Other (0 people)
+Min Tag: Male & Female & Other (0 people)
+---------------------------------------------
+
 Plan | Number of people
 A   | 1
 B   | 0
 C   | 0
 
+Total for Feature: 1
+Average: 0.33
+Max Tag: A (1 person)
+Min Tag: B & C (0 people)
+---------------------------------------------
 
 ### Undoing the last action : `undo`
 

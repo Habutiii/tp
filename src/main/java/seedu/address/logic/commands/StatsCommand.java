@@ -105,18 +105,12 @@ public class StatsCommand extends Command {
 
             if (total == catMax) {
                 catMaxTag.append(catMaxTag.isEmpty() ? tag : " & " + tag);
-            }
-
-            else if (total > catMax) {
+            } else if (total > catMax) {
                 catMax = total;
                 catMaxTag = new StringBuilder(tag);
-            }
-
-            else if (total == catMin) {
+            } else if (total == catMin) {
                 catMinTag.append(catMinTag.isEmpty() ? tag : " & " + tag);
-            }
-
-            else if (total < catMin) {
+            } else if (total < catMin) {
                 catMin = total;
                 catMinTag = new StringBuilder(tag);
             }
