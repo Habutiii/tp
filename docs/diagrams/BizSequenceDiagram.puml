@@ -44,5 +44,4 @@ destroy BizTagCommand
 
 [<--LogicManager
 deactivate LogicManager
-
 @enduml

@@ -52,5 +52,4 @@ destroy StatsCommand
 
 [<--LogicManager
 deactivate LogicManager
-
 @enduml
