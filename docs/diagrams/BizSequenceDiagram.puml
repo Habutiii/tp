@@ -31,7 +31,7 @@ deactivate AddressBookParser
 LogicManager -> BizTagCommand : execute()
 activate BizTagCommand
 
-BizTagCommand -> Model : addBizTag()
+BizTagCommand -> Model : addBizTags()
 activate Model
 
 Model --> BizTagCommand
