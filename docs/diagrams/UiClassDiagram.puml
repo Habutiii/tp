@@ -15,6 +15,9 @@ Class PersonListPanel
 Class PersonCard
 Class StatusBarFooter
 Class CommandBox
+Class EditPreviewBuilder
+Class AddPreviewBuilder
+Class FieldPreview
 }
 
 package Model <<Rectangle>> {
@@ -42,6 +45,11 @@ MainWindow -left-|> UiPart
 
 ResultDisplay --|> UiPart
 CommandBox --|> UiPart
+CommandBox ..> FieldPreview
+CommandBox ..> EditPreviewBuilder
+CommandBox ..> AddPreviewBuilder
+AddPreviewBuilder ..> FieldPreview
+EditPreviewBuilder ..> FieldPreview
 PersonListPanel --|> UiPart
 PersonCard --|> UiPart
 StatusBarFooter --|> UiPart
