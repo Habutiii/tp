@@ -13,6 +13,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -111,6 +112,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String feature} into a {@code FeatureTag}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code feature} is invalid.
+     */
+    public static FeatureTag parseFeatureTag(String feature) throws ParseException {
+        requireNonNull(feature);
+        String trimmedTag = feature.trim();
+        if (!Tag.isValidTagName(trimmedTag)) {
+            throw new ParseException(FeatureTag.MESSAGE_CONSTRAINTS);
+        }
+        return new FeatureTag(trimmedTag);
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
@@ -118,6 +134,18 @@ public class ParserUtil {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
+        }
+        return tagSet;
+    }
+
+    /**
+     * Parses {@code Collection<String> features} into a {@code Set<FeatureTag>}.
+     */
+    public static Set<FeatureTag> parseFeatureTags(Collection<String> features) throws ParseException {
+        requireNonNull(features);
+        final Set<FeatureTag> tagSet = new HashSet<>();
+        for (String featureName : features) {
+            tagSet.add(parseFeatureTag(featureName));
         }
         return tagSet;
     }

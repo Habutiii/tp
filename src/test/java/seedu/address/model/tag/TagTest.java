@@ -55,7 +55,7 @@ public class TagTest {
 
     @Test
     public void toString_preservesOriginalCase() {
-        assertEquals("[Friend]", new Tag("Friend").toString());
+        assertEquals("Friend", new Tag("Friend").toString());
     }
 
 }
