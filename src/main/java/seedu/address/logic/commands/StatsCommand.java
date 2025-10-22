@@ -109,7 +109,9 @@ public class StatsCommand extends Command {
             } else if (total > catMax) {
                 catMax = total;
                 catMaxTag = new StringBuilder(tag);
-            } else if (total == catMin) {
+            }
+
+            if (total == catMin) {
                 catMinTag.append(catMinTag.isEmpty() ? tag : " & " + tag);
             } else if (total < catMin) {
                 catMin = total;
