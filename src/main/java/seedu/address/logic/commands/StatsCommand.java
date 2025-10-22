@@ -63,6 +63,7 @@ public class StatsCommand extends Command {
 
         for (FeatureTag category : bizTags.keySet()) {
             tables.add(this.getFeatureStats(filteredPersons, bizTags, category));
+            tables.add(barTable);
             tables.add("\n");
         }
 
@@ -110,14 +111,14 @@ public class StatsCommand extends Command {
                 catMaxTag.append(catMaxTag.isEmpty() ? tag : " & " + tag);
             } else if (total > catMax) {
                 catMax = total;
-                catMaxTag = new StringBuilder(tag);
+                catMaxTag = new StringBuilder(tag.toString());
             }
 
             if (total == catMin) {
                 catMinTag.append(catMinTag.isEmpty() ? tag : " & " + tag);
             } else if (total < catMin) {
                 catMin = total;
-                catMinTag = new StringBuilder(tag);
+                catMinTag = new StringBuilder(tag.toString());
             }
 
             String stat = String.format("%-" + padding + "s |  %d", tag, total);

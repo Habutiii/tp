@@ -42,13 +42,13 @@ public class StatsCommandTest {
         String actualResult = "Total Number of Customers in AddressBook: 10"
                 + "\n\n" + barOutput + "\n\n"
                 + "Gender   |  Number of people\n"
-                + "Male     |  3\n"
+                + "Other    |  0\n"
                 + "Female   |  0\n"
-                + "Other    |  0\n\n"
+                + "Male     |  3\n\n"
                 + "Total for Feature: 3\n"
                 + "Average: 1.00\n"
                 + "Max Tag: Male (3 people)\n"
-                + "Min Tag: Female & Other (0 people)\n"
+                + "Min Tag: Other & Female (0 people)\n"
                 + barTable + "\n\n\n"
                 + "Plan   |  Number of people\n"
                 + "A      |  3\n"
@@ -110,8 +110,8 @@ public class StatsCommandTest {
 
         String result = cmd.execute(model).toString();
         // all tags count = 1, so maxTag = all, minTag = all
-        assertTrue(result.contains("Max Tag: Male & Female & Other"));
-        assertTrue(result.contains("Min Tag: Male & Female & Other"));
+        assertTrue(result.contains("Max Tag: Other & Female & Male"));
+        assertTrue(result.contains("Min Tag: Other & Female & Male"));
         assertTrue(result.contains("Average: 1.00"));
     }
 
