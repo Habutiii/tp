@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -9,6 +11,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
+import seedu.address.model.tag.Tag;
 
 /**
  * The API of the Model component.
@@ -102,6 +106,27 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns True if Field is present inside the {@code bizTags} in Model.
+     */
+    boolean isBizFeature(FeatureTag feature);
+
+    /**
+     * Declares the {@code bizTags} inside Model.
+     */
+    void addBizTags(FeatureTag feature, Set<Tag> tags);
+
+    /**
+     * Undeclares the {@code Field} from the {@code bizTags} inside Model.
+     * @param feature Field to undeclare
+     */
+    void removeBizFeature(FeatureTag feature);
+
+    /**
+     * Returns a copy of all the {@code bizTags} inside Model.
+     */
+    HashMap<FeatureTag, Set<Tag>> getBizTags();
 
     /**
      * Saves the mutable command history to support undo.

@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -23,6 +26,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -227,6 +232,38 @@ public class StatsCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
 
+        }
+
+        @Override
+        public boolean isBizFeature(FeatureTag field) {
+            return false;
+        }
+
+        @Override
+        public void addBizTags(FeatureTag field, Set<Tag> tags) {
+
+        }
+
+        @Override
+        public void removeBizFeature(FeatureTag field) {
+
+        }
+
+        @Override
+        public HashMap<FeatureTag, Set<Tag>> getBizTags() {
+            // Hardcode dummy bizTags
+            HashMap<FeatureTag, Set<Tag>> bizTags = new HashMap<>();
+            Set<Tag> plans = new HashSet<>();
+            plans.add(new Tag("A"));
+            plans.add(new Tag("B"));
+            plans.add(new Tag("C"));
+            Set<Tag> genders = new HashSet<>();
+            genders.add(new Tag("Male"));
+            genders.add(new Tag("Female"));
+            genders.add(new Tag("Other"));
+            bizTags.put(new FeatureTag("Plan"), plans);
+            bizTags.put(new FeatureTag("Gender"), genders);
+            return bizTags;
         }
 
         @Override

@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +13,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.FeatureTag;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TypicalPersons;
 
@@ -24,6 +29,16 @@ public class StatsCommandIntegrationTest {
         model.addPerson(alice);
         model.addPerson(benson);
         model.addPerson(TypicalPersons.CARL);
+        Set<Tag> plans = new HashSet<>();
+        plans.add(new Tag("A"));
+        plans.add(new Tag("B"));
+        plans.add(new Tag("C"));
+        model.addBizTags(new FeatureTag("Plan"), plans);
+        Set<Tag> genders = new HashSet<>();
+        genders.add(new Tag("Male"));
+        genders.add(new Tag("Female"));
+        genders.add(new Tag("Other"));
+        model.addBizTags(new FeatureTag("Gender"), genders);
     }
     @Test
     public void execute_statsIntegration_success() {
