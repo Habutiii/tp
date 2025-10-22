@@ -60,6 +60,78 @@ public class StatsCommandTest {
     }
 
     @Test
+    public void execute_stats_mixedCounts() {
+        StatsCommand cmd = new StatsCommand();
+        Model model = new ModelStub() {
+            @Override
+            public ObservableList<Person> getPersonListCopy() {
+                return FXCollections.observableArrayList(
+                        new PersonBuilder().withTags("Male", "A").build(),
+                        new PersonBuilder().withTags("Female", "A").build(),
+                        new PersonBuilder().withTags("Male", "B").build()
+                );
+            }
+
+            @Override
+            public int getSize() {
+                return 3;
+            }
+        };
+
+        String result = cmd.execute(model).toString();
+        assertTrue(result.contains("Male")); // max tag
+        assertTrue(result.contains("Other")); // min tag
+        assertTrue(result.contains("Average: 1.00"));
+    }
+
+    @Test
+    public void execute_stats_allEqualCounts() {
+        StatsCommand cmd = new StatsCommand();
+        Model model = new ModelStub() {
+            @Override
+            public ObservableList<Person> getPersonListCopy() {
+                return FXCollections.observableArrayList(
+                        new PersonBuilder().withTags("Male").build(),
+                        new PersonBuilder().withTags("Female").build(),
+                        new PersonBuilder().withTags("Other").build()
+                );
+            }
+
+            @Override
+            public int getSize() {
+                return 3;
+            }
+        };
+
+        String result = cmd.execute(model).toString();
+        // all tags count = 1, so maxTag = all, minTag = all
+        assertTrue(result.contains("Max Tag: Male & Female & Other"));
+        assertTrue(result.contains("Min Tag: Male & Female & Other"));
+        assertTrue(result.contains("Average: 1.00"));
+    }
+
+
+    @Test
+    public void execute_stats_emptyList() {
+        StatsCommand statsCommand = new StatsCommand();
+        Model emptyModel = new ModelStub() {
+            @Override
+            public ObservableList<Person> getPersonListCopy() {
+                return FXCollections.observableArrayList();
+            }
+
+            @Override
+            public int getSize() {
+                return 0;
+            }
+        };
+        CommandResult result = statsCommand.execute(emptyModel);
+        System.out.print(result.toString());
+        assertTrue(result.toString().contains("Total Number of Customers in AddressBook: 0"));
+        assertTrue(result.toString().contains("Average: 0.00")); // mean < 0 branch
+    }
+
+    @Test
     public void man_returnsManualString() {
         StatsCommand cmd = new StatsCommand();
         String manual = cmd.man();
@@ -180,6 +252,16 @@ public class StatsCommandTest {
      * Stub for {@code ObservableList Person} Object in ModelStub for unit testing.
      */
     private class PersonListStub implements ObservableList<Person> {
+        private final List<Person> people;
+
+        public PersonListStub() {
+            people = List.of(
+                    new PersonBuilder().withTags("Male", "A").build(),
+                    new PersonBuilder().withTags("Female", "B").build(),
+                    new PersonBuilder().withTags("Other", "C").build(),
+                    new PersonBuilder().withTags("Male", "A").build()
+            );
+        }
 
         @Override
         public void addListener(ListChangeListener<? super Person> listener) {
@@ -263,7 +345,7 @@ public class StatsCommandTest {
 
         @Override
         public int size() {
-            return 3;
+            return people.size();
         }
 
         @Override

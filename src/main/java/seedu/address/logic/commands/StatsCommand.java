@@ -30,9 +30,10 @@ public class StatsCommand extends Command {
             "DESCRIPTION",
             "  Shows an overview of the current data in the address book, such as:",
             "  • Total number of persons stored.",
-            "  • Breakdown of 'Number of people' by predefined Fields and their Categories:",
+            "  • Breakdown of 'Number of people' by predefined Features and their Tags:",
             "  \t•{Gender : Male, Female, Other}",
             "  \t•{Plan : A, B, C}",
+            "  • Average, Max Tag and Min Tag per Feature.",
             "  • User will be able to define their own Fields and Categories in the future.",
             "",
             "EXAMPLES",
@@ -123,7 +124,7 @@ public class StatsCommand extends Command {
 
         String catSummary = String.join("\n",
                 "\nTotal for Feature: " + catTotal,
-                "Average: " + (mean >= 0 ? String.format("%.2f", mean) : "N/A"),
+                "Average: " + (mean == -1 ? "N/A" : String.format("%.2f", mean)),
                 "Max Tag: " + catMaxTag + " (" + catMax + String.format(" %s)", catMax != 1 ? "people" : "person"),
                 "Min Tag: " + catMinTag + " (" + catMin + String.format(" %s)", catMin != 1 ? "people" : "person")
         );
