@@ -217,7 +217,7 @@ The object then returns a `String` message to the user about the successful addi
 
 ### Unbiz feature
 
-Biz feature is implemented via `BizUntagCommand` class. When the user inputs `biz f/Plan f/Gender`, an instance of `BizUntagCommand` is created and its `execute` method is called.
+Unbiz feature is implemented via `BizUntagCommand` class. When the user inputs `unbiz f/Plan f/Gender`, an instance of `BizUntagCommand` is created and its `execute` method is called.
 The object does the following:
 * Check if the Feature after each `f/` exists in `Model` via the `isBizFeature()` method in `Model`. If there are Features that do not exist in `Model`, this command fails and tells the User which Features are missing.
 * Else, for each Feature remove them and their Tags from `Model` via the `removeBizFeature()` method in `Model`. Then it returns to the User a `String` confirmation of the removal operation done with which Feature and Tags pair have been removed.
