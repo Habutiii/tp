@@ -6,25 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javafx.application.Platform;
-
 class TagFolderTest {
-
-    @BeforeAll
-    static void initFx() throws Exception {
-        CountDownLatch latch = new CountDownLatch(1);
-        Platform.startup(latch::countDown);
-        // ensure FX started
-        if (!latch.await(5, TimeUnit.SECONDS)) {
-            throw new IllegalStateException("JavaFX platform failed to start");
-        }
-    }
 
     @Test
     void ctor_singleTag_setsNameCountAndQueryTags() {
@@ -48,7 +33,8 @@ class TagFolderTest {
         TagFolder f = new TagFolder("x", 0);
         f.setCount(7);
         assertEquals(7, f.getCount());
-        assertNotNull(f.countProperty()); // property exists (for bindings in UI)
+        // Property exists (used by UI binders) but safe to access without starting JavaFX
+        assertNotNull(f.countProperty());
     }
 
     @Test
@@ -56,23 +42,9 @@ class TagFolderTest {
         TagFolder a = new TagFolder("Friends", 1);
         TagFolder b = new TagFolder("friends", 99);
         TagFolder c = TagFolder.composite("friends & colleagues", List.of("friends", "colleagues"));
+
         assertTrue(a.equals(b));
         assertTrue(a.hashCode() == b.hashCode());
         assertNotSame(a, c); // different names → not equal
     }
-
-    private static void fxRun(Runnable r) throws Exception {
-        CountDownLatch done = new CountDownLatch(1);
-        Platform.runLater(() -> {
-            try {
-                r.run();
-            } finally {
-                done.countDown();
-            }
-        });
-        if (!done.await(5, TimeUnit.SECONDS)) {
-            throw new IllegalStateException("FX action timed out");
-        }
-    }
 }
-
