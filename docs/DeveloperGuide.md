@@ -224,6 +224,40 @@ Using clear command as an example, the sequence diagram below illustrates how th
 Using clear command as an example, the sequence diagram below illustrates how the `redo` command works after an `undo` of the clear command has been executed:
 ![Undo Clear Sequence Diagram](images/RedoCommandSequenceDiagram.png)
 
+### Tag Folder Feature
+The Tag Folder feature allows users to organize contacts based on tags (e.g., “friend”, “family”, “work”) and display them as folders in the sidebar.
+* When a user executes a command with tags (e.g., list t/A t/friend):
+* The command is parsed into a ListCommand object by the AddressBookParser.
+* The command filters the person list by the specified tags and updates the sidebar with corresponding tag folders.
+* The Model component, via ModelManager, manages the active tag folders
+    * It deduplicates tag names (case-insensitive).
+    * Creates or updates TagFolder objects.
+    * Refreshes tag folder counts for display.
+
+This process is facilitated through methods like:
+* addActiveTagFolders(List<String> tagNames)
+* setActiveTagFolders(List<String> tagNames)
+* refreshActiveTagFolderCounts()
+
+![Tag Folder Logic Sequence Diagram](images/TagFolderSequenceDiagram-Logic.png)
+![Tag Folder Model Sequence Diagram](images/TagFolderSequenceDiagram-Model.png)
+
+
+### Keybinding Up/down arrows feature
+The Keybinding feature enables users to quickly navigate through previously entered commands using the ↑ and ↓ arrow keys, similar to command-line interfaces like Linux or macOS terminals.
+
+When a user presses the ↑ key, the system retrieves the previous command from the command history and displays it in the command box. Conversely, pressing the ↓ key moves forward through the command history.
+
+This feature is primarily handled by the KeyBindingHandler and LogicManager classes:
+* The KeyBindingHandler detects arrow key input events from the UI.
+* It calls getPreviousCommand() or getNextCommand() in the Logic interface.
+* The LogicManager delegates these calls to the Model component, which uses a CommandHistory class to store and manage the command list.
+* The retrieved command text is displayed in the command input box for editing or re-execution.
+
+![Keybinding Logic Class Diagram](images/LogicKeybindingClassDiagram.png)
+![Keybinding Model Class Diagram](images/ModelKeybindingClassDiagram.png)
+
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_

@@ -1,0 +1,61 @@
+@startuml
+!include style.puml
+
+' Layout & spacing
+left to right direction
+skinparam linetype ortho
+skinparam ranksep 70
+skinparam nodesep 110
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package UI {
+ class CommandBox #FFFFFF
+ class KeyBindingHandler {
+   +onUpArrow() : void
+   +onDownArrow() : void
+   -currentText : String
+ }
+}
+
+package Logic {
+ interface Logic {
+   +getPreviousCommand() : String
+   +getNextCommand() : String
+   +rememberExecutedCommand(cmd:String)
+ }
+
+ class LogicManager {
+   +getPreviousCommand() : String
+   +getNextCommand() : String
+ }
+}
+
+package Model {
+ class Model #FFFFFF
+}
+
+CommandBox -[hidden]-> KeyBindingHandler
+KeyBindingHandler -[hidden]-> Logic
+Logic -[hidden]-> LogicManager
+LogicManager -[hidden]-> Model
+
+LogicManager .|> Logic
+KeyBindingHandler ..> Logic : getPreviousCommand()\ngetNextCommand()
+CommandBox ..> KeyBindingHandler : «↑/↓ sends key events»
+LogicManager --> Model : «uses»
+
+note bottom of KeyBindingHandler
+ Handles ↑ / ↓ keys, queries Logic for
+ history entries, and updates the input box.
+end note
+
+note right of LogicManager
+ Implements the Logic API and delegates
+ to Model for command history retrieval.
+end note
+
+@enduml
