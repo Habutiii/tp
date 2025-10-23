@@ -248,6 +248,25 @@ Using clear command as an example, the sequence diagram below illustrates how th
 Using clear command as an example, the sequence diagram below illustrates how the `redo` command works after an `undo` of the clear command has been executed:
 ![Undo Clear Sequence Diagram](images/RedoCommandSequenceDiagram.png)
 
+### Tag Folder Feature
+The Tag Folder feature allows users to organize contacts based on tags (e.g., “friend”, “family”, “work”) and display them as folders in the sidebar.
+* When a user executes a command with tags (e.g., list t/A t/friend):
+* The command is parsed into a ListCommand object by the AddressBookParser.
+* The command filters the person list by the specified tags and updates the sidebar with corresponding tag folders.
+* The Model component, via ModelManager, manages the active tag folders
+    * It deduplicates tag names (case-insensitive).
+    * Creates or updates TagFolder objects.
+    * Refreshes tag folder counts for display.
+
+This process is facilitated through methods like:
+* addActiveTagFolders(List<String> tagNames)
+* setActiveTagFolders(List<String> tagNames)
+* refreshActiveTagFolderCounts()
+
+![Tag Folder Logic Sequence Diagram](images/TagFolderSequenceDiagram-Logic.png)
+![Tag Folder Model Sequence Diagram](images/TagFolderSequenceDiagram-Model.png)
+
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_

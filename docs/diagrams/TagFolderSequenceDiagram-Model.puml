@@ -1,0 +1,33 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant ":ActiveTagFolders" as ActiveTagFolders MODEL_COLOR
+end box
+
+[-> Model : addActiveTagFolders(["A","friend"])
+activate Model
+
+' default method delegates to implementation
+Model -> ModelManager : setActiveTagFolders(["A","friend"])
+activate ModelManager
+
+ModelManager -> ActiveTagFolders : dedupe(case-insensitive)\ncreate/update TagFolder("A"), TagFolder("friend")
+ActiveTagFolders --> ModelManager
+
+ModelManager -> ModelManager : refreshActiveTagFolderCounts()
+ModelManager --> Model
+deactivate ModelManager
+
+[<-- Model
+deactivate Model
+
+
+[-> Model : updateFilteredPersonList(predicate)
+activate Model
+Model --> Model
+deactivate Model
+@enduml
