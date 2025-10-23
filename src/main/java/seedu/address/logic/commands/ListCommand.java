@@ -42,41 +42,53 @@ public class ListCommand extends Command {
 
     private final Predicate<Person> predicate; // null => list all
     private final List<String> tagNamesForSidebar;
+    private final boolean saveFolder;
 
     /** List all. */
     public ListCommand() {
         this.predicate = null;
         this.tagNamesForSidebar = java.util.Collections.emptyList();
+        this.saveFolder = false;
     }
 
-    /** Old ctor kept for backwards-compat (no sidebar updates). */
+    /** Old ctor (no sidebar updates). */
     public ListCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
         this.tagNamesForSidebar = Collections.emptyList();
+        this.saveFolder = false;
     }
 
-    /** New ctor: predicate + tag names to populate the sidebar. */
-    public ListCommand(Predicate<Person> predicate, List<String> tagNames) {
+    /** Predicate + tags + whether to save a folder. */
+    public ListCommand(Predicate<Person> predicate, List<String> tagNames, boolean saveFolder) {
         this.predicate = predicate;
         this.tagNamesForSidebar = (tagNames == null) ? Collections.emptyList() : tagNames;
+        this.saveFolder = saveFolder;
     }
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+
         if (predicate == null) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(MESSAGE_SUCCESS);
-        } else {
-            model.updateFilteredPersonList(predicate);
-
-            // >>> THIS MUST MATCH THE MODEL API NAME <<<
-            if (!tagNamesForSidebar.isEmpty()) {
-                model.addActiveTagFolders(tagNamesForSidebar);
-            }
-
-            return new CommandResult(MESSAGE_LIST_BY_TAG_PREFIX + predicate);
         }
+
+        // filter list
+        model.updateFilteredPersonList(predicate);
+
+        // Only SAVE to the sidebar when user explicitly added the trailing 's'
+        if (saveFolder && !tagNamesForSidebar.isEmpty()) {
+            if (tagNamesForSidebar.size() == 1) {
+                // single-tag folder (create if missing)
+                model.addActiveTagFolders(tagNamesForSidebar);
+            } else {
+                // multi-tag composite folder
+                model.addCompositeTagFolder(tagNamesForSidebar);
+            }
+        }
+
+        return new CommandResult(MESSAGE_LIST_BY_TAG_PREFIX + predicate);
     }
 
     @Override

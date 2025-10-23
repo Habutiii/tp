@@ -47,11 +47,15 @@ public class ModelManager implements Model {
     private final java.util.LinkedHashMap<String, Integer> folderIndex =
             new java.util.LinkedHashMap<>();
 
+    // --- constructors must come before any methods ---
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
@@ -64,8 +68,12 @@ public class ModelManager implements Model {
         bootstrapAllTags();
     }
 
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+    // --- methods below constructors ---
+    private static String folderKey(java.util.List<String> tags) {
+        return tags.stream()
+                .map(String::toLowerCase)
+                .sorted()
+                .collect(java.util.stream.Collectors.joining("|"));
     }
 
     //=========== UserPrefs ==================================================================================
@@ -269,14 +277,15 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void addActiveTagFolders(java.util.List<String> tagNames) {
+    public void addActiveTagFolders(List<String> tagNames) {
         if (tagNames == null || tagNames.isEmpty()) {
             return;
         }
+
         for (String raw : tagNames) {
             String key = raw.toLowerCase();
             if (!folderIndex.containsKey(key)) {
-                activeFolders.add(new TagFolder(raw, 0));
+                activeFolders.add(new TagFolder(raw, 0)); // single-tag folder
                 folderIndex.put(key, activeFolders.size() - 1);
             }
         }
@@ -286,15 +295,53 @@ public class ModelManager implements Model {
     @Override
     public void refreshActiveTagFolderCounts() {
         var people = getAddressBook().getPersonList();
+
         for (TagFolder f : activeFolders) {
-            int count = (int) people.stream()
-                    .filter(p -> p.getTags().stream()
-                            .anyMatch(t -> t.tagName.equalsIgnoreCase(f.getName())))
-                    .count();
+            // A person "matches" this folder iff they contain ALL of the folder's query tags
+            int count = (int) people.stream().filter(p ->
+                    f.getQueryTags().stream()
+                            .allMatch(qt -> p.getTags().stream()
+                                    .anyMatch(t -> t.tagName.equalsIgnoreCase(qt)))
+            ).count();
+
             f.setCount(count);
         }
     }
 
+    @Override
+    public void addCompositeTagFolder(java.util.List<String> tagNames) {
+        if (tagNames == null || tagNames.isEmpty()) {
+            return;
+        }
+
+        // Normalise: trim, lower-case, distinct, sorted (so "b a" == "a b")
+        java.util.List<String> norm = tagNames.stream()
+                .map(s -> s.trim().toLowerCase())
+                .filter(s -> !s.isEmpty())
+                .distinct()
+                .sorted()
+                .toList();
+
+        if (norm.isEmpty()) {
+            return;
+        }
+
+        String key = String.join("&", norm);
+        if (folderIndex.containsKey(key)) {
+            // already saved; just make sure counts are fresh
+            refreshActiveTagFolderCounts();
+            return;
+        }
+        // Display name like "friends & colleagues"
+        String display = String.join(" & ", norm);
+
+        // TagFolder must carry the query tags of a composite
+        TagFolder folder = TagFolder.composite(display, norm); // see helper below
+        activeFolders.add(folder);
+        folderIndex.put(key, activeFolders.size() - 1);
+
+        refreshActiveTagFolderCounts();
+    }
 
     private void bootstrapAllTags() {
         java.util.Set<String> all = new java.util.HashSet<>();

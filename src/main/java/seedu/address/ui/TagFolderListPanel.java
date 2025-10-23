@@ -1,20 +1,24 @@
 package seedu.address.ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Region;
 import seedu.address.model.tag.TagFolder;
 
 /**
- * A UI component that displays a list of {@link TagFolder} objects in the sidebar.
- * Each tag folder represents a logical grouping of persons who share the same tag,
- * along with the count of persons in that group.
+ * Displays tag folders in the sidebar. Supports multi-select and calls back with the
+ * current selection as a {@code List<TagFolder>}.
  */
 public class TagFolderListPanel extends UiPart<Region> {
     private static final String FXML = "TagFolderListPanel.fxml";
@@ -22,31 +26,30 @@ public class TagFolderListPanel extends UiPart<Region> {
     @FXML
     private ListView<TagFolder> folderListView;
 
-    public TagFolderListPanel(ObservableList<TagFolder> folders) {
-        this(folders, null);
-    }
-
-    /** Supplies a callback with ALL selected tag names. */
+    /** Constructor here */
     public TagFolderListPanel(ObservableList<TagFolder> folders,
-                              java.util.function.Consumer<java.util.List<String>> onSelectMany) {
+                              Consumer<List<TagFolder>> onSelect) {
         super(FXML);
-        folderListView.setItems(folders);
-        folderListView.setCellFactory(list -> new FolderCell());
-        folderListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
 
-        if (onSelectMany != null) {
+        folderListView.setItems(folders);
+        folderListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        if (onSelect != null) {
+            // Listen to changes in the selected items (ObservableList),
+            // and pass a snapshot of the selection to the consumer.
             folderListView.getSelectionModel().getSelectedItems().addListener(
-                    (javafx.collections.ListChangeListener<TagFolder>) c -> {
-                        var selected = folderListView.getSelectionModel().getSelectedItems()
-                                .stream().map(TagFolder::getName).toList();
-                        onSelectMany.accept(selected);
-                    });
+                    (ListChangeListener<TagFolder>) change -> {
+                        List<TagFolder> snapshot =
+                                new ArrayList<>(folderListView.getSelectionModel().getSelectedItems());
+                        onSelect.accept(snapshot);
+                    }
+            );
         }
+
+        folderListView.setCellFactory(list -> new FolderCell());
     }
 
-    /**
-     * Custom {@link ListCell} for displaying each {@link TagFolder} in the sidebar list.
-     */
+    /** Custom ListCell for TagFolder rows. */
     private static class FolderCell extends ListCell<TagFolder> {
         @Override
         protected void updateItem(TagFolder folder, boolean empty) {
@@ -61,10 +64,11 @@ public class TagFolderListPanel extends UiPart<Region> {
                         FolderCell.class.getResource("/view/TagFolderCard.fxml"));
                 Node node = loader.load();
                 TagFolderCard controller = loader.getController();
-                controller.setFolder(folder);
+                controller.setFolder(folder); // bind name + count
                 setGraphic(node);
                 setText(null);
             } catch (IOException e) {
+                // Fallback text if FXML fails
                 setText(folder.getName() + " (" + folder.getCount() + ")");
                 setGraphic(null);
             }

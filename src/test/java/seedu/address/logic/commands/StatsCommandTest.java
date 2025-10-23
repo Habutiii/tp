@@ -213,6 +213,11 @@ public class StatsCommandTest {
         }
 
         @Override
+        public void addCompositeTagFolder(List<String> tagNames) {
+
+        }
+
+        @Override
         public void refreshActiveTagFolderCounts() {
 
         }
