@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_FIELD;
@@ -191,4 +192,86 @@ public class ModelManagerTest {
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
+
+    @Test
+    void folderKey_sortsAndLowersCorrectly() throws Exception {
+        var list = java.util.List.of("B", "a", "C");
+        java.lang.reflect.Method m = ModelManager.class.getDeclaredMethod("folderKey", java.util.List.class);
+        m.setAccessible(true);
+        String key = (String) m.invoke(null, list);
+        assertEquals("a|b|c", key);
+    }
+
+    @Test
+    void getActiveTagFoldersndSetActiveTagFolders_noop() {
+        ModelManager m = new ModelManager();
+        assertNotNull(m.getActiveTagFolders());
+        int sizeBefore = m.getActiveTagFolders().size();
+
+        // setActiveTagFolders does nothing; should not throw
+        m.setActiveTagFolders(java.util.List.of("x", "y"));
+
+        assertEquals(sizeBefore, m.getActiveTagFolders().size());
+        assertThrows(UnsupportedOperationException.class, () ->
+                m.getActiveTagFolders().add(new seedu.address.model.tag.TagFolder("bad", 1))
+        );
+    }
+
+    @Test
+    void addActiveTagFolders_handlesNullEmptyAndAdds() {
+        ModelManager m = new ModelManager();
+
+        m.addActiveTagFolders(null);
+        m.addActiveTagFolders(java.util.Collections.emptyList());
+        assertTrue(m.getActiveTagFolders().isEmpty());
+
+        m.addActiveTagFolders(java.util.List.of("friends", "colleagues"));
+        assertTrue(m.getActiveTagFolders().size() == 2);
+    }
+
+    @Test
+    void addCompositeTagFolder_coversAllBranches() {
+        ModelManager m = new ModelManager();
+
+        // null → return
+        m.addCompositeTagFolder(null);
+        // empty → return
+        m.addCompositeTagFolder(java.util.Collections.emptyList());
+
+        // valid add
+        m.addCompositeTagFolder(java.util.List.of("Friends", " Colleagues ", "friends"));
+        assertTrue(m.getActiveTagFolders().size() == 1);
+
+        // duplicate key path triggers refresh (no add)
+        m.addCompositeTagFolder(java.util.List.of("colleagues", "friends"));
+        assertTrue(m.getActiveTagFolders().size() == 1);
+    }
+
+    @Test
+    void ensureFoldersExistForTags_handlesNullAndAddsNewFolders() throws Exception {
+        ModelManager m = new ModelManager();
+
+        java.lang.reflect.Method method = ModelManager.class.getDeclaredMethod(
+                "ensureFoldersExistForTags", java.util.Collection.class);
+        method.setAccessible(true);
+
+        // null → return
+        method.invoke(m, (Object) null);
+        assertTrue(m.getActiveTagFolders().isEmpty());
+
+        // add new tags
+        var tags = java.util.List.of(new seedu.address.model.tag.Tag("alpha"), new seedu.address.model.tag.Tag("beta"));
+        method.invoke(m, tags);
+        assertTrue(m.getActiveTagFolders().size() == 2);
+    }
+
+    @Test
+    void bootstrapAllTags_populatesFoldersFromPeople() throws Exception {
+        ModelManager m = new ModelManager();
+        java.lang.reflect.Method bootstrap = ModelManager.class.getDeclaredMethod("bootstrapAllTags");
+        bootstrap.setAccessible(true);
+        bootstrap.invoke(m);
+        assertNotNull(m.getActiveTagFolders());
+    }
+
 }
