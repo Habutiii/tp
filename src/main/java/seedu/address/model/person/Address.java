@@ -17,6 +17,7 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final int MAX_LENGTH = 254;
 
     public final String value;
 
@@ -32,11 +33,12 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid email.
-     */
+    * Returns true if a given string is a valid email.
+    */
     public static boolean isValidAddress(String test) {
         // printable ASCII AND not starting with whitespace AND not ending with a space
-        return test.matches(PRINTABLE_ASCII_REGEX)
+        return test.length() <= MAX_LENGTH
+                && test.matches(PRINTABLE_ASCII_REGEX)
                 && test.matches(VALIDATION_REGEX)
                 && !test.endsWith(" ");
     }

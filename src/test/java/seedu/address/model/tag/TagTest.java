@@ -58,4 +58,64 @@ public class TagTest {
         assertEquals("Friend", new Tag("Friend").toString());
     }
 
+    @Test
+    public void exceedsMaxLength_returnsFalse() {
+        // 41 characters (should fail)
+        String longTag = "A".repeat(41);
+        assertFalse(Tag.isValidTagName(longTag));
+        assertThrows(IllegalArgumentException.class, () -> new Tag(longTag));
+    }
+
+    @Test
+    public void atMaxLength_returnsTrue() {
+        // 40 characters (should pass)
+        String validLongTag = "A".repeat(40);
+        assertTrue(Tag.isValidTagName(validLongTag));
+        Tag tag = new Tag(validLongTag);
+        assertEquals("[" + validLongTag + "]", tag.toString());
+    }
+
+    @Test
+    public void equals_allBranchesCovered() {
+        Tag tagA = new Tag("Important");
+        Tag tagB = new Tag("Important");
+        Tag tagC = new Tag("important"); // same letters, different cases
+        Tag tagD = new Tag("Optional"); // different content
+
+        // 1. same object -> true
+        assertTrue(tagA.equals(tagA));
+
+        // 2. same name, same case -> true
+        assertTrue(tagA.equals(tagB));
+
+        // 3. same name, different case -> true (equalsIgnoreCase)
+        assertTrue(tagA.equals(tagC));
+
+        // 4. null -> false
+        assertFalse(tagA.equals(null));
+
+        // 5. different type -> false
+        assertFalse(tagA.equals("Important"));
+
+        // 6. different tag name -> false
+        assertFalse(tagA.equals(tagD));
+    }
+
+    @Test
+    public void hashCode_consistencyAndCaseInsensitiveEquality() {
+        Tag upper = new Tag("Work");
+        Tag lower = new Tag("work");
+        Tag other = new Tag("Home");
+
+        // equal ignoring case -> equal hashCode
+        org.junit.jupiter.api.Assertions.assertEquals(upper.hashCode(), lower.hashCode());
+
+        // different tagName -> different hashCode
+        org.junit.jupiter.api.Assertions.assertNotEquals(upper.hashCode(), other.hashCode());
+
+        // consistency
+        int initial = upper.hashCode();
+        org.junit.jupiter.api.Assertions.assertEquals(initial, upper.hashCode());
+    }
 }
+

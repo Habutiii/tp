@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 
 public class NameTest {
 
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Name(null));
     }
+
 
     @Test
     public void constructor_invalidName_throwsIllegalArgumentException() {
@@ -19,10 +21,12 @@ public class NameTest {
         assertThrows(IllegalArgumentException.class, () -> new Name(invalidName));
     }
 
+
     @Test
     public void isValidName() {
         // null name
         assertThrows(NullPointerException.class, () -> Name.isValidName(null));
+
 
         // invalid name
         assertFalse(Name.isValidName("")); // empty string
@@ -36,6 +40,11 @@ public class NameTest {
         assertFalse(Name.isValidName("12345")); // numbers only
         assertFalse(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertFalse(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertFalse(Name.isValidName("qqqqqqqqqqqqqqqqqqqwwwwwwwwwwweeeeeeeeeeeeeeeeeerrrr"
+                + "iiiiiiiiiiiiiiiiiiiiiisdccccccccccccccccccccccccjjjjjjjjjjjjjjjwfeeeeeeewwf"
+                + "wkcmmmmmmmmmmmmmmmmmmmfionvalllllllllllllllllllllllllllllllllioqweeeeeeeiiiii"
+                + "wfoecjjjjjjjjjjjjjjjjjqeopfffffffffffffffffffffffffvncwjeeeeeeeeeeeeeeeeee"));
+
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
@@ -49,6 +58,7 @@ public class NameTest {
         assertTrue(Name.isValidName("Alex @ Home")); //@
         assertTrue(Name.isValidName("A.B (C-D), E/F @ G-H' I")); // stress test with allowed chars
     }
+
 
     @Test
     public void equals() {
@@ -69,4 +79,56 @@ public class NameTest {
         // different values -> returns false
         assertFalse(name.equals(new Name("Other Valid Name")));
     }
+    @Test
+    public void exceedsMaxLength_returnsFalse() {
+        String overMax = "A".repeat(Name.MAX_LENGTH + 1); // 101 chars
+        assertFalse(Name.isValidName(overMax));
+        assertThrows(IllegalArgumentException.class, () -> new Name(overMax));
+    }
+
+    @Test
+    public void atMaxLength_returnsTrue() {
+        String atMax = "A".repeat(Name.MAX_LENGTH); // 100 characters
+        assertTrue(Name.isValidName(atMax));
+        Name n = new Name(atMax); // should not throw
+        assertTrue(n.toString().equals(atMax));
+    }
+
+    @Test
+    public void withAllowedPunctuation_returnsTrue() {
+        // Build a realistic name using only allowed characters, then pad to exactly MAX
+        String base = "Dr. Jean-Luc O'Connor (Team Lead) @ Project Alpha";
+        int pad = Name.MAX_LENGTH - base.length();
+        String atMax = base + (pad > 0 ? "A".repeat(pad) : "");
+        assertTrue(atMax.length() == Name.MAX_LENGTH);
+        assertTrue(Name.isValidName(atMax));
+        new Name(atMax); // should not throw
+    }
+
+    @Test
+    public void toString_returnsOriginalValue() {
+        Name n = new Name("Alice Smith");
+        org.junit.jupiter.api.Assertions.assertEquals("Alice Smith", n.toString());
+    }
+
+    @Test
+    public void hashCode_consistencyAndEquality() {
+        Name a = new Name("Charlie Day");
+        Name b = new Name("Charlie Day");
+        Name c = new Name("Charlie May");
+
+        // equal objects -> equal hash
+        org.junit.jupiter.api.Assertions.assertEquals(a.hashCode(), b.hashCode());
+
+        // different value -> very likely different hash
+        org.junit.jupiter.api.Assertions.assertNotEquals(a.hashCode(), c.hashCode());
+    }
+
+    @Test
+    public void equals_caseSensitivity_check() {
+        Name lower = new Name("david lee");
+        Name upper = new Name("David Lee"); // different by case, equals() is case-sensitive
+        assertFalse(lower.equals(upper));
+    }
 }
+
