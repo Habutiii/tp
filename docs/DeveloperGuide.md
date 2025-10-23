@@ -448,6 +448,45 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
+### Use case: `biz`
+
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent issues biz command with a feature name and tags for those features.
+> 2. System displays confirmation that the feature and its tags have been added.
+> 3. Agent reads and continues working. 
+>    - Use case ends.
+>
+> **Extensions:**
+> - 1a. Agent types synonym (e.g., addbiz). 
+>   - 1a1. System displays: “Unknown command. Type help to see available commands.”
+>   - Use case ends.
+
+---
+
+### Use case: `unbiz`
+
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent issues unbiz command with the feature name of an existing feature in Statistics.
+> 2. System displays confirmation that the feature and its tags have been removed from stats.
+> 3. Agent reads and continues working. 
+>    - Use case ends.
+>
+> **Extensions:**
+> - 1a. Agent types synonym (e.g., addbiz).
+>   - 1a1. System displays: “Unknown command. Type help to see available commands.” 
+>   - Use case ends.
+> - 1b. Agent enters feature name that does not exist in Statistics.
+>   - 1b1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]"
+>   - Use case ends.
+
+---
+
 ### Use case: `stats`
 
 > **System:** Insurance Management App  
@@ -456,13 +495,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > **MSS:**  
 > 1. Agent issues stats command.  
 > 2. System analyses customer data.  
-> 3. System displays summary table (Packages vs. No. of Customers).  
+> 3. System displays summary tables aggregated by declared feature names and tags.  
 > 4. Agent reviews performance insights.  
 >    - Use case ends.  
 >
 > **Extensions:**  
 > - 2a. No data available.  
->   - 2a1. System displays: “No statistics available – no clients found.”  
+>   - 2a1. System displays: “Number of customers in AddressBook: 0”  
 >   - Use case ends.  
 
 ---
