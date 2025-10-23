@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.model.Model;
@@ -39,13 +41,24 @@ public class ListCommand extends Command {
     );
 
     private final Predicate<Person> predicate; // null => list all
+    private final List<String> tagNamesForSidebar;
 
+    /** List all. */
     public ListCommand() {
         this.predicate = null;
+        this.tagNamesForSidebar = java.util.Collections.emptyList();
     }
 
+    /** Old ctor kept for backwards-compat (no sidebar updates). */
     public ListCommand(Predicate<Person> predicate) {
         this.predicate = predicate;
+        this.tagNamesForSidebar = Collections.emptyList();
+    }
+
+    /** New ctor: predicate + tag names to populate the sidebar. */
+    public ListCommand(Predicate<Person> predicate, List<String> tagNames) {
+        this.predicate = predicate;
+        this.tagNamesForSidebar = (tagNames == null) ? Collections.emptyList() : tagNames;
     }
 
     @Override
@@ -56,6 +69,12 @@ public class ListCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             model.updateFilteredPersonList(predicate);
+
+            // >>> THIS MUST MATCH THE MODEL API NAME <<<
+            if (!tagNamesForSidebar.isEmpty()) {
+                model.addActiveTagFolders(tagNamesForSidebar);
+            }
+
             return new CommandResult(MESSAGE_LIST_BY_TAG_PREFIX + predicate);
         }
     }

@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -22,6 +24,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFolder;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -38,11 +41,16 @@ public class ModelManager implements Model {
     private final Stack<Command> undoStack = new Stack<>();
     private final Stack<Command> redoStack = new Stack<>();
 
+    // Sidebar state
+    private final ObservableList<TagFolder> activeFolders =
+            FXCollections.observableArrayList();
+    private final java.util.LinkedHashMap<String, Integer> folderIndex =
+            new java.util.LinkedHashMap<>();
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
@@ -50,6 +58,10 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.bizTags = new HashMap<>();
+
+        requireAllNonNull(addressBook, userPrefs);
+        // call this at the end of ModelManager constructor after addressBook is set:
+        bootstrapAllTags();
     }
 
     public ModelManager() {
@@ -96,6 +108,8 @@ public class ModelManager implements Model {
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
         this.addressBook.resetData(addressBook);
+        bootstrapAllTags();
+        refreshActiveTagFolderCounts();
     }
 
     @Override
@@ -235,4 +249,48 @@ public class ModelManager implements Model {
         return Optional.of(redoStack.pop());
     }
 
+    // =========== Tag Folders (sidebar) ==================================================
+
+    @Override
+    public javafx.collections.ObservableList<TagFolder> getActiveTagFolders() {
+        return javafx.collections.FXCollections.unmodifiableObservableList(activeFolders);
+    }
+
+    @Override
+    public void setActiveTagFolders(List<String> tagNames) {
+    }
+
+    @Override
+    public void addActiveTagFolders(java.util.List<String> tagNames) {
+        if (tagNames == null || tagNames.isEmpty()) {
+            return;
+        }
+        for (String raw : tagNames) {
+            String key = raw.toLowerCase();
+            if (!folderIndex.containsKey(key)) {
+                activeFolders.add(new TagFolder(raw, 0));
+                folderIndex.put(key, activeFolders.size() - 1);
+            }
+        }
+        refreshActiveTagFolderCounts();
+    }
+
+    @Override
+    public void refreshActiveTagFolderCounts() {
+        var people = getAddressBook().getPersonList();
+        for (TagFolder f : activeFolders) {
+            int count = (int) people.stream()
+                    .filter(p -> p.getTags().stream()
+                            .anyMatch(t -> t.tagName.equalsIgnoreCase(f.getName())))
+                    .count();
+            f.setCount(count);
+        }
+    }
+
+    private void bootstrapAllTags() {
+        java.util.Set<String> all = new java.util.HashSet<>();
+        getAddressBook().getPersonList().forEach(p ->
+                p.getTags().forEach(t -> all.add(t.tagName)));
+        addActiveTagFolders(new java.util.ArrayList<>(all));
+    }
 }

@@ -50,6 +50,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane tagDisplayPlaceholder;
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -123,6 +126,24 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand, resultDisplay::setLivePreviewFeedback,
                 logic.getFilteredPersonList());
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        TagFolderListPanel tagFolderListPanel = new TagFolderListPanel(
+                logic.getActiveTagFolders(),
+                selectedTags -> {
+                    try {
+                        if (selectedTags == null || selectedTags.isEmpty()) {
+                            executeCommand("list");
+                            return;
+                        }
+                        String cmd = "list " + selectedTags.stream()
+                                .map(t -> "t/" + t)
+                                .collect(java.util.stream.Collectors.joining(" "));
+                        executeCommand(cmd);
+                    } catch (Exception ignored) {
+                        // pass
+                    }
+                });
+        tagDisplayPlaceholder.getChildren().add(tagFolderListPanel.getRoot());
     }
 
     /**
