@@ -243,21 +243,6 @@ This process is facilitated through methods like:
 ![Tag Folder Model Sequence Diagram](images/TagFolderSequenceDiagram-Model.png)
 
 
-### Keybinding Up/down arrows feature
-The Keybinding feature enables users to quickly navigate through previously entered commands using the ↑ and ↓ arrow keys, similar to command-line interfaces like Linux or macOS terminals.
-
-When a user presses the ↑ key, the system retrieves the previous command from the command history and displays it in the command box. Conversely, pressing the ↓ key moves forward through the command history.
-
-This feature is primarily handled by the KeyBindingHandler and LogicManager classes:
-* The KeyBindingHandler detects arrow key input events from the UI.
-* It calls getPreviousCommand() or getNextCommand() in the Logic interface.
-* The LogicManager delegates these calls to the Model component, which uses a CommandHistory class to store and manage the command list.
-* The retrieved command text is displayed in the command input box for editing or re-execution.
-
-![Keybinding Logic Class Diagram](images/LogicKeybindingClassDiagram.png)
-![Keybinding Model Class Diagram](images/ModelKeybindingClassDiagram.png)
-
-
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
