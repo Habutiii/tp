@@ -5,4 +5,3 @@ ignore:
   - "src/main/java/seedu/address/MainApp.java"
   - "src/main/java/seedu/address/ui/TagFolderListPanel.java"
   - "src/main/java/seedu/address/ui/TagFolderCard.java"
-  -
