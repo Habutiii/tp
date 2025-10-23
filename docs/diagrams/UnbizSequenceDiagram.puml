@@ -1,0 +1,87 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "b:BizUntagCommand" as BizUntagCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute(unbiz)
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand(unbiz)
+activate AddressBookParser
+
+create BizUntagCommand
+AddressBookParser -> BizUntagCommand
+activate BizUntagCommand
+
+BizUntagCommand --> AddressBookParser
+deactivate BizUntagCommand
+
+AddressBookParser --> LogicManager : b
+deactivate AddressBookParser
+
+LogicManager -> BizUntagCommand : execute()
+activate BizUntagCommand
+
+loop for (feature in features)
+    BizUntagCommand -> Model : isBizFeature(feature)
+    activate Model
+
+    Model --> BizUntagCommand :
+    deactivate Model
+
+    opt isBizFeature == false
+            BizUntagCommand -> BizUntagCommand : missingFeatures.append(feature)
+            activate BizUntagCommand
+            BizUntagCommand --> BizUntagCommand
+            deactivate BizUntagCommand
+    end
+end
+
+
+alt missingFeatures.empty == False
+    loop for (feature in features)
+        BizUntagCommand -> Model : removeBizFeature()
+        activate Model
+
+        Model --> BizUntagCommand
+        deactivate Model
+
+        BizUntagCommand -> BizUntagCommand : untaggedFeatures.append(feature)
+        activate BizUntagCommand
+
+        BizUntagCommand --> BizUntagCommand
+        deactivate BizUntagCommand
+    end
+
+    BizUntagCommand -> BizUntagCommand : result = untaggedFeatures
+    activate BizUntagCommand
+
+    BizUntagCommand --> BizUntagCommand
+    deactivate BizUntagCommand
+
+else
+    BizUntagCommand -> BizUntagCommand : result = missingFeatures
+    activate BizUntagCommand
+
+    BizUntagCommand --> BizUntagCommand
+    deactivate BizUntagCommand
+end
+
+
+BizUntagCommand --> LogicManager : result
+deactivate BizUntagCommand
+BizUntagCommand -[hidden]-> LogicManager : result
+destroy BizUntagCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

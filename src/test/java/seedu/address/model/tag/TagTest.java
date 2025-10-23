@@ -95,3 +95,4 @@ public class TagTest {
         assertEquals("friends", b.toString());
     }
 }
+

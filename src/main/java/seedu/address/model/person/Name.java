@@ -19,6 +19,7 @@ public class Name {
      * Only the allowed ASCII set is permitted. Digits are excluded.
      */
     // Allowed special characters need escaping in regex where applicable.
+    public static final int MAX_LENGTH = 100;
     private static final String ALLOWED_FIRST_CHAR_CLASS = "[A-Za-z(),/\\.@\\-']";
     private static final String ALLOWED_REST_CLASS = "[A-Za-z(),/\\.@\\-' ]";
 
@@ -42,10 +43,10 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(PRINTABLE_ASCII_REGEX)
+        return test.length() <= MAX_LENGTH
+                && test.matches(PRINTABLE_ASCII_REGEX)
                 && test.matches(VALIDATION_REGEX);
     }
-
 
     @Override
     public String toString() {
