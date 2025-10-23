@@ -6,10 +6,25 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javafx.application.Platform;
+
 class TagFolderTest {
+
+    @BeforeAll
+    static void initFx() throws Exception {
+        CountDownLatch latch = new CountDownLatch(1);
+        Platform.startup(latch::countDown);
+        // ensure FX started
+        if (!latch.await(5, TimeUnit.SECONDS)) {
+            throw new IllegalStateException("JavaFX platform failed to start");
+        }
+    }
 
     @Test
     void ctor_singleTag_setsNameCountAndQueryTags() {
@@ -45,4 +60,19 @@ class TagFolderTest {
         assertTrue(a.hashCode() == b.hashCode());
         assertNotSame(a, c); // different names → not equal
     }
+
+    private static void fxRun(Runnable r) throws Exception {
+        CountDownLatch done = new CountDownLatch(1);
+        Platform.runLater(() -> {
+            try {
+                r.run();
+            } finally {
+                done.countDown();
+            }
+        });
+        if (!done.await(5, TimeUnit.SECONDS)) {
+            throw new IllegalStateException("FX action timed out");
+        }
+    }
 }
+

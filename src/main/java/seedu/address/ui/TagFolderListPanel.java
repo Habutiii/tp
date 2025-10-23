@@ -50,7 +50,7 @@ public class TagFolderListPanel extends UiPart<Region> {
     }
 
     /** Custom ListCell for TagFolder rows. */
-    private static class FolderCell extends ListCell<TagFolder> {
+    static class FolderCell extends ListCell<TagFolder> {
         @Override
         protected void updateItem(TagFolder folder, boolean empty) {
             super.updateItem(folder, empty);
