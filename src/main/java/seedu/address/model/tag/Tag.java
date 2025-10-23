@@ -14,6 +14,7 @@ public class Tag {
             "Tag names should only contain English letters, digits, or '-' (dash), and must not be empty.";
 
     public static final String VALIDATION_REGEX = "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$";
+    public static final int MAX_LENGTH = 40;
 
     public final String tagName;
 
@@ -29,10 +30,12 @@ public class Tag {
     }
 
     /**
-     * Returns true if a given string is a valid tag name.
+     * Returns true if a given string is a valid tag names.
      */
     public static boolean isValidTagName(String test) {
-        return test.matches(VALIDATION_REGEX) && test.matches(PRINTABLE_ASCII_REGEX);
+        return test.length() <= MAX_LENGTH
+                && test.matches(VALIDATION_REGEX)
+                && test.matches(PRINTABLE_ASCII_REGEX);
     }
 
     @Override

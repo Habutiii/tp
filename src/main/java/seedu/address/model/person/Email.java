@@ -10,6 +10,7 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
  */
 public class Email {
 
+    public static final int MAX_LENGTH = 254;
     private static final String SPECIAL_CHARACTERS = "+_.-";
     public static final String MESSAGE_CONSTRAINTS = "Emails should be of the format local-part@domain "
             + "and adhere to the following constraints:\n"
@@ -50,7 +51,8 @@ public class Email {
      */
     public static boolean isValidEmail(String test) {
 
-        return test.matches(PRINTABLE_ASCII_REGEX)
+        return test.length() <= MAX_LENGTH
+                && test.matches(PRINTABLE_ASCII_REGEX)
                 && test.matches(VALIDATION_REGEX);
     }
 

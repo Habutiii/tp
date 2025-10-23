@@ -13,25 +13,30 @@ public class EmailTest {
         assertThrows(NullPointerException.class, () -> new Email(null));
     }
 
+
     @Test
     public void constructor_invalidEmail_throwsIllegalArgumentException() {
         String invalidEmail = "";
         assertThrows(IllegalArgumentException.class, () -> new Email(invalidEmail));
     }
 
+
     @Test
     public void isValidEmail() {
         // null email
         assertThrows(NullPointerException.class, () -> Email.isValidEmail(null));
 
+
         // blank email
         assertFalse(Email.isValidEmail("")); // empty string
         assertFalse(Email.isValidEmail(" ")); // spaces only
+
 
         // missing parts
         assertFalse(Email.isValidEmail("@example.com")); // missing local part
         assertFalse(Email.isValidEmail("peterjackexample.com")); // missing '@' symbol
         assertFalse(Email.isValidEmail("peterjack@")); // missing domain name
+
 
         // invalid parts
         assertFalse(Email.isValidEmail("peterjack@-")); // invalid domain name
@@ -54,6 +59,7 @@ public class EmailTest {
         assertFalse(Email.isValidEmail("john.doe@例子.公司")); // non-ASCII characters
         assertFalse(Email.isValidEmail("john.例子@example.com")); // non-ASCII characters
 
+
         // valid email
         assertTrue(Email.isValidEmail("PeterJack_1190@example.com")); // underscore in local part
         assertTrue(Email.isValidEmail("PeterJack.1190@example.com")); // period in local part
@@ -68,23 +74,98 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("e1234567@u.nus.edu")); // more than one period in domain
     }
 
+
     @Test
     public void equals() {
         Email email = new Email("valid@email");
 
+
         // same values -> returns true
         assertTrue(email.equals(new Email("valid@email")));
+
 
         // same object -> returns true
         assertTrue(email.equals(email));
 
+
         // null -> returns false
         assertFalse(email.equals(null));
+
 
         // different types -> returns false
         assertFalse(email.equals(5.0f));
 
+
         // different values -> returns false
         assertFalse(email.equals(new Email("other.valid@email")));
     }
+    private static String emailOfLength(int totalLength) {
+        String suffix = "@a.co"; // length = 5
+        int localLen = totalLength - suffix.length();
+        return "a".repeat(Math.max(0, localLen)) + suffix;
+    }
+
+
+    @Test
+    public void exceedsMaxLength_returnsFalse() {
+        String overMax = emailOfLength(Email.MAX_LENGTH + 1);
+        assertFalse(Email.isValidEmail(overMax));
+        assertThrows(IllegalArgumentException.class, () -> new Email(overMax));
+    }
+
+
+    @Test
+    public void atMaxLength_returnsTrue() {
+        String atMax = emailOfLength(Email.MAX_LENGTH);
+        assertTrue(Email.isValidEmail(atMax));
+        Email e = new Email(atMax);
+        assertTrue(e.equals(new Email(atMax)));
+    }
+
+
+    @Test
+    public void longButWithinLimit_returnsTrue() {
+        // Build a long, valid email well under the 254-char limit
+        String email = "very.long.local-part.with.many.sections+tags-okay"
+                + ".and_more@sub-domain-example-with-hyphens.example.co";
+        // If it's still short, pad the local part a bit (still valid per your regex)
+        if (email.length() < 200) {
+            int pad = 200 - email.length();
+            email = "a".repeat(pad) + email; // keep local-part alphanumeric padding
+        }
+        assertTrue(Email.isValidEmail(email));
+        new Email(email); // should not throw
+    }
+
+
+    @Test
+    public void toString_returnsOriginalValue() {
+        Email e = new Email("user.name+tag@example.com");
+        org.junit.jupiter.api.Assertions.assertEquals("user.name+tag@example.com", e.toString());
+    }
+
+
+    @Test
+    public void hashCode_consistencyAndEquality() {
+        Email a = new Email("valid@email");
+        Email b = new Email("valid@email");
+        Email c = new Email("other@email");
+
+
+        // equal objects -> equal hashs
+        org.junit.jupiter.api.Assertions.assertEquals(a.hashCode(), b.hashCode());
+
+
+        // different value -> very likely different hash
+        org.junit.jupiter.api.Assertions.assertNotEquals(a.hashCode(), c.hashCode());
+    }
+
+
+    @Test
+    public void equals_caseSensitivity_check() {
+        Email lower = new Email("user@example.com");
+        Email upper = new Email("User@Example.com"); // different by case; equals() compares raw value
+        assertFalse(lower.equals(upper));
+    }
 }
+
