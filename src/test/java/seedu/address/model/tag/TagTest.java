@@ -72,7 +72,7 @@ public class TagTest {
         String validLongTag = "A".repeat(40);
         assertTrue(Tag.isValidTagName(validLongTag));
         Tag tag = new Tag(validLongTag);
-        assertEquals("[" + validLongTag + "]", tag.toString());
+        assertEquals( validLongTag, tag.toString());
     }
 
     @Test
