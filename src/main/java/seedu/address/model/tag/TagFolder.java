@@ -1,0 +1,65 @@
+package seedu.address.model.tag;
+
+import java.util.List;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+/** Making a tag folder feature */
+public final class TagFolder {
+    private final String name;
+    private final List<String> queryTags; // lower-cased tags this folder represents (1 or many)
+    private final IntegerProperty count = new SimpleIntegerProperty();
+
+    /** Single-tag folder. */
+    public TagFolder(String name, int count) {
+        this(name, count, List.of(name));
+    }
+
+    /** Composite or single-tag folder. queryTags should be lower-cased. */
+    public TagFolder(String name, int count, List<String> queryTags) {
+        this.name = name;
+        this.count.set(count);
+        this.queryTags = List.copyOf(queryTags);
+    }
+
+    // factory for composites
+    public static TagFolder composite(String displayName, java.util.List<String> queryTags) {
+        return new TagFolder(displayName, 0, queryTags);
+    }
+
+    public String getName() {
+        return name;
+    }
+    public List<String> getQueryTags() {
+        return queryTags;
+    }
+    public int getCount() {
+        return count.get();
+    }
+    public void setCount(int value) {
+        count.set(value);
+    }
+    public IntegerProperty countProperty() {
+        return count;
+    }
+
+    @Override public String toString() {
+        return name + " (" + getCount() + ")";
+    }
+
+    @Override public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof TagFolder)) {
+            return false;
+        }
+        TagFolder o = (TagFolder) other;
+        return this.name.equalsIgnoreCase(o.name);
+    }
+
+    @Override public int hashCode() {
+        return name.toLowerCase().hashCode();
+    }
+}

@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -13,6 +14,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFolder;
 
 /**
  * The API of the Model component.
@@ -147,5 +149,19 @@ public interface Model {
      * Returns the last undo command in the history.
      */
     Optional<Command> popLastUndoCommand();
+
+    ObservableList<TagFolder> getActiveTagFolders();
+
+    void setActiveTagFolders(java.util.List<String> tagNames);
+
+    /** Back-compat alias used by some tests. */
+    default void addActiveTagFolders(List<String> tagNames) {
+        setActiveTagFolders(tagNames);
+    }
+
+    void addCompositeTagFolder(List<String> tagNames);
+
+    /** Recompute the badge counts for all active folders. */
+    void refreshActiveTagFolderCounts();
 
 }

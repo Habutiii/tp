@@ -28,6 +28,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFolder;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -282,6 +283,26 @@ public class StatsCommandTest {
         @Override
         public Optional<Command> popLastUndoCommand() {
             return Optional.empty();
+        }
+
+        @Override
+        public ObservableList<TagFolder> getActiveTagFolders() {
+            return null;
+        }
+
+        @Override
+        public void setActiveTagFolders(List<String> tagNames) {
+
+        }
+
+        @Override
+        public void addCompositeTagFolder(List<String> tagNames) {
+
+        }
+
+        @Override
+        public void refreshActiveTagFolderCounts() {
+
         }
     }
 

@@ -36,20 +36,34 @@ import seedu.address.model.tag.Tag;
 public class ListCommandParser implements Parser<ListCommand> {
     @Override
     public ListCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TAG);
-
-        // Collect ALL occurrences of t/
-        List<String> tagValues = argMultimap.getAllValues(PREFIX_TAG);
-
-        if (tagValues.isEmpty()) {
-            return new ListCommand(); // no tag -> list all
+        // 0) Pull a trailing lone "s" off the raw args first, so it doesn't get
+        // glued to the last t/ value by the tokenizer.
+        String raw = args == null ? "" : args.trim();
+        boolean saveFolder = false;
+        if (!raw.isEmpty() && raw.matches(".*\\s+s\\s*$")) {
+            // ends with whitespace + 's' (and optional trailing whitespace)
+            saveFolder = true;
+            raw = raw.replaceFirst("\\s+s\\s*$", "");
         }
 
+        // 1) Tokenize normally (now without the trailing 's')
+        ArgumentMultimap map = ArgumentTokenizer.tokenize(raw, PREFIX_TAG);
+
+        // 2) Collect tag values
+        List<String> tagValues = map.getAllValues(PREFIX_TAG);
+
+        if (tagValues.isEmpty()) {
+            // no tags -> plain list-all; ignore 's'
+            return new ListCommand();
+        }
+
+        // 3) Build predicate
         Set<Tag> required = new LinkedHashSet<>();
         for (String v : tagValues) {
             required.add(ParserUtil.parseTag(v));
         }
 
-        return new ListCommand(new TagMatchesAllPredicate(required));
+        // 4) Pass tags and the save flag to the command
+        return new ListCommand(new TagMatchesAllPredicate(required), tagValues, saveFolder);
     }
 }
