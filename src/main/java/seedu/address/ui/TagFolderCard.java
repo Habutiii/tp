@@ -33,7 +33,7 @@ public class TagFolderCard {
         bound = folder;
 
         nameLabel.setText(folder.getName());
-        // live binding: updates whenever ModelManager calls setCount(...)
+        countBadge.textProperty().unbind();
         countBadge.textProperty().bind(folder.countProperty().asString());
     }
 

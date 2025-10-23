@@ -108,6 +108,8 @@ public class ModelManager implements Model {
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
         this.addressBook.resetData(addressBook);
+        activeFolders.clear();
+        folderIndex.clear();
         bootstrapAllTags();
         refreshActiveTagFolderCounts();
     }
@@ -126,12 +128,15 @@ public class ModelManager implements Model {
     @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
+        refreshActiveTagFolderCounts();
     }
 
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        ensureFoldersExistForTags(person.getTags());
+        refreshActiveTagFolderCounts();
     }
 
     @Override
@@ -139,13 +144,16 @@ public class ModelManager implements Model {
         requireAllNonNull(index, person);
         addressBook.insertPerson(index.getZeroBased(), person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        ensureFoldersExistForTags(person.getTags());
+        refreshActiveTagFolderCounts();
     }
 
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         addressBook.setPerson(target, editedPerson);
+        ensureFoldersExistForTags(editedPerson.getTags());
+        refreshActiveTagFolderCounts();
     }
 
     @Override
@@ -287,10 +295,34 @@ public class ModelManager implements Model {
         }
     }
 
+
     private void bootstrapAllTags() {
         java.util.Set<String> all = new java.util.HashSet<>();
         getAddressBook().getPersonList().forEach(p ->
                 p.getTags().forEach(t -> all.add(t.tagName)));
         addActiveTagFolders(new java.util.ArrayList<>(all));
+    }
+
+    // Ensures every tag has a corresponding TagFolder.
+    private void ensureFoldersExistForTags(java.util.Collection<? extends seedu.address.model.tag.Tag> tags) {
+        if (tags == null) {
+            return;
+        }
+        for (seedu.address.model.tag.Tag t : tags) {
+            String key = t.tagName.toLowerCase();
+            if (!folderIndex.containsKey(key)) {
+                activeFolders.add(new TagFolder(t.tagName, 0));
+                folderIndex.put(key, activeFolders.size() - 1);
+            }
+        }
+        sortFolders();
+    }
+
+    private void sortFolders() {
+        FXCollections.sort(activeFolders, java.util.Comparator.comparing(f -> f.getName().toLowerCase()));
+        folderIndex.clear();
+        for (int i = 0; i < activeFolders.size(); i++) {
+            folderIndex.put(activeFolders.get(i).getName().toLowerCase(), i);
+        }
     }
 }
