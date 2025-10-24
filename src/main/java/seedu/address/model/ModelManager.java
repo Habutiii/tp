@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +45,8 @@ public class ModelManager implements Model {
     // Sidebar state
     private final ObservableList<TagFolder> activeFolders =
             FXCollections.observableArrayList();
-    private final java.util.LinkedHashMap<String, Integer> folderIndex =
-            new java.util.LinkedHashMap<>();
+    private final LinkedHashMap<String, Integer> folderIndex =
+            new LinkedHashMap<>();
 
     // --- constructors must come before any methods ---
     public ModelManager() {
@@ -281,35 +282,40 @@ public class ModelManager implements Model {
         for (String raw : tagNames) {
             String key = raw.toLowerCase();
             if (!folderIndex.containsKey(key)) {
-                activeFolders.add(new TagFolder(raw, 0)); // single-tag folder
-                folderIndex.put(key, activeFolders.size() - 1);
+                activeFolders.add(new TagFolder(raw, 1)); // single-tag folder
             }
         }
         refreshActiveTagFolderCounts();
+
+        // Keep folders sorted
+        sortFolders();
     }
 
     @Override
     public void refreshActiveTagFolderCounts() {
-        var people = getAddressBook().getPersonList()
+        var people = getAddressBook().getPersonList();
 
-        activeFolders.forEach(tagFolder -> tagFolder.setCount(
-                // A person "matches" this folder iff they contain ALL of the folder's query tags
-                (int) people.stream().filter(p ->
-                        tagFolder.getQueryTags().stream()
-                                .allMatch(qt -> p.getTags().stream()
-                                        .anyMatch(t -> t.tagName.equalsIgnoreCase(qt)))
-                ).count()
-        ));
+        for (TagFolder tagFolder : activeFolders) {
+            int count = (int) people.stream()
+                    .filter(p -> tagFolder.getQueryTags().stream()
+                            .allMatch(qt -> p.getTags().stream()
+                                    .anyMatch(t -> t.tagName.equalsIgnoreCase(qt))))
+                    .count();
+            tagFolder.setCount(count);
+        }
+
+        // Remove folders with zero count
+        activeFolders.removeIf(folder -> folder.getCount() == 0);
     }
 
     @Override
-    public void addCompositeTagFolder(java.util.List<String> tagNames) {
+    public void addCompositeTagFolder(List<String> tagNames) {
         if (tagNames == null || tagNames.isEmpty()) {
             return;
         }
 
         // Normalise: trim, lower-case, distinct, sorted (so "b a" == "a b")
-        java.util.List<String> norm = tagNames.stream()
+        List<String> norm = tagNames.stream()
                 .map(s -> s.trim().toLowerCase())
                 .filter(s -> !s.isEmpty())
                 .distinct()
@@ -360,7 +366,7 @@ public class ModelManager implements Model {
     }
 
     private void sortFolders() {
-        FXCollections.sort(activeFolders, java.util.Comparator.comparing(f -> f.getName().toLowerCase()));
+        FXCollections.sort(activeFolders);
         folderIndex.clear();
         for (int i = 0; i < activeFolders.size(); i++) {
             folderIndex.put(activeFolders.get(i).getName().toLowerCase(), i);
