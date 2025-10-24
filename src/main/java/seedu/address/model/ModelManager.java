@@ -273,10 +273,6 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setActiveTagFolders(List<String> tagNames) {
-    }
-
-    @Override
     public void addActiveTagFolders(List<String> tagNames) {
         if (tagNames == null || tagNames.isEmpty()) {
             return;

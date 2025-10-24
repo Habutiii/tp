@@ -203,21 +203,6 @@ public class ModelManagerTest {
     }
 
     @Test
-    void getActiveTagFoldersndSetActiveTagFolders_noop() {
-        ModelManager m = new ModelManager();
-        assertNotNull(m.getActiveTagFolders());
-        int sizeBefore = m.getActiveTagFolders().size();
-
-        // setActiveTagFolders does nothing; should not throw
-        m.setActiveTagFolders(java.util.List.of("x", "y"));
-
-        assertEquals(sizeBefore, m.getActiveTagFolders().size());
-        assertThrows(UnsupportedOperationException.class, () ->
-                m.getActiveTagFolders().add(new seedu.address.model.tag.TagFolder("bad", 1))
-        );
-    }
-
-    @Test
     void addActiveTagFolders_handlesNullEmptyAndAdds() {
         ModelManager m = new ModelManager();
 
