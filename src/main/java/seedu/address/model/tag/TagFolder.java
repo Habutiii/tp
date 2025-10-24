@@ -63,8 +63,16 @@ public final class TagFolder {
         return name.toLowerCase().hashCode();
     }
 
-    // For sorting purposes
-    public int compareTo(TagFolder other) {
+    /**
+     * Compares this TagFolder with another TagFolder for sorting purposes.
+     * The comparison is based on a case-insensitive alphabetical order of folder names.
+     * This method is primarily used to determine the order of TagFolders in the UI.
+     *
+     * @param other The other TagFolder to compare against.
+     * @return A negative integer, zero, or a positive integer as this TagFolder's name
+     *         is less than, equal to, or greater than the other TagFolder's name, ignoring case.
+     */
+    int compareTo(TagFolder other) {
         // Case-insensitive alphabetical order
         return this.name.compareToIgnoreCase(other.name);
     }
