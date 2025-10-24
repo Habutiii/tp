@@ -294,18 +294,16 @@ public class ModelManager implements Model {
 
     @Override
     public void refreshActiveTagFolderCounts() {
-        var people = getAddressBook().getPersonList();
+        var people = getAddressBook().getPersonList()
 
-        for (TagFolder f : activeFolders) {
-            // A person "matches" this folder iff they contain ALL of the folder's query tags
-            int count = (int) people.stream().filter(p ->
-                    f.getQueryTags().stream()
-                            .allMatch(qt -> p.getTags().stream()
-                                    .anyMatch(t -> t.tagName.equalsIgnoreCase(qt)))
-            ).count();
-
-            f.setCount(count);
-        }
+        activeFolders.forEach(tagFolder -> tagFolder.setCount(
+                // A person "matches" this folder iff they contain ALL of the folder's query tags
+                (int) people.stream().filter(p ->
+                        tagFolder.getQueryTags().stream()
+                                .allMatch(qt -> p.getTags().stream()
+                                        .anyMatch(t -> t.tagName.equalsIgnoreCase(qt)))
+                ).count()
+        ));
     }
 
     @Override
