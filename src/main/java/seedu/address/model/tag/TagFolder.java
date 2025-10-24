@@ -62,4 +62,10 @@ public final class TagFolder {
     @Override public int hashCode() {
         return name.toLowerCase().hashCode();
     }
+
+    // For sorting purposes
+    public int compareTo(TagFolder other) {
+        // Case-insensitive alphabetical order
+        return this.name.compareToIgnoreCase(other.name);
+    }
 }

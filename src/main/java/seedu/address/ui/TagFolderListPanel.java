@@ -31,7 +31,7 @@ public class TagFolderListPanel extends UiPart<Region> {
                               Consumer<List<TagFolder>> onSelect) {
         super(FXML);
 
-        folderListView.setItems(folders);
+        folderListView.setItems(folders.sorted());
         folderListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         if (onSelect != null) {
