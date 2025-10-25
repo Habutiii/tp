@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -37,13 +38,16 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
-            + "Existing values will be overwritten by the input values.\n"
+            + "Existing values will be overwritten by the input values except when using the ADDTAG prefix,"
+            + " instead of TAG prefix, where tags input after that prefix will be added to "
+            + "existing tags of the Person.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]..." + " OR "
+            + "[" + PREFIX_ADDTAG + "ADDTAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -53,12 +57,13 @@ public class EditCommand extends Command {
             "  edit — Edits details of an existing person.",
             "",
             "USAGE",
-            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…",
+            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]… [at/TAG]…",
             "",
             "PARAMETERS",
             "  • INDEX: positive integer referring to displayed list index",
-            "  • Any of NAME, PHONE, EMAIL, ADDRESS, TAG fields may be provided",
+            "  • Any of NAME, PHONE, EMAIL, ADDRESS, (TAG OR ADDTAG)  fields may be provided",
             "  • TAG fields replace the existing tag set if provided",
+            "  • ADDTAG fields add on to the existing tag set of Person if provided",
             "",
             "EXAMPLES",
             "  edit 2 p/91234567 e/new@example.com",
@@ -144,7 +149,15 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags()
+                .orElse(
+                        editPersonDescriptor.getAddTags().map(tags ->
+                        {
+                            Set<Tag> combined = new HashSet<>(personToEdit.getTags());
+                            combined.addAll(tags);
+                            return combined;
+                        }).orElse(personToEdit.getTags())
+                );
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
@@ -183,6 +196,7 @@ public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Tag> addTags;
 
         public EditPersonDescriptor() {}
 
@@ -196,13 +210,14 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            addTags(toCopy.addTags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, addTags);
         }
 
         public void setName(Name name) {
@@ -246,12 +261,30 @@ public class EditCommand extends Command {
         }
 
         /**
+         * Adds {@code tags} to this object's {@code tags"}.
+         * A defensive copy of {@code tags} is used internally.
+         */
+        public void addTags(Set<Tag> tags) {
+            assert this.tags == null;
+            this.addTags = (tags != null) ? new HashSet<>(tags) : null;
+        }
+
+        /**
          * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
          * if modification is attempted.
          * Returns {@code Optional#empty()} if {@code tags} is null.
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        /**
+         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code tags} is null.
+         */
+        public Optional<Set<Tag>> getAddTags() {
+            return (addTags != null) ? Optional.of(Collections.unmodifiableSet(addTags)) : Optional.empty();
         }
 
         @Override
