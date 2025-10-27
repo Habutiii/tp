@@ -48,11 +48,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        if ((argMultimap.getValue(PREFIX_TAG).isPresent() &&
-                (argMultimap.getValue(PREFIX_ADDTAG).isPresent() ||
-                        argMultimap.getValue(PREFIX_DELETETAG).isPresent())) ||
-                (argMultimap.getValue(PREFIX_ADDTAG).isPresent() &&
-                        argMultimap.getValue(PREFIX_DELETETAG).isPresent())) {
+        if ((argMultimap.getValue(PREFIX_TAG).isPresent()
+                && (argMultimap.getValue(PREFIX_ADDTAG).isPresent()
+                    || argMultimap.getValue(PREFIX_DELETETAG).isPresent()))
+                || (argMultimap.getValue(PREFIX_ADDTAG).isPresent()
+                    && argMultimap.getValue(PREFIX_DELETETAG).isPresent())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditCommand.MESSAGE_TOO_MANY_TAG_COMMANDS));
         }

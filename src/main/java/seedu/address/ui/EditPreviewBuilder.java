@@ -171,6 +171,9 @@ public class EditPreviewBuilder {
             if (!tag.isEmpty() && !Tag.isValidTagName(tag)) {
                 invalidTagIndices.add(i);
             }
+            if (op == TagOperation.REMOVE && !person.getTags().contains(new Tag(tag))) {
+                invalidTagIndices.add(i);
+            }
             tagsJoined.append(tag);
             if (i < newTagsList.size() - 1) {
                 tagsJoined.append(", ");
