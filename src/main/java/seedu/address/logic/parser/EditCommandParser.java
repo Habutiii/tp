@@ -53,7 +53,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                         argMultimap.getValue(PREFIX_DELETETAG).isPresent())) ||
                 (argMultimap.getValue(PREFIX_ADDTAG).isPresent() &&
                         argMultimap.getValue(PREFIX_DELETETAG).isPresent())) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCommand.MESSAGE_TOO_MANY_TAG_COMMANDS));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);

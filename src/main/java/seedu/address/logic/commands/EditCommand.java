@@ -78,6 +78,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_TOO_MANY_TAG_COMMANDS =
+            "Only one of t/, at/, or dt/ can be used in a single edit command.";
     public static final String MESSAGE_TAGS_TO_DELETE_NOT_FOUND =
             "One or more tags to delete do not exist for this person.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
