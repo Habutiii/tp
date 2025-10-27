@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDTAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETETAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -34,7 +35,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
-                        args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_ADDTAG);
+                        args, PREFIX_NAME, PREFIX_PHONE,
+                        PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_TAG, PREFIX_ADDTAG,
+                        PREFIX_DELETETAG);
 
         Index index;
 
@@ -44,7 +48,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        if (argMultimap.getValue(PREFIX_TAG).isPresent() && argMultimap.getValue(PREFIX_ADDTAG).isPresent()) {
+        if ((argMultimap.getValue(PREFIX_TAG).isPresent() &&
+                (argMultimap.getValue(PREFIX_ADDTAG).isPresent() ||
+                        argMultimap.getValue(PREFIX_DELETETAG).isPresent())) ||
+                (argMultimap.getValue(PREFIX_ADDTAG).isPresent() &&
+                        argMultimap.getValue(PREFIX_DELETETAG).isPresent())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
@@ -68,6 +76,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_ADDTAG)).ifPresent(editPersonDescriptor::addTags);
+
+        parseTagsForEdit(argMultimap.getAllValues(PREFIX_DELETETAG)).ifPresent(editPersonDescriptor::deleteTags);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
