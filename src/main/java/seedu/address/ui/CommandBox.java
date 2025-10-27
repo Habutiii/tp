@@ -76,11 +76,12 @@ public class CommandBox extends UiPart<Region> {
             livePreviewCallback.accept(new ArrayList<>());
             return;
         }
-
+        String[] splitInput = input.split(" ");
+        String prefix = splitInput.length == 0 ? "" : splitInput[0];
         List<FieldPreview> fieldPreviews;
-        if (input.startsWith("add")) {
+        if (prefix.equals("add")) {
             fieldPreviews = AddPreviewBuilder.buildPreview(input);
-        } else if (input.startsWith("edit")) {
+        } else if (prefix.equals("edit")) {
             fieldPreviews = EditPreviewBuilder.buildPreview(input, personList);
         } else {
             livePreviewCallback.accept(new ArrayList<>());

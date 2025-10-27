@@ -140,15 +140,14 @@ public class MainWindow extends UiPart<Stage> {
                         String cmd = tags.isEmpty()
                                 ? "list"
                                 : "list " + tags.stream()
-                                .map(t -> "t/" + t)
-                                .collect(java.util.stream.Collectors.joining(" "));
+                                        .map(t -> "t/" + t)
+                                        .collect(java.util.stream.Collectors.joining(" "));
 
                         executeCommand(cmd);
                     } catch (Exception ignored) {
                         // resultDisplay will already show any parse/exec error
                     }
-                }
-        );
+                });
         tagDisplayPlaceholder.getChildren().add(tagFolderListPanel.getRoot());
     }
 
