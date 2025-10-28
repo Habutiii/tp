@@ -41,6 +41,16 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Keybinds
+
+The following keybinds are available in Ethical Insurance
+![Keybinds](images/Keybinds.png)
+
+- Up Arrow (↑): Goes back to previous command in history.
+- Down Arrow (↓): Goes forward to next command in history or empties command box when reach the end of history.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Features
 
 <div markdown="block" class="alert alert-info">

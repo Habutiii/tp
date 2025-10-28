@@ -526,8 +526,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ---
 
 ### Use case: `list`
-
-> **Example 1**  
+ 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
@@ -536,6 +535,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 2. System displays all the persons in the address book.  
 > 3. Use case ends.  
 
+---
+
+### Use case: Navigating the command history
+ 
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent wants to navigate through previously entered commands.
+> 2. Agent press up arrow key
+> 3. Command box displays the previous command.
+> 4. Agent wants to go back to more recent commands.
+> 5. Agent press down arrow key
+> 6. Command box displays the next command.
+> 7. Use case ends.
 
 
 ### Non-Functional Requirements
