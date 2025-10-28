@@ -8,7 +8,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -56,9 +55,9 @@ public class AddCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#adding-a-person-add"
     );
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New person added:\n%1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_UNDO_SUCCESS = "Removed last added person: %1$s";
+    public static final String MESSAGE_UNDO_SUCCESS = "Removed last added person:\n%1$s";
     public static final String MESSAGE_UNDO_FAILED = "No person was added";
 
     private final Person toAdd;
@@ -80,7 +79,7 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
     @Override
@@ -104,7 +103,7 @@ public class AddCommand extends Command {
             throw new IllegalStateException(MESSAGE_UNDO_FAILED);
         }
         model.deletePerson(toAdd);
-        return String.format(MESSAGE_UNDO_SUCCESS, Messages.format(toAdd));
+        return String.format(MESSAGE_UNDO_SUCCESS, toAdd);
     }
 
     @Override

@@ -11,7 +11,6 @@ import java.util.Stack;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -45,7 +44,7 @@ public class RedoCommandTest {
         expectedModel.addPerson(person);
         String expectedMessage = String.format(
                 RedoCommand.MESSAGE_SUCCESS,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person)));
+                String.format(AddCommand.MESSAGE_SUCCESS, person));
         assertCommandSuccess(redoCommand, model, expectedMessage, expectedModel);
     }
 

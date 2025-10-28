@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,6 +25,9 @@ public class CommandBox extends UiPart<Region> {
     private final CommandExecutor commandExecutor;
     private final Consumer<List<FieldPreview>> livePreviewCallback;
     private final ObservableList<Person> personList;
+
+    private List<String> commandHistory = new ArrayList<>();
+    private int historyPointer = -1;
 
     @FXML
     private TextField commandTextField;
@@ -43,6 +47,7 @@ public class CommandBox extends UiPart<Region> {
             setStyleToDefault();
             handleLiveFeedback(commandTextField.getText());
         });
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKeyPress);
     }
 
     public TextField getCommandTextField() {
@@ -62,6 +67,8 @@ public class CommandBox extends UiPart<Region> {
         try {
             commandExecutor.execute(commandText);
             commandTextField.setText("");
+            commandHistory.add(commandText);
+            historyPointer = commandHistory.size();
         } catch (CommandException | ParseException e) {
             setStyleToIndicateCommandFailure();
         }
@@ -76,11 +83,12 @@ public class CommandBox extends UiPart<Region> {
             livePreviewCallback.accept(new ArrayList<>());
             return;
         }
-
+        String[] splitInput = input.split(" ");
+        String prefix = splitInput.length == 0 ? "" : splitInput[0];
         List<FieldPreview> fieldPreviews;
-        if (input.startsWith("add")) {
+        if (prefix.equals("add")) {
             fieldPreviews = AddPreviewBuilder.buildPreview(input);
-        } else if (input.startsWith("edit")) {
+        } else if (prefix.equals("edit")) {
             fieldPreviews = EditPreviewBuilder.buildPreview(input, personList);
         } else {
             livePreviewCallback.accept(new ArrayList<>());
@@ -121,6 +129,47 @@ public class CommandBox extends UiPart<Region> {
          * @see seedu.address.logic.Logic#execute(String)
          */
         CommandResult execute(String commandText) throws CommandException, ParseException;
+    }
+
+    /**
+     * Handles any key pressed event.
+     */
+    @FXML
+    private void handleKeyPress(KeyEvent keyEvent) {
+        if (!keyEvent.getCode().isArrowKey()) {
+            return;
+        }
+
+        String history = switch (keyEvent.getCode()) {
+        case UP -> {
+            keyEvent.consume();
+            // Navigate up the history
+            if (commandHistory.isEmpty() || historyPointer <= 0) {
+                yield null;
+            } else {
+                historyPointer--;
+                yield commandHistory.get(historyPointer);
+            }
+        }
+        case DOWN -> {
+            keyEvent.consume();
+            // Navigate down the history
+            if (commandHistory.isEmpty() || historyPointer >= commandHistory.size()) {
+                yield null;
+            } else if (historyPointer == commandHistory.size() - 1) {
+                historyPointer++;
+                yield "";
+            } else {
+                historyPointer++;
+                yield commandHistory.get(historyPointer);
+            }
+        }
+        default -> null;
+        };
+
+        if (history != null) {
+            commandTextField.setText(history);
+        }
     }
 
 }

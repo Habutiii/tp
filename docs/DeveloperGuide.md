@@ -395,10 +395,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > - 4a. Tag replacement error.  
 >   - 4a1. System rejects entire edit if one invalid tag is found.  
 >   - Use case ends.  
->
-> - 4b. Storage failure occurs.  
->   - 4b1. System displays: “Couldn’t save data. Your edit was cancelled.”  
->   - Use case ends.  
 
 ---
 
@@ -526,8 +522,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ---
 
 ### Use case: `list`
-
-> **Example 1**  
+ 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
@@ -535,7 +530,70 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 1. Agent issues list command.  
 > 2. System displays all the persons in the address book.  
 > 3. Use case ends.  
+ 
+---
 
+### Use case: `clear`
+
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent first started the application and there are dummy values initialized.
+> 2. Agent remove all entries by issuing clear command.
+> 3. Use case ends.
+
+
+---
+
+### Use case: `undo`
+> **System:** Insurance Management App
+> **Actor:** Insurance Agent
+>   
+> **MSS:**
+> 1. Agent accidentally ran an undoable command eg. deleted all entries by issuing clear command.
+> 2. Agent issues undo command.
+> 3. System restores the previous state before the last mutable command.
+> 4. Use case ends.
+> 
+> *Extensions:*
+> - 2a. No commands to undo.
+>   - 2a1. System displays: "No commands to undo."
+>   - Use case ends.
+
+--- 
+
+### Use case: `redo`
+> **System:** Insurance Management App
+> **Actor:** Insurance Agent
+> 
+> **MSS:**
+> 1. Agent had undone a previous mutable command, but he changes his mind.
+> 2. Agent issues redo command.
+> 3. System reapplies the last undone mutable command.
+> 4. Use case ends.
+> 
+> *Extensions:*
+> - 2a. No commands to redo.
+>   - 2a1. System displays: "No commands to redo."
+>   - Use case ends.
+
+
+---
+
+### Use case: Navigating the command history
+ 
+> **System:** Insurance Management App  
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent wants to navigate through previously entered commands.
+> 2. Agent press up arrow key
+> 3. Command box displays the previous command.
+> 4. Agent wants to go back to more recent commands.
+> 5. Agent press down arrow key
+> 6. Command box displays the next command.
+> 7. Use case ends.
 
 
 ### Non-Functional Requirements
@@ -621,6 +679,9 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Ethical Insurance will discard all data and start with an empty data file at the next run, *without any warning*.
+    The dummy initial address book content will be used instead.
 
-1. _{ more test cases …​ }_
+2. Dealing with saving issues
+   1. Ethical Insurance will display an error message when it is unable to save data.
+   2. If the data file is not writable (e.g., due to permission issues), Ethical Insurance will notify the permission issue to the user upon attempting to save data.
