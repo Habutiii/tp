@@ -137,7 +137,7 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
 
-        // Parse-time guard
+        // Parse-time guard for max tags per person
         if (tagSet.size() > Person.MAX_TAGS_PER_PERSON) {
             throw new ParseException(String.format(
                     "Too many tags: maximum is %d, but %d were given.",
