@@ -52,12 +52,12 @@ public class RedoCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // get the last command from the undo stack and execute its undo method
+        // get the last command from the undo stack and run its execute method
         Optional<Command> lastCommand = model.popLastUndoCommand();
 
         if (lastCommand.isPresent()) {
             Command command = lastCommand.get();
-            // Check if the command is mutable before redoing
+            // Check if the command is mutable before executing (redo)
             if (command.isMutable()) {
                 CommandResult result = command.execute(model);
                 // After redoing, add the command back to the undo stack
