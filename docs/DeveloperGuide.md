@@ -395,10 +395,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > - 4a. Tag replacement error.  
 >   - 4a1. System rejects entire edit if one invalid tag is found.  
 >   - Use case ends.  
->
-> - 4b. Storage failure occurs.  
->   - 4b1. System displays: “Couldn’t save data. Your edit was cancelled.”  
->   - Use case ends.  
 
 ---
 
@@ -621,6 +617,9 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. Ethical Insurance will discard all data and start with an empty data file at the next run, *without any warning*.
+    The dummy initial address book content will be used instead.
 
-1. _{ more test cases …​ }_
+2. Dealing with saving issues
+   1. Ethical Insurance will display an error message when it is unable to save data.
+   2. If the data file is not writable (e.g., due to permission issues), Ethical Insurance will notify the permission issue to the user upon attempting to save data.
