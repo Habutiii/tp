@@ -68,10 +68,10 @@ public class EditCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#editing-a-person--edit"
     );
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person:\n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_UNDO_SUCCESS = "Reverted last edit: %1$s";
+    public static final String MESSAGE_UNDO_SUCCESS = "Reverted last edit:\n%1$s";
     public static final String MESSAGE_UNDO_FAILED = "No edit to revert.";
 
     private final Index index;
@@ -110,7 +110,7 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class EditCommand extends Command {
         requireNonNull(model);
         if (personToEdit != null) {
             model.setPerson(model.getFilteredPersonList().get(index.getZeroBased()), personToEdit);
-            return String.format(MESSAGE_UNDO_SUCCESS, Messages.format(personToEdit));
+            return String.format(MESSAGE_UNDO_SUCCESS, personToEdit);
         } else {
             throw new IllegalStateException(MESSAGE_UNDO_FAILED);
         }
