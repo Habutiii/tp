@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
@@ -61,6 +62,15 @@ public class LogicManager implements Logic {
         } catch (AccessDeniedException e) {
             throw new CommandException(String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, e.getMessage()), e);
         } catch (IOException ioe) {
+            Path filePath = storage.getAddressBookFilePath();
+            logger.severe("Could not save data to file due to insufficient permission: " + filePath);
+
+            // check permission of filePath
+            if (!Files.isWritable(filePath.getParent()) || !Files.isWritable(filePath)) {
+                throw new CommandException(
+                        String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, filePath), ioe);
+            }
+
             throw new CommandException(String.format(FILE_OPS_ERROR_FORMAT, ioe.getMessage()), ioe);
         }
 
