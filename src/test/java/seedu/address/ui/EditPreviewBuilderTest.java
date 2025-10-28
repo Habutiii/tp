@@ -200,7 +200,7 @@ public class EditPreviewBuilderTest {
         List<Person> personList = Arrays.asList(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend"),
-                        new Tag("colleague")))));
+                            new Tag("colleague")))));
 
         // delete existing tag
         String input = "edit 1 dt/friend";
