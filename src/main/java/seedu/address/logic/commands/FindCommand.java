@@ -24,7 +24,8 @@ public class FindCommand extends Command {
 
     public static final String MANUAL = String.join("\n",
             "NAME",
-            "  find — Finds all persons whose names, phone numbers, or email addresses contain any of the given keywords.",
+            "  find — Finds all persons whose names, phone numbers, "
+                    + "or email addresses contain any of the given keywords.",
             "",
             "USAGE",
             "  find KEYWORD [MORE_KEYWORDS]",

@@ -43,7 +43,8 @@ public class AddCommand extends Command {
             "",
             "PARAMETERS",
             "  • NAME: non-empty string; all leading and trailing whitespace is trimmed",
-            "  • PHONE: must be 3 to 15 digits to account for special and international numbers; only digits (0–9) are allowed, no spaces, letters, or symbols",
+            "  • PHONE: must be 3 to 15 digits to account for special and international numbers; "
+                    + "only digits (0–9) are allowed, no spaces, letters, or symbols",
             "  • EMAIL: must follow standard email format (must contain '@')",
             "  • ADDRESS: non-empty string",
             "  • TAG (optional): alphanumeric, no spaces; up to 15 tags per person",
