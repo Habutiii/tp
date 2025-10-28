@@ -80,6 +80,17 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_storageThrowsAdExceptionFolderNoWritePermission_throwsCommandException() {
+        // Simulate IOException during storage save and file inaccessible
+        Path exceptionFolderPath = temporaryFolder.resolve("ExceptionFolder/ExceptionUserPrefs.json");
+        assertCommandFailureForExceptionFromStorage(DUMMY_IO_EXCEPTION,
+                String.format(LogicManager.FILE_OPS_PERMISSION_ERROR_FORMAT,
+                        exceptionFolderPath),
+                exceptionFolderPath);
+
+    }
+
+    @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         // now create the file so that it is accessible
         Path prefPath = temporaryFolder.resolve("ExceptionUserPrefs.json");
@@ -168,7 +179,10 @@ public class LogicManagerTest {
      */
     private void assertCommandFailureForExceptionFromStorage(IOException e, String expectedMessage) {
         Path prefPath = temporaryFolder.resolve("ExceptionUserPrefs.json");
+        assertCommandFailureForExceptionFromStorage(e, expectedMessage, prefPath);
+    }
 
+    private void assertCommandFailureForExceptionFromStorage(IOException e, String expectedMessage, Path prefPath) {
         // Inject LogicManager with an AddressBookStorage that throws the IOException e when saving
         JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(prefPath) {
             @Override
