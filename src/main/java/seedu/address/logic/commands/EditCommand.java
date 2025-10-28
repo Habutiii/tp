@@ -284,7 +284,6 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public void addTags(Set<Tag> tags) {
-            assert this.tags == null;
             this.addTags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
@@ -293,7 +292,6 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public void deleteTags(Set<Tag> tags) {
-            assert this.tags == null;
             this.deleteTags = (tags != null) ? new HashSet<>(tags) : null;
         }
 
@@ -340,7 +338,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(addTags, otherEditPersonDescriptor.addTags)
+                    && Objects.equals(deleteTags, otherEditPersonDescriptor.deleteTags);
         }
 
         @Override
