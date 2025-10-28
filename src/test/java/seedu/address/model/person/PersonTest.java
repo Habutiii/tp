@@ -12,8 +12,11 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -98,8 +101,11 @@ public class PersonTest {
 
     @Test
     public void toStringMethod() {
-        String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
+        String expected = "Name: " + ALICE.getName() + "\nPhone: " + ALICE.getPhone()
+                + "\nEmail: " + ALICE.getEmail() + "\nAddress: " + ALICE.getAddress()
+                + "\nTags: " + ALICE.getTags().stream()
+                .map(Tag::toString)
+                .collect(Collectors.joining(", "));
         assertEquals(expected, ALICE.toString());
     }
 

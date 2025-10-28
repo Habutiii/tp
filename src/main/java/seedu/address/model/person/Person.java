@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -106,13 +106,14 @@ public class Person {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", name)
-                .add("phone", phone)
-                .add("email", email)
-                .add("address", address)
-                .add("tags", tags)
-                .toString();
+
+        return "Name: " + name
+                + "\nPhone: " + phone
+                + "\nEmail: " + email
+                + "\nAddress: " + address
+                + "\nTags: " + tags.stream()
+                .map(Tag::toString)
+                .collect(Collectors.joining(", "));
     }
 
     /**

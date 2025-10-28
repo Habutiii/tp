@@ -11,7 +11,6 @@ import java.util.Stack;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -44,7 +43,7 @@ public class UndoCommandTest {
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         String expectedMessage = String.format(
                 UndoCommand.MESSAGE_SUCCESS,
-                String.format(AddCommand.MESSAGE_UNDO_SUCCESS, Messages.format(person)));
+                String.format(AddCommand.MESSAGE_UNDO_SUCCESS, person));
         assertCommandSuccess(undoCommand, model, expectedMessage, expectedModel);
     }
 
