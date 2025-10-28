@@ -71,9 +71,29 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_storageThrowsAdExceptionNoWritePermission_throwsCommandException() {
+        // Simulate IOException during storage save and file inaccessible
+        assertCommandFailureForExceptionFromStorage(DUMMY_IO_EXCEPTION,
+            String.format(LogicManager.FILE_OPS_PERMISSION_ERROR_FORMAT,
+                temporaryFolder.resolve("ExceptionUserPrefs.json")));
+
+    }
+
+    @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
+        // now create the file so that it is accessible
+        Path prefPath = temporaryFolder.resolve("ExceptionUserPrefs.json");
+        try {
+            prefPath.toFile().createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Simulate IOException during storage save and file accessible
         assertCommandFailureForExceptionFromStorage(DUMMY_IO_EXCEPTION, String.format(
                 LogicManager.FILE_OPS_ERROR_FORMAT, DUMMY_IO_EXCEPTION.getMessage()));
+
+        prefPath.toFile().delete();
     }
 
     @Test
