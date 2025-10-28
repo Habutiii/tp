@@ -556,10 +556,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > **Actor:** Insurance Agent
 >   
 > **MSS:**
-> 1. Agent accidentally ran a command eg. deleted all entries by issuing clear command.
+> 1. Agent accidentally ran an undoable command eg. deleted all entries by issuing clear command.
 > 2. Agent issues undo command.
 > 3. System restores the previous state before the last mutable command.
 > 4. Use case ends.
+> 
+> *Extensions:*
+> - 2a. No commands to undo.
+>   - 2a1. System displays: "No commands to undo."
+>   - Use case ends.
 
 --- 
 
@@ -572,6 +577,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 2. Agent issues redo command.
 > 3. System reapplies the last undone mutable command.
 > 4. Use case ends.
+> 
+> *Extensions:*
+> - 2a. No commands to redo.
+>   - 2a1. System displays: "No commands to redo."
+>   - Use case ends.
 
 
 
