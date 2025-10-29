@@ -106,9 +106,13 @@ Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t
 
 ### Create folder by tag : `list t/<your tag here> s/`
 
-Create and save custom folder.
+Create and save custom folder. 
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
+Output will be a folder with the names of the tags you have selected.
+Example:
+- Input: list t/friends t/colleagues s/
+- Output: Folder friends & colleagues created
 
 ### Delete folder by tag : `list t/<your tag here> d/`
 

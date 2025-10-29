@@ -586,10 +586,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > **Actor:** Insurance Agent
 >
 > **MSS:**
-> 1. Agent issues list command with all the tags the agent wants.
-> 2. Agent adds 's/' at the end of the command to create a custom folder.
-> 3. Custom folder with all selected tags is created.
-> 4. Agent can click into newly created folder for easy sorting
+> 1. Agent wants to create a custom folder for all entries with tags friends and travel.
+> 2. Agent issues list command with the two tags.
+> 3. Agent adds 's/' at the end of the command to create a custom folder.
+> 4. Folder 'friends & travel' is created.
+> 5. Agent can click into newly created folder for easy sorting and access.
 >       - Use case ends
 
 ---
@@ -600,9 +601,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > **Actor:** Insurance Agent
 >
 > **MSS:**
-> 1. Agent issues list command with all the tags the agent wants.
-> 2. Agent adds 'd/' at the end of the command to delete selected folder.
-> 3. Folder with respective tags is deleted.
+> 1. Agent issues wants to delete folder called 'events'.
+> 2. Agent writes "list t/events d/" command
+> 3. Folder with respective tag(s) is deleted.
 >    - Use case ends
 
 ### Non-Functional Requirements
