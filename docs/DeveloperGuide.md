@@ -380,12 +380,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. Index out of bounds.  
->   - 2a1. System displays error: "The person index provided is invalid"
->   - 2a2. Agent provides the correct index"
->   - Use case resumes from step 2  
+>   - 2a1. System displays error: "The person index provided is invalid".
+>   - 2a2. Agent provides the correct index".
+>   - Use case resumes from step 2.  
 >
 > - 2b. Invalid parameter format.  
->   - 2b1. System displays error specifying invalid field .  
+>   - 2b1. System displays error specifying invalid field.  
 >   - 2b2. Agent corrects input.  
 >   - Use case resumes from step 2.  
 >
@@ -409,7 +409,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. Index out of bounds.  
->   - 2a1. System displays error: "The person index provided is invalid" 
+>   - 2a1. System displays error: "The person index provided is invalid". 
 >   - Use case ends.  
 
 ---
@@ -428,7 +428,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. No matches found.  
->   - 2a1. System displays: “0 persons listed!”  
+>   - 2a1. System displays: "0 persons listed!".  
 >   - Use case ends.  
 ---
 
@@ -459,7 +459,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**
 > - 1a. Agent types synonym (e.g., addbiz). 
->   - 1a1. System displays: “Unknown command. Type help to see available commands.”
+>   - 1a1. System displays: "Unknown command. Type help to see available commands".
 >   - Use case ends.
 
 ---
@@ -480,7 +480,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >   - 1a1. System displays: “Unknown command. Type help to see available commands.” 
 >   - Use case ends.
 > - 1b. Agent enters feature name that does not exist in Statistics.
->   - 1b1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]"
+>   - 1b1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]".
 >   - Use case ends.
 
 ---
@@ -499,7 +499,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. No data available.  
->   - 2a1. System displays: “Number of customers in AddressBook: 0”  
+>   - 2a1. System displays: "Number of customers in AddressBook: 0".  
 >   - Use case ends.  
 
 ---
