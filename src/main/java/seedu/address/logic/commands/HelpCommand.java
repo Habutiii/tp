@@ -16,7 +16,7 @@ public class HelpCommand extends Command {
 
     public static final String MANUAL = String.join("\n",
             "NAME",
-            "  help — Opens the user guide in a browser or dialog.",
+            "  help — Opens the help dialog box.",
             "",
             "USAGE",
             "  help",
