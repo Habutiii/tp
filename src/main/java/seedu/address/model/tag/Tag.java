@@ -11,8 +11,8 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
 public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Tag names should only contain English letters, digits, or '-' (dash),"
-                    + " should not exceed 40 characters and must not be empty.";
+            "Tag names must not be empty, may contain only English letters, digits, or '-' (dash),"
+                    + " and must not exceed 40 characters.";
 
     public static final String VALIDATION_REGEX = "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$";
     public static final int MAX_LENGTH = 40;
