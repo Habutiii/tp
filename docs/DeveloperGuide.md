@@ -334,16 +334,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Insurance Management App` and the **Actor** is the `user`, unless specified otherwise)
 
-### Use case: `add`
+### UC01 Use case: `add`
 
-> **Example 1**  
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
 > **MSS:**  
-> 1. Agent issues add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]... command.  
+> 1. Agent issues `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...` command.  
 > 2. System validates each parameter.  
 > 3. System checks for duplicates using (name + phone).  
 > 4. If valid, system creates a new client entry and updates the display.  
@@ -351,28 +350,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. Missing required fields.  
->   - 2a1. System displays: “ERROR: Missing required fields. Required: n/, p/, e/, a/.”  
->   - Use case ends.  
+>   - 2a1. System displays: "Invalid command format!" and specifies the required parameters.
+>   - 2a2. Agent provides all the required parameters.
+>   - Use case resumes from step 2.  
 >
 > - 2b. Invalid parameter format.  
->   - 2b1. System displays specific error message (e.g., “Phone must be a valid number”).  
+>   - 2b1. System displays specific error message (e.g., "Phone numbers should be 3 to 15 digits.").  
 >   - 2b2. Agent corrects input.  
 >   - Use case resumes from step 2.  
 >
 > - 3a. Duplicate detected.  
->   - 3a1. System displays: “DUPLICATE CLIENT: A client with the same phone/email already exists.”  
->   - 3a2. Agent may use edit INDEX instead.  
+>   - 3a1. System displays: "This person already exists in the address book".  
+>   - 3a2. Agent may consider using UC02 to edit existing client details, if required.
 >   - Use case ends.  
 
 ---
 
-### Use case: `edit`
+### UC02 Use case: `edit`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
 > **MSS:**  
-> 1. Agent issues edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... command.  
+> 1. Agent issues `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` command.  
 > 2. System validates the index and input fields.  
 > 3. System checks for duplicates (name + phone).  
 > 4. If valid, system updates client details and displays confirmation.  
@@ -380,25 +380,22 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. Index out of bounds.  
->   - 2a1. System displays error: “Index not found.”  
->   - Use case ends.  
+>   - 2a1. System displays error: "The person index provided is invalid"
+>   - 2a2. Agent provides the correct index"
+>   - Use case resumes from step 2  
 >
 > - 2b. Invalid parameter format.  
->   - 2b1. System displays error specifying invalid field.  
+>   - 2b1. System displays error specifying invalid field .  
 >   - 2b2. Agent corrects input.  
 >   - Use case resumes from step 2.  
 >
-> - 3a. Duplicate detected.  
->   - 3a1. System displays duplicate warning.  
->   - Use case ends.  
->
-> - 4a. Tag replacement error.  
->   - 4a1. System rejects entire edit if one invalid tag is found.  
+> - 3a. Duplicate clients detected.  
+>   - 3a1. System displays "This person already exists in the address book."  
 >   - Use case ends.  
 
 ---
 
-### Use case: `delete`
+### UC03 Use case: `delete`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
@@ -412,58 +409,44 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >
 > **Extensions:**  
 > - 2a. Index out of bounds.  
->   - 2a1. System displays error: “Index not found.”  
+>   - 2a1. System displays error: "The person index provided is invalid" 
 >   - Use case ends.  
 
 ---
 
-### Use case: `find`
+### UC04 Use case: `find`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
 > **MSS:**  
-> 1. Agent issues find STRING command.  
-> 2. System searches client records by name, UID, email, or phone.  
-> 3. System returns matching records in a tabular list (CLI) or as clickable results (GUI).  
-> 4. Agent views or selects the desired client record.  
+> 1. Agent issues `find <query 1> <query 2> ...` command.  
+> 2. System searches for clients whose information matches the keywords in the query. 
+> 3. System displays all clients whose information matches the keywords in the query. 
+> 4. Agent views the list of clients displayed by the system.
 >    - Use case ends.  
 >
 > **Extensions:**  
 > - 2a. No matches found.  
->   - 2a1. System displays: “No clients matched the provided filters.”  
+>   - 2a1. System displays: “0 persons listed!”  
 >   - Use case ends.  
->
-> - 2b. Invalid parameter provided (e.g., malformed input).  
->   - 2b1. System displays error specifying the issue (e.g., invalid characters).  
->   - 2b2. Agent re-enters correct input.  
->   - Use case resumes from step 2.  
->
-> - 2c. Conflicting filters applied.  
->   - 2c1. System displays: "No clients matched all provided filters."  
->   - Use case ends.  
-
 ---
 
-### Use case: `help`
+### UC05 case: `help`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
 > **MSS:**  
 > 1. Agent issues help command.  
-> 2. System displays a list of commands with usage details.  
+> 2. System shows a popup containing link to user guide and introduces the `man` command.
 > 3. Agent reads and continues working.  
 >    - Use case ends.  
->
-> **Extensions:**  
-> - 1a. Agent types synonym (e.g., guide, man).  
->   - 1a1. System displays: “Unknown command. Type help to see available commands.”  
->   - Use case ends.  
+
 
 ---
 
-### Use case: `biz`
+### UC06 Use case: `biz`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent
@@ -481,7 +464,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### Use case: `unbiz`
+### UC07 Use case: `unbiz`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent
@@ -502,7 +485,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### Use case: `stats`
+### UC08 Use case: `stats`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
@@ -521,32 +504,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### Use case: `list`
+### UC09 Use case: `list`
  
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent  
 >
 > **MSS:**  
 > 1. Agent issues list command.  
-> 2. System displays all the persons in the address book.  
-> 3. Use case ends.  
+> 2. System displays all the persons in the Insurance Management App.  
+>    - Use case ends.  
  
 ---
 
-### Use case: `clear`
+### UC10 Use case: `clear`
 
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent
 >
 > **MSS:**
-> 1. Agent first started the application and there are dummy values initialized.
+> 1. Agent first started the application and there are dummy values initialized or agent wants to clean up all users currently stored.
 > 2. Agent remove all entries by issuing clear command.
-> 3. Use case ends.
+>    - Use case ends.  
 
 
 ---
 
-### Use case: `undo`
+### UC11 Use case: `undo`
 > **System:** Insurance Management App
 > **Actor:** Insurance Agent
 >   
@@ -554,7 +537,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 1. Agent accidentally ran an undoable command eg. deleted all entries by issuing clear command.
 > 2. Agent issues undo command.
 > 3. System restores the previous state before the last mutable command.
-> 4. Use case ends.
+>    - Use case ends.  
 > 
 > *Extensions:*
 > - 2a. No commands to undo.
@@ -563,7 +546,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --- 
 
-### Use case: `redo`
+### UC12 Use case: `redo`
 > **System:** Insurance Management App
 > **Actor:** Insurance Agent
 > 
@@ -571,7 +554,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 1. Agent had undone a previous mutable command, but he changes his mind.
 > 2. Agent issues redo command.
 > 3. System reapplies the last undone mutable command.
-> 4. Use case ends.
+>    - Use case ends.  
 > 
 > *Extensions:*
 > - 2a. No commands to redo.
@@ -581,7 +564,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### Use case: Navigating the command history
+### UC13 Use case: Navigating the command history
  
 > **System:** Insurance Management App  
 > **Actor:** Insurance Agent
@@ -593,7 +576,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 4. Agent wants to go back to more recent commands.
 > 5. Agent press down arrow key
 > 6. Command box displays the next command.
-> 7. Use case ends.
+>    - Use case ends.  
 
 
 ### Non-Functional Requirements
