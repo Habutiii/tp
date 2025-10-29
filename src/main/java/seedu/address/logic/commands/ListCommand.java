@@ -31,7 +31,8 @@ public class ListCommand extends Command {
     public static final String MESSAGE_FOLDER_CREATED = "Created folder \"%s\" and listed matching persons";
     public static final String MESSAGE_LISTED_MATCHING = "Listed persons with all of: %s";
     public static final String MESSAGE_FOLDER_DELETED = "Deleted folder \"%s\"";
-    public static final String MESSAGE_FOLDER_MISSING = "Folder \"%s\" not found";
+    public static final String MESSAGE_FOLDER_MISSING = "Folder \"%s\" not found. You cannot delete a folder "
+            + "that does not exist";
 
     public static final String MANUAL = String.join("\n",
             "NAME",
