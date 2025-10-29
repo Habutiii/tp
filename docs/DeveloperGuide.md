@@ -578,6 +578,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 6. Command box displays the next command.
 >    - Use case ends.  
 
+---
+
+### UC14 Use case: Creating and saving custom folders
+
+> **System:** Insurance Management App
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent issues list command with all the tags the agent wants.
+> 2. Agent adds 's/' at the end of the command to create a custom folder.
+> 3. Custom folder with all selected tags is created.
+> 4. Agent can click into newly created folder for easy sorting
+>       - Use case ends
+
+---
+
+### UC15 Use case: Deleteing folders
+
+> **System:** Insurance Management App
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent issues list command with all the tags the agent wants.
+> 2. Agent adds 'd/' at the end of the command to delete selected folder.
+> 3. Folder with respective tags is deleted.
+>    - Use case ends
 
 ### Non-Functional Requirements
 
