@@ -17,6 +17,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
@@ -296,5 +299,25 @@ public class EditCommandTest {
         String manual = cmd.man();
         assertTrue(manual.contains("edit"));
         assertTrue(manual.contains("PARAMETERS"));
+    }
+
+    @Test
+    public void execute_editCausesTooManyTags_throwsCommandException() {
+        // Retrieve a valid person from the model (e.g., Alice)
+        Person originalPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // Build a set of tags that exceeds the limit
+        List<String> tooManyTagStrings = IntStream.rangeClosed(1, Person.MAX_TAGS_PER_PERSON + 2)
+                .mapToObj(i -> "tag" + i)
+                .collect(Collectors.toList());
+
+        // Build descriptor with too many tags
+        EditCommand.EditPersonDescriptor descriptor =
+                new EditPersonDescriptorBuilder().withTags(tooManyTagStrings.toArray(new String[0])).build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        // Expect CommandException due to tag overflow
+        assertThrows(CommandException.class, () -> editCommand.execute(model));
     }
 }

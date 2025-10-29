@@ -29,8 +29,8 @@ public class BizTagCommand extends Command {
 
     public static final String MANUAL = String.join("\n",
             "NAME",
-            "  biz — Declares Features to use for grouping Tags for Statistics.",
-            "        Using biz with the same Feature name overwrites the existing Feature - Tags combination.",
+            "  biz — Declares Features to use for grouping Tags for Statistics. "
+                    + "Using biz with the same Feature name overwrites the existing Feature - Tags combination.",
             "",
             "USAGE",
             "  biz f/FEATURE [t/TAG]…",

@@ -16,6 +16,9 @@ import seedu.address.model.tag.Tag;
  */
 public class Person {
 
+    // Restrains
+    public static final int MAX_TAGS_PER_PERSON = 15;
+
     // Identity fields
     private final Name name;
     private final Phone phone;
@@ -30,6 +33,13 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
+
+        if (tags.size() > MAX_TAGS_PER_PERSON) {
+            throw new IllegalArgumentException(String.format(
+                    "A person can have at most %d tags. You provided %d.",
+                    MAX_TAGS_PER_PERSON, tags.size()));
+        }
+
         this.name = name;
         this.phone = phone;
         this.email = email;
