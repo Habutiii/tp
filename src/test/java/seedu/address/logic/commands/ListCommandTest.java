@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -12,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.TagMatchesAllPredicate;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
@@ -102,10 +103,24 @@ public class ListCommandTest {
     }
 
     @Test
-    public void undoCommand_notSupported() {
-        ListCommand listCommand = new ListCommand();
-        assertThrows(UnsupportedOperationException.class, () ->
-            listCommand.undo(model));
+    public void undoCommand_notSupported_nonMutable() {
+        ListCommand listCommand = new ListCommand(); // not mutable
+        // now just call and assert the message if you kept the non-throwing behavior
+        assertEquals("Nothing to undo.", listCommand.undo(model));
+    }
+
+    @Test
+    public void undoCommand_supported_whenSaveOrDelete() {
+        Predicate<Person> any = p -> true;
+
+        // save path
+        ListCommand save = new ListCommand(any, java.util.List.of("friends"), true, false);
+        // execute(save) first in an integration test; here we can just check isMutable()
+        assertTrue(save.isMutable());
+
+        // delete path
+        ListCommand del = new ListCommand(any, java.util.List.of("friends"), false, true);
+        assertTrue(del.isMutable());
     }
 
     @Test

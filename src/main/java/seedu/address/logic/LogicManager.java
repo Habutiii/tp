@@ -106,4 +106,5 @@ public class LogicManager implements Logic {
     public ObservableList<TagFolder> getActiveTagFolders() {
         return model.getActiveTagFolders();
     }
+
 }

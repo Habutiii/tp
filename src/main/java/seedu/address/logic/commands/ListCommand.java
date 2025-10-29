@@ -36,6 +36,8 @@ public class ListCommand extends Command {
     public static final String MANUAL = String.join("\n",
             "NAME",
             "  list — Lists all persons in the address book.",
+            "  s/   — To create and save a custom folder",
+            "  d/   — To delete a folder",
             "",
             "USAGE",
             "  list",
@@ -58,10 +60,13 @@ public class ListCommand extends Command {
     private final boolean saveFolder;
     private final boolean deleteFolder;
 
+    private String folderNameForUndo;
+    private seedu.address.model.tag.TagFolder deletedSnapshot;
+
     /** List all. */
     public ListCommand() {
         this.predicate = null;
-        this.tagNamesForSidebar = java.util.Collections.emptyList();
+        this.tagNamesForSidebar = Collections.emptyList();
         this.saveFolder = false;
         this.deleteFolder = false;
     }
@@ -78,7 +83,7 @@ public class ListCommand extends Command {
     public ListCommand(Predicate<Person> predicate, List<String> tagNames,
                        boolean saveFolder, boolean deleteFolder) {
         this.predicate = predicate;
-        this.tagNamesForSidebar = (tagNames == null) ? java.util.Collections.emptyList() : tagNames;
+        this.tagNamesForSidebar = (tagNames == null) ? Collections.emptyList() : tagNames;
         this.saveFolder = saveFolder;
         this.deleteFolder = deleteFolder;
     }
@@ -95,22 +100,35 @@ public class ListCommand extends Command {
         // filter list
         model.updateFilteredPersonList(predicate);
 
-        // Delete flow
+        // ---------- DELETE FLOW ----------
         if (deleteFolder) {
             final String folderName = deriveFolderName(tagNamesForSidebar);
+            folderNameForUndo = folderName;
+
             if (!model.hasTagFolder(folderName)) {
                 throw new CommandException(String.format(MESSAGE_FOLDER_MISSING, folderName));
             }
+
+            // Take a snapshot of the folder we're going to remove so we can restore it on undo
+            deletedSnapshot = model.getActiveTagFolders().stream()
+                    .filter(f -> f.getName().equalsIgnoreCase(folderName))
+                    .findFirst()
+                    .map(f -> new seedu.address.model.tag.TagFolder(
+                            f.getName(), f.getCount(), f.getQueryTags()))
+                    .orElse(null);
+
             boolean removed = model.removeTagFolderByName(folderName);
             if (!removed) {
                 throw new CommandException(String.format(MESSAGE_FOLDER_MISSING, folderName));
             }
+
             return new CommandResult(String.format(MESSAGE_FOLDER_DELETED, folderName));
         }
 
-        // Only create a folder when user explicitly specified s/
+        // ---------- SAVE FLOW ----------
         if (saveFolder && !tagNamesForSidebar.isEmpty()) {
             final String folderName = deriveFolderName(tagNamesForSidebar);
+            folderNameForUndo = folderName;
 
             // Guard against duplicates
             if (model.hasTagFolder(folderName)) {
@@ -150,5 +168,48 @@ public class ListCommand extends Command {
                 || (other instanceof ListCommand
                 && ((this.predicate == null && ((ListCommand) other).predicate == null)
                 || (this.predicate != null && this.predicate.equals(((ListCommand) other).predicate))));
+    }
+
+    @Override
+    public boolean isMutable() {
+        return saveFolder || deleteFolder;
+    }
+
+    @Override
+    public String undo(Model model) throws UnsupportedOperationException {
+        requireNonNull(model);
+
+        if (!isMutable()) {
+            return "Nothing to undo.";
+        }
+
+        // Undo a SAVE → remove the folder we just created
+        if (saveFolder) {
+            if (folderNameForUndo == null) {
+                return "Nothing to undo.";
+            }
+            boolean removed = model.removeTagFolderByName(folderNameForUndo);
+            model.refreshActiveTagFolderCounts();
+            return removed
+                    ? "Undid: removed folder \"" + folderNameForUndo + "\""
+                    : "Undo had nothing to remove for \"" + folderNameForUndo + "\"";
+        }
+
+        // Undo a DELETE → restore the deleted folder from its snapshot
+        if (deleteFolder) {
+            if (deletedSnapshot == null || deletedSnapshot.getQueryTags().isEmpty()) {
+                return "Nothing to undo.";
+            }
+            var tags = deletedSnapshot.getQueryTags();
+            if (tags.size() == 1) {
+                model.addActiveTagFoldersFromUser(tags);
+            } else {
+                model.addCompositeTagFolderFromUser(tags);
+            }
+            model.refreshActiveTagFolderCounts();
+            return "Undid: restored folder \"" + deletedSnapshot.getName() + "\"";
+        }
+
+        return "Nothing to undo.";
     }
 }
