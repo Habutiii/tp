@@ -11,8 +11,9 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names may only contain English letters (A–Z, a–z), spaces, and these special characters: , ( ) / . @ - '\n"
-                    + "Names must not contain numbers and must not start with a space.";
+            "Names may only contain English letters (A–Z, a–z), spaces and these special characters: , ( ) / . @ - '\n"
+                    + "Names must not contain numbers and must not start with a space. \n"
+                    + "A name should also not exceed 100 characters.";
 
     /*
      * First char cannot be a space.
