@@ -10,8 +10,8 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
  */
 public class Address {
 
-    public static final String MESSAGE_CONSTRAINTS = "Address can take any values but it cannot be blank"
-            + " and should not exceed 254 characters";
+    public static final String MESSAGE_CONSTRAINTS = "Address can contain any printable characters. "
+            + "However, it must not be blank and cannot exceed 254 characters.";
 
     /*
      * The first character of the address must not be a whitespace,
