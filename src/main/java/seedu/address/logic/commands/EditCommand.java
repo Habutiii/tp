@@ -137,7 +137,9 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(Person personToEdit,
+                                             EditPersonDescriptor editPersonDescriptor) throws CommandException {
+
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -145,6 +147,13 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+
+        // Edit-time guard for max tags per person
+        if (updatedTags.size() > Person.MAX_TAGS_PER_PERSON) {
+            throw new CommandException(String.format(
+                    "Too many tags after edit: at most %d allowed, but %d provided.",
+                    Person.MAX_TAGS_PER_PERSON, updatedTags.size()));
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }

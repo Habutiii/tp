@@ -64,7 +64,7 @@ The following keybinds are available in Ethical Insurance
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (Up to 15 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -150,7 +150,7 @@ Only printable ASCII characters are allowed.
   - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
   - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
-- **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.   
   _Example: friend, VIP, family-member, project2025_
 
 **Criteria for Same Person:**
@@ -170,6 +170,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
+* Each person after editing can only contain a maximum of 15 tags.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
