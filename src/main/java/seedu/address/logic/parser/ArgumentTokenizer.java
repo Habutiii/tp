@@ -73,13 +73,21 @@ public class ArgumentTokenizer {
      * {@code argsString} = "e/hi p/900", {@code prefix} = "p/" and
      * {@code fromIndex} = 0, this method returns 5.
      */
-    private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int idx = argsString.indexOf(prefix, Math.max(0, fromIndex));
-        while (idx != -1) {
-            if (idx == 0 || Character.isWhitespace(argsString.charAt(idx - 1))) {
-                return idx;
+    private static int findPrefixPosition(String s, String prefix, int from) {
+        int i = from;
+        while (i <= s.length() - prefix.length()) {
+            int pos = s.indexOf(prefix, i);
+            if (pos == -1) {
+                return -1;
             }
-            idx = argsString.indexOf(prefix, idx + 1); // keep looking further right
+
+            boolean atStart = pos == 0;
+            boolean precededByWs = !atStart && Character.isWhitespace(s.charAt(pos - 1));
+            if (atStart || precededByWs) {
+                return pos;
+            }
+
+            i = pos + 1; // keep searching
         }
         return -1;
     }
