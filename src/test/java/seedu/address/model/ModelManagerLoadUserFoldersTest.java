@@ -26,7 +26,7 @@ public class ModelManagerLoadUserFoldersTest {
         AddressBook ab = new AddressBook();
         UserPrefs up = new UserPrefs();
         up.setSavedSidebarFolders(List.of(
-                new SidebarFolderPrefs("friends", List.of("friends"))));
+                new SidebarFolderPrefs(List.of("friends"))));
 
         ModelManager mm = new ModelManager(ab, up);
 
@@ -42,7 +42,7 @@ public class ModelManagerLoadUserFoldersTest {
         UserPrefs up = new UserPrefs();
         // Order in prefs is reversed; loader should normalise and sort.
         up.setSavedSidebarFolders(List.of(
-                new SidebarFolderPrefs("friends & colleagues", List.of("friends", "colleagues"))));
+                new SidebarFolderPrefs(List.of("friends", "colleagues"))));
 
         ModelManager mm = new ModelManager(ab, up);
 
@@ -59,10 +59,10 @@ public class ModelManagerLoadUserFoldersTest {
         UserPrefs up = new UserPrefs();
         up.setSavedSidebarFolders(List.of(
                 // blank name + null tags -> ignored
-                new SidebarFolderPrefs("   ", null),
+                new SidebarFolderPrefs(null),
                 // composite (will become "a & b")
-                new SidebarFolderPrefs(null, List.of("b", "a", "a", "  ")),
-                new SidebarFolderPrefs("b & a", List.of("a", "b"))
+                new SidebarFolderPrefs(List.of("b", "a", "a", "  ")),
+                new SidebarFolderPrefs(List.of("a", "b"))
         ));
 
         ModelManager mm = new ModelManager(ab, up);
@@ -73,21 +73,5 @@ public class ModelManagerLoadUserFoldersTest {
                 .filter(f -> f.getName().equalsIgnoreCase("a & b"))
                 .count();
         assertEquals(1, countAandB, "duplicate composite should be suppressed");
-    }
-
-    @Test
-    void usesNameWhenQueryTagsIsNullOrEmpty() {
-        AddressBook ab = new AddressBook();
-        UserPrefs up = new UserPrefs();
-
-        up.setSavedSidebarFolders(List.of(
-                new SidebarFolderPrefs("Custom Named", null),
-                new SidebarFolderPrefs("Another", List.of())
-        ));
-
-        ModelManager mm = new ModelManager(ab, up);
-
-        assertNotNull(find(mm.getActiveTagFolders(), "Custom Named"));
-        assertNotNull(find(mm.getActiveTagFolders(), "Another"));
     }
 }
