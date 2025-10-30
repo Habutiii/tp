@@ -595,7 +595,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC15 Use case: Deleteing folders
+### UC15 Use case: Deleting folders
 
 > **System:** Insurance Management App
 > **Actor:** Insurance Agent

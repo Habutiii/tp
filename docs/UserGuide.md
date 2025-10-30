@@ -116,7 +116,8 @@ Example:
 
 ### Delete folder by tag : `list t/<your tag here> d/`
 
-Delete selected folder.
+Delete selected folder. Order does not matter for the deleting of folder, as long as
+the respective tags are that folder will be deleted.
 
 Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
 
