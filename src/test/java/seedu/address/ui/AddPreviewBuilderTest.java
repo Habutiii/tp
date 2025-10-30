@@ -82,7 +82,7 @@ public class AddPreviewBuilderTest {
         List<FieldPreview> previews = AddPreviewBuilder.buildPreview(input);
 
         assertEquals("Tags (t/):", previews.get(4).getLabel());
-        assertEquals("friend, friend", previews.get(4).getValue());
+        assertEquals("friend", previews.get(4).getValue()); // Only one friend shown after new update
         assertTrue(previews.get(4).getInvalidTagIndices().isEmpty() || previews.get(4).isValid());
     }
 }
