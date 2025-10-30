@@ -234,6 +234,43 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
+    public void buildPreview_addTags_existingTagcontinueExecuted() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
+
+        // add existing tag 'friend' → should trigger `continue`
+        String input = "edit 1 at/friend";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        // nothing new appended, since 'friend' already exists
+        assertEquals("friend, colleague + ", tagPreview.getValue());
+        assertTrue(tagPreview.isValid()); // confirm branch didn’t invalidate
+    }
+
+
+    @Test
+    public void buildPreview_deleteTagsexistingTag_valid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
+
+        // remove existing tag 'friend' -> valid, not added to invalidTagIndices
+        String input = "edit 1 dt/friend";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals("friend, colleague - friend", tagPreview.getValue());
+        assertTrue(tagPreview.isValid()); // ensures skip branch executed
+    }
+
+
+    @Test
     public void buildPreview_addTags_invalidTag() {
         List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
