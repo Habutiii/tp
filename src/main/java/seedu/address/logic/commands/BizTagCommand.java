@@ -36,9 +36,9 @@ public class BizTagCommand extends Command {
             "  biz f/FEATURE [t/TAG]…",
             "",
             "PARAMETERS",
-            "  • FEATURE: non-empty string, alphanumeric, no spaces;",
-            "  • TAG: non-empty string, alphanumeric, no spaces; "
-                    + "you may have multiple t/TAG categories for the FEATURE",
+            "  • FEATURE: " + FeatureTag.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
+            "\n  • TAG: " + Tag.MESSAGE_CONSTRAINTS.replace("\n", "\n\t")
+                    + "\nYou may have multiple t/TAG categories for the FEATURE",
             "",
             "EXAMPLES",
             "  biz f/Plan t/A t/B",

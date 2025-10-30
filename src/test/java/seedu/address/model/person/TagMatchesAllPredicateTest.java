@@ -28,11 +28,10 @@ public class TagMatchesAllPredicateTest {
     }
 
     @Test
-    public void test_personHasOneOfRequiredTags_returnsTrue() {
-        // Person with only friends still matches (ANY semantics)
+    public void test_personHasAllRequiredTags_returnsTrue() {
         Person person = new PersonBuilder()
-                .withName("James Ho")
-                .withTags("friends")
+                .withName("Bernice Yu")
+                .withTags("friends", "colleagues")
                 .build();
 
         TagMatchesAllPredicate predicate =
