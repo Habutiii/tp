@@ -150,7 +150,7 @@ Only printable ASCII characters are allowed.
   - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
   - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
-- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.   
+- **Tag:** Each Person can only have up to 15 tags. A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 **Criteria for Same Person:**
@@ -254,7 +254,7 @@ Examples: [See result in 'Viewing Summary Statistics']
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -273,7 +273,7 @@ Examples:
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -380,6 +380,9 @@ _Details coming soon ..._
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Ethical Insurance home folder.
+
+**Q**: Why when I issue add/edit command, something appears on the right side of the application?<br>
+**A**: When issuing an add or edit command, a live preview of what you are adding or editing will appear on the right side of your screen. This allows you to quickly verify that the information you entered is correct. When an invalid field is detected (e.g., `n/X Æ A-12`), that field will be highlighted in red to indicate an error. Currently, duplicate users are not flagged (coming soon!).
 
 --------------------------------------------------------------------------------------------------------------------
 
