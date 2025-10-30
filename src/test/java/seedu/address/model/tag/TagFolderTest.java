@@ -14,6 +14,13 @@ import org.junit.jupiter.api.Test;
 class TagFolderTest {
 
     @Test
+    void null_tagFolderQuery_throws() {
+        assertThrows(NullPointerException.class, ()-> {
+            new TagFolder("null", 0, null);
+        });
+    }
+
+    @Test
     void ctor_singleTag_setsNameCountAndQueryTags() {
         TagFolder f = new TagFolder("friends", 3);
         assertEquals("friends", f.getName());
