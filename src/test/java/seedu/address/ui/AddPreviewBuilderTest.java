@@ -85,4 +85,50 @@ public class AddPreviewBuilderTest {
         assertEquals("friend", previews.get(4).getValue()); // Only one friend shown after new update
         assertTrue(previews.get(4).getInvalidTagIndices().isEmpty() || previews.get(4).isValid());
     }
+
+    @Test
+    public void addPreview_emptyTag_invalid() {
+        String input = "add t/";
+        List<FieldPreview> previews = AddPreviewBuilder.buildPreview(input);
+
+        assertEquals("Tags (t/):", previews.get(4).getLabel());
+        assertFalse(previews.get(4).isValid());
+        assertTrue(previews.get(4).getInvalidTagIndices().contains(0));
+    }
+
+    @Test
+    public void addPreview_invalidTagName_invalid() {
+        String input = "add t/invalid*tag";
+        List<FieldPreview> previews = AddPreviewBuilder.buildPreview(input);
+
+        assertEquals("Tags (t/):", previews.get(4).getLabel());
+        assertFalse(previews.get(4).isValid());
+        assertTrue(previews.get(4).getInvalidTagIndices().contains(0));
+    }
+
+    @Test
+    public void addPreview_tooManyTags_invalid() {
+        StringBuilder inputBuilder = new StringBuilder("add");
+        for (int i = 1; i <= 16; i++) {
+            inputBuilder.append(" t/tag").append(i);
+        }
+        String input = inputBuilder.toString();
+        List<FieldPreview> previews = AddPreviewBuilder.buildPreview(input);
+
+        assertEquals("Tags (t/):", previews.get(4).getLabel());
+        // Show only the first 15 tags then error messaage (if nothing goes wrong)
+        StringBuilder expected = new StringBuilder();
+        for (int i = 1; i <= 15; i++) {
+            expected.append("tag").append(i);
+            if (i < 15) {
+                expected.append(", ");
+            }
+        }
+        expected.append(", (Max number of tags is 15)");
+        System.out.println("Actual: " + previews.get(4).getValue());
+        System.out.println("Invalid indices: " + previews.get(4).getInvalidTagIndices());
+        assertEquals(expected.toString(), previews.get(4).getValue());
+        assertFalse(previews.get(4).isValid());
+        assertTrue(previews.get(4).getInvalidTagIndices().contains(14));
+    }
 }

@@ -88,7 +88,7 @@ public class AddPreviewBuilder {
             if (displayCount > 0) {
                 tagsJoined.append(", ");
             }
-            tagsJoined.append(" (Max number of tags is 15)");
+            tagsJoined.append("(Max number of tags is 15)");
             invalidTagIndices.add(Person.MAX_TAGS_PER_PERSON - 1);
         }
         return new FieldPreview("Tags (t/):", tagsJoined.toString(), invalidTagIndices);
