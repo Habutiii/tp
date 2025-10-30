@@ -251,6 +251,20 @@ public class EditPreviewBuilderTest {
         assertTrue(tagPreview.isValid()); // confirm branch didn’t invalidate
     }
 
+    @Test
+    public void buildPreview_addTags_invalidTagNameinvalid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        String input = "edit 1 at/!!!"; // invalid tag name
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertFalse(tagPreview.isValid());
+    }
+
+
 
     @Test
     public void buildPreview_deleteTagsexistingTag_valid() {
@@ -268,6 +282,20 @@ public class EditPreviewBuilderTest {
         assertEquals("friend, colleague - friend", tagPreview.getValue());
         assertTrue(tagPreview.isValid()); // ensures skip branch executed
     }
+
+    @Test
+    public void buildPreview_deleteTags_invalidTagNameinvalid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        String input = "edit 1 dt/!!!"; // invalid tag name
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertFalse(tagPreview.isValid());
+    }
+
 
 
     @Test
