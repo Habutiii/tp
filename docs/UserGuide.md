@@ -287,9 +287,10 @@ Key - Features: Tags
 * Plan: A, B, C
 * Gender: Male, Female, Other
 
-Total Number of Customers: 6
+``` Sample table view
+Total Number of Customers in AddressBook: 6
 
-Gender  | Number of people
+Gender  | Number of people 
 Male   | 0
 Female  | 0
 Other  | 0
@@ -310,6 +311,7 @@ Average: 0.33
 Max Tag: A (1 person)
 Min Tag: B & C (0 people)
 ---------------------------------------------
+```
 
 ### Undoing the last action : `undo`
 
