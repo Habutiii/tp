@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import seedu.address.logic.parser.ArgumentMultimap;
@@ -10,6 +11,7 @@ import seedu.address.logic.parser.DuplicateFieldChecker;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -66,24 +68,35 @@ public class AddPreviewBuilder {
     }
 
     static FieldPreview createTagsPreview(List<String> tagList) {
+        LinkedHashSet<String> uniqueTags = new LinkedHashSet<>(tagList);
+        List<String> displayTags = new ArrayList<>(uniqueTags);
         StringBuilder tagsJoined = new StringBuilder();
         List<Integer> invalidTagIndices = new ArrayList<>();
-        for (int i = 0; i < tagList.size(); i++) {
-            String tag = tagList.get(i);
+        int displayCount = Math.min(displayTags.size(), Person.MAX_TAGS_PER_PERSON);
+
+        for (int i = 0; i < displayCount; i++) {
+            String tag = displayTags.get(i);
             if (tag.isEmpty() || !Tag.isValidTagName(tag)) {
                 invalidTagIndices.add(i);
             }
             tagsJoined.append(tag);
-            if (i < tagList.size() - 1) {
+            if (i < displayCount - 1) {
                 tagsJoined.append(", ");
             }
+        }
+        if (displayTags.size() > Person.MAX_TAGS_PER_PERSON) {
+            if (displayCount > 0) {
+                tagsJoined.append(", ");
+            }
+            tagsJoined.append(" (Max number of tags is 15)");
+            invalidTagIndices.add(Person.MAX_TAGS_PER_PERSON - 1);
         }
         return new FieldPreview("Tags (t/):", tagsJoined.toString(), invalidTagIndices);
     }
 
     static FieldPreview createNamePreview(String name, boolean duplicate) {
         if (duplicate) {
-            return new FieldPreview("Name (n/):", name + " (duplicate)", false);
+            return new FieldPreview("Name (n/):", name + " (duplicate n/ found!)", false);
         }
         boolean isValid = !name.isEmpty() && Name.isValidName(name);
         if (name.isEmpty()) {
@@ -94,7 +107,7 @@ public class AddPreviewBuilder {
 
     static FieldPreview createPhonePreview(String phone, boolean duplicate) {
         if (duplicate) {
-            return new FieldPreview("Phone (p/):", phone + " (duplicate)", false);
+            return new FieldPreview("Phone (p/):", phone + " (duplicate p/ found!)", false);
         }
         boolean isValid = !phone.isEmpty() && Phone.isValidPhone(phone);
         if (phone.isEmpty()) {
@@ -105,7 +118,7 @@ public class AddPreviewBuilder {
 
     static FieldPreview createEmailPreview(String email, boolean duplicate) {
         if (duplicate) {
-            return new FieldPreview("Email (e/):", email + " (duplicate)", false);
+            return new FieldPreview("Email (e/):", email + " (duplicate e/ found!)", false);
         }
         boolean isValid = !email.isEmpty() && Email.isValidEmail(email);
         if (email.isEmpty()) {
@@ -116,7 +129,7 @@ public class AddPreviewBuilder {
 
     static FieldPreview createAddressPreview(String address, boolean duplicate) {
         if (duplicate) {
-            return new FieldPreview("Address (a/):", address + " (duplicate)", false);
+            return new FieldPreview("Address (a/):", address + " (duplicate a/ found!)", false);
         }
         boolean isValid = !address.isEmpty() && Address.isValidAddress(address);
         if (address.isEmpty()) {
