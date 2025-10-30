@@ -5,41 +5,66 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":BizTagCommandParser" as BizTagCommandParser LOGIC_COLOR
 participant "b:BizTagCommand" as BizTagCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute(biz)
+[-> LogicManager : execute("biz f/Plan t/A t/B")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand(biz)
+LogicManager -> AddressBookParser : parseCommand("biz f/Plan t/A t/B")
 activate AddressBookParser
 
+create BizTagCommandParser
+AddressBookParser -> BizTagCommandParser
+activate BizTagCommandParser
+
+BizTagCommandParser --> AddressBookParser
+deactivate BizTagCommandParser
+
+AddressBookParser -> BizTagCommandParser : parse("f/Plan t/A t/B")
+activate BizTagCommandParser
+
 create BizTagCommand
-AddressBookParser -> BizTagCommand
+BizTagCommandParser -> BizTagCommand
 activate BizTagCommand
 
-BizTagCommand --> AddressBookParser
+BizTagCommand --> BizTagCommandParser
 deactivate BizTagCommand
+
+BizTagCommandParser --> AddressBookParser : b
+deactivate BizTagCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+BizTagCommandParser -[hidden]-> AddressBookParser
+destroy BizTagCommandParser
 
 AddressBookParser --> LogicManager : b
 deactivate AddressBookParser
 
-LogicManager -> BizTagCommand : execute()
+LogicManager -> BizTagCommand : execute(m)
 activate BizTagCommand
 
-BizTagCommand -> Model : addBizTags()
+BizTagCommand -> Model : addBizTags(Plan, {A, B}})
 activate Model
 
 Model --> BizTagCommand
 deactivate Model
 
-BizTagCommand --> LogicManager : result
+create CommandResult
+BizTagCommand --> CommandResult
+activate CommandResult
+
+CommandResult --> BizTagCommand
+deactivate CommandResult
+
+BizTagCommand --> LogicManager : r
 deactivate BizTagCommand
-BizTagCommand -[hidden]-> LogicManager : result
+BizTagCommand -[hidden]-> LogicManager : r
 
 [<--LogicManager
 deactivate LogicManager
