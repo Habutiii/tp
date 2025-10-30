@@ -53,27 +53,21 @@ The following keybinds are available in Ethical Insurance
 
 ## Features
 
-<div markdown="block" class="alert alert-info">
+### 💡 Notes about Command Format
 
-**:information_source: Notes about the command format:**<br>
+| Rule                               | Description                                                                                | Example                                                                |
+|------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                              | `add n/NAME` → `add n/John Doe`                                        |
+| **Items in square brackets `[ ]`** | Are optional.                                                                              | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`               |
+| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                           | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**) |
+| **Parameter order**                | Parameters can appear in any order.                                                        | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                      |
+| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                     | `help 123` → interpreted as `help`                                     |
+| **PDF copy-paste tip**             | If copying commands that span multiple lines, ensure spaces near line breaks are not lost. | —                                                                      |
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+---
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+> This section explains how to read and use command syntax throughout the User Guide
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (Up to 15 times), `t/friend`, `t/friend t/family` etc.
-
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-</div>
 
 ### Viewing Manuals: `man`
 
@@ -111,52 +105,114 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
-* Another person entry with the same `NAME` and `PHONE_NUMBER` is treated as a duplicate entry.
+> 💡 **Tip:**  
+> A person can have any number of tags (including 0).
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
-</div>
 
-Examples:
+> ⚠️ **Duplicate Rule:**  
+> Another person with the same **`NAME`** and **`PHONE_NUMBER`** is treated as a duplicate entry.
+
+### **⚠️ Criteria for Same Person**
+
+Two persons are considered the same if:
+- They have the **same `NAME`** (case-insensitive), and
+- They have the **same `PHONE_NUMBER`**.
+
+Duplicate entries are not allowed in the address book.
+
+---
+
+#### **Examples**
+
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-**Parameter restrictions:**
-***All parameters contains only printable ASCII characters***
+---
 
-- **Name:** Must start with a letter or number
-  - Can contain letters, spaces, and the following special characters only:
-  (space) , ( ) / . @ - '
-  - Names cannot contain numbers or any other special symbols.
+### **Parameter Restrictions**
 
-  **Example:** 
-  - Valid: Jean-Luc, Tan, Mei Ling, O'Connor, Mary (Ann), Alex @ Home
-  - Invalid: John123, Strauß, José, John*, John_
+_All parameters must contain only printable ASCII characters._
 
-- **Phone:** Must be 3 to 15 digits to account for some special numbers and international numbers.
-Only digits (0–9) are allowed, no spaces, letters, or symbols.
+#### **Name**
+- Must start with a **letter or number**.
+- Can contain **letters**, **spaces**, and the following special characters only:  
+  `(space) , ( ) / . @ - '`
+- Cannot contain **numbers** inside the name or any other special symbols.
 
-  **Example:**
-  - Valid: 94567802, 82684533, 66265555, 123456789012345
-  - Invalid: +65 98765432, phone123, 9011p041, 9312 1534
+**Examples**
 
-- **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
-  _Example: johndoe@example.com, alice.smith-99@mail.co, user+test@abc-def.com_
+| ✅ Valid     | ❌ Invalid |
+|-------------|-----------|
+| Jean-Luc    | John123   |
+| Tan         | Strauß    |
+| Mei Ling    | José      |
+| O’Connor    | John*     |
+| Mary (Ann)  | John_     |
+| Alex @ Home |           |
 
-- **Address:** Must not be blank, must start with a non-space character, and must not end with a space.
-Only printable ASCII characters are allowed.
+---
 
-  **Example:**
-  - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
-  - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
+#### **Phone**
+- Must be **3–15 digits** (to account for international numbers).
+- Only digits (0–9) are allowed — **no spaces, letters, or symbols.**
 
-- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.   
-  _Example: friend, VIP, family-member, project2025_
+**Examples**
 
-**Criteria for Same Person:**
-* Two persons are considered the same if they have the same `NAME` (case-insensitive) and `PHONE_NUMBER`.
-* There should not be duplicate persons in the address book.
+| ✅ Valid         | ❌ Invalid    |
+|-----------------|--------------|
+| 94567802        | +65 98765432 |
+| 82684533        | phone123     |
+| 66265555        | 9011p041     |
+| 123456789012345 | 9312 1534    |
 
+---
+
+#### **Email**
+- Must be a **valid email address**, with:
+    - An alphanumeric username
+    - Optional special characters (`+`, `_`, `.`, `-`)
+    - An `@` followed by a valid domain name
+
+**Examples**
+
+| ✅ Valid                | ❌ Invalid       |
+|------------------------|-----------------|
+| johndoe@example.com    | johndoe@        |
+| alice.smith-99@mail.co | alice@@mail.com |
+| user+test@abc-def.com  | user@mail       |
+
+---
+
+#### **Address**
+- Must **not be blank**.
+- Must **start with a non-space** and **not end with a space**.
+- Only printable ASCII characters allowed.
+
+**Examples**
+
+| ✅ Valid                      | ❌ Invalid                     |
+|------------------------------|-------------------------------|
+| 123 Main St, Block 5, #01-01 | " "                           |
+| 42 Wallaby Way               | " Blk 456, Den Road, #01-355" |
+| 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
+
+---
+
+#### **Tag**
+- Tags are optional.
+- Each person can have **up to 15 tags**.
+- Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
+- Tags are **case-insensitive**.
+
+**Examples**
+
+| ✅ Valid       | ❌ Invalid     |
+|---------------|---------------|
+| friend        | friend!       |
+| family-member | family_member |
+| project2025   | Project@2025  |
+
+---
 
 ### Editing a person : `edit`
 
@@ -164,54 +220,73 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
-* Each person after editing can only contain a maximum of 15 tags.
+> 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
 
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+> 💡 Example: if you use `find` first, `edit 1` edits the first result from that filtered list.
+  Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) command.
 
-Parameter restrictions: Same as `add` command.
+---
+
+#### Description
+
+- Edits the person at the specified **`INDEX`** in the currently displayed list.  
+  The index **must be a positive integer** (1, 2, 3, …).
+- At least **one** of the optional fields must be provided.
+- Only the specified fields are updated, other fields remain unchanged.
+- When editing tags, the existing tags are **replaced**, not added cumulatively.
+- To remove **all** of a person’s tags, type `t/` with nothing following it.
+- Each person can have up to **15 tags** after editing.
+- **Parameter restrictions:** Same as those in the [`add`](#adding-a-person-add) command.
+
+---
+
+#### Examples
+
+| Command                                   | Description                                                              |
+|-------------------------------------------|--------------------------------------------------------------------------|
+| `edit 1 p/91234567 e/johndoe@example.com` | Updates the **phone** and **email** of the 1st person.                   |
+| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and **clears all existing tags**. |
+
+---
 
 ### Locating persons by name: `find`
 
 Finds clients whose **name, phone number, or email** contain any of the given keywords (case-insensitive, partial matches allowed).
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-**Details:**
-* The search is **case-insensitive**.  
-  e.g. `hans` will match `Hans`, `HANS`, or `Johanssen`
-* **Partial matches** are supported.  
-  e.g. `li` will match `David Li`, `Lina Tan`, and `charlie@gmail.com`
-* The search covers **name**, **phone**, and **email** fields.
-* The order of the keywords does **not** matter.  
-  e.g. `Alex 9123` returns all clients with “Alex” in their name or “9123” in their phone number.
-* Matching uses **OR semantics** – a client is listed if **any** keyword matches any searchable field.
-* Blank or invalid inputs (e.g. only spaces or non-printable Unicode) are safely ignored.
+---
+
+#### Description
+
+- The search is **case-insensitive**.  
+  Example: `hans` matches `Hans`, `HANS`, and `Johanssen`.
+- **Partial matches** are supported.  
+  Example: `li` matches `David Li`, `Lina Tan`, and `charlie@gmail.com`.
+- Searches across **name**, **phone**, and **email** fields.
+- Keyword order **does not matter**.  
+  Example: `Alex 9123` matches clients whose name contains “Alex” or phone contains “9123”.
+- Uses **OR semantics** — a client is listed if **any** keyword matches any field.
+- Blank or invalid inputs (e.g., spaces only or non-printable Unicode) are ignored safely.
 
 ---
 
-**Examples:**
+#### Examples
 
-| Command                    | Description / Result                                                      |
-|----------------------------|---------------------------------------------------------------------------|
-| `find alex`                | Returns all clients with “alex” in their name, phone, or email.           |
-| `find 9123`                | Returns clients whose phone number contains `9123`.                       |
-| `find gmail.com`           | Returns clients using Gmail addresses.                                    |
-| `find alex 9123 gmail.com` | Returns any client whose name, phone, or email contains any of the terms. |
+| Command                    | Description / Result                                                |
+|----------------------------|---------------------------------------------------------------------|
+| `find alex`                | Lists all clients with “alex” in their name, phone, or email.       |
+| `find 9123`                | Lists clients whose phone number contains “9123”.                   |
+| `find gmail.com`           | Lists clients using Gmail addresses.                                |
+| `find alex 9123 gmail.com` | Lists clients whose name, phone, or email matches any of the terms. |
 
-Examples:
-* `find al` returns `Alex Yeow` and `Roy Balakrishnan`
-    ![result for 'find al'](images/findAlexResult.png)
+> 💡 `find al` returns `Alex Yeow` and `Roy Balakrishnan`
+  
+![result for 'find al'](images/findAlexResult.png)
 
 
-* `find alex 9927` returns `Alex Yeoh`, `Bernice Yu`<br>
-    ![result for 'find alex 9927'](images/findAlexBerniceResult.png)
+> 💡 `find alex 9927` returns `Alex Yeoh`, `Bernice Yu`<br>
+
+![result for 'find alex 9927'](images/findAlexBerniceResult.png)
 
 
 ### Deleting a person : `delete`
