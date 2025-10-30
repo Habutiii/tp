@@ -104,6 +104,23 @@ Sorts and lists only entries with the respective tag(s) entered.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 
+### Create folder by tag : `list t/<your tag here> s/`
+
+Create and save custom folder. 
+
+Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
+Output will be a folder with the names of the tags you have selected.
+Example:
+- Input: list t/friends t/colleagues s/
+- Output: Folder friends & colleagues created
+
+### Delete folder by tag : `list t/<your tag here> d/`
+
+Delete selected folder. Order does not matter for the deleting of folder, as long as
+the respective tags are that folder will be deleted.
+
+Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
+
 
 ### Adding a person: `add`
 
@@ -128,6 +145,7 @@ Examples:
   - Can contain letters, spaces, and the following special characters only:
   (space) , ( ) / . @ - '
   - Names cannot contain numbers or any other special symbols.
+  - Must not exceed 100 characters.
 
   **Example:** 
   - Valid: Jean-Luc, Tan, Mei Ling, O'Connor, Mary (Ann), Alex @ Home
@@ -140,18 +158,20 @@ Only digits (0–9) are allowed, no spaces, letters, or symbols.
   - Valid: 94567802, 82684533, 66265555, 123456789012345
   - Invalid: +65 98765432, phone123, 9011p041, 9312 1534
 
-- **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.  
-  _Example: johndoe@example.com, alice.smith-99@mail.co, user+test@abc-def.com_
+- **Email:** Must be a valid email address, with an alphanumeric username, optional special characters (+, _, ., -), an '@', and a domain name.
+Must not exceed 254 characters.
+  - Example: johndoe@example.com, alice.smith-99@mail.co, user+test@abc-def.com_
 
 - **Address:** Must not be blank, must start with a non-space character, and must not end with a space.
-Only printable ASCII characters are allowed.
+Only printable ASCII characters are allowed. Must not exceed 254 characters.
 
   **Example:**
   - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
   - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
-- **Tag:** Each Person can only have up to 15 tags. A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
-  _Example: friend, VIP, family-member, project2025_
+- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.
+Must not exceed 40 characters.
+  - Example: friend, VIP, family-member, project2025_
 
 **Criteria for Same Person:**
 * Two persons are considered the same if they have the same `NAME` (case-insensitive) and `PHONE_NUMBER`.
@@ -405,6 +425,8 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **List by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
+**Create and save folder** | `list t/<your tag here> s/` <br> e.g., `list t/friends s/`
+**Delete folder** | `list t/<your tag here> d/` <br> e.g., `list t/friends d/`
 **Help** | `help`
 **Declare Features and Tags** | `biz f/[FEATURE] t/[TAG]...` <br> e.g. `biz f/Plan t/A t/B`
 **Undeclare Features and Tags** | `unbiz f/[FEATURE]...` <br> e.g. `unbiz f/Plan f/Gender`
