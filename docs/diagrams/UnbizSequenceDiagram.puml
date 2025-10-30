@@ -5,25 +5,45 @@ skinparam ArrowFontStyle plain
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":BizUntagCommandParser" as BizUntagCommandParser LOGIC_COLOR
 participant "b:BizUntagCommand" as BizUntagCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+
 end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute(unbiz)
+[-> LogicManager : execute("unbiz f/Plan")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand(unbiz)
+LogicManager -> AddressBookParser : parseCommand("f/plan")
 activate AddressBookParser
 
+create BizUntagCommandParser
+AddressBookParser -> BizUntagCommandParser
+activate BizUntagCommandParser
+
+BizUntagCommandParser --> AddressBookParser
+deactivate BizUntagCommandParser
+
+AddressBookParser -> BizUntagCommandParser : parse("f/Plan")
+activate BizUntagCommandParser
+
 create BizUntagCommand
-AddressBookParser -> BizUntagCommand
+BizUntagCommandParser -> BizUntagCommand
 activate BizUntagCommand
 
-BizUntagCommand --> AddressBookParser
+BizUntagCommand --> BizUntagCommandParser
 deactivate BizUntagCommand
+
+BizUntagCommandParser --> AddressBookParser: b
+deactivate BizUntagCommandParser
+
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+BizUntagCommandParser -[hidden]-> AddressBookParser
+destroy BizUntagCommandParser
 
 AddressBookParser --> LogicManager : b
 deactivate AddressBookParser
@@ -47,7 +67,7 @@ loop for (feature in features)
 end
 
 
-alt missingFeatures.empty == False
+alt missingFeatures is empty
     loop for (feature in features)
         BizUntagCommand -> Model : removeBizFeature()
         activate Model
@@ -68,7 +88,7 @@ alt missingFeatures.empty == False
     BizUntagCommand --> BizUntagCommand
     deactivate BizUntagCommand
 
-else
+else else
     BizUntagCommand -> BizUntagCommand : result = missingFeatures
     activate BizUntagCommand
 
@@ -76,11 +96,18 @@ else
     deactivate BizUntagCommand
 end
 
+create CommandResult
+BizUntagCommand --> CommandResult : result
+activate CommandResult
 
-BizUntagCommand --> LogicManager : result
+CommandResult --> BizUntagCommand
+deactivate
+
+
+BizUntagCommand --> LogicManager : r
 deactivate BizUntagCommand
 BizUntagCommand -[hidden]-> LogicManager : result
-destroy BizUntagCommand
+
 
 [<--LogicManager
 deactivate LogicManager
