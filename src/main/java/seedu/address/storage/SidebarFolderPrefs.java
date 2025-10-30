@@ -18,12 +18,6 @@ public class SidebarFolderPrefs {
     /** Lower-cased query tags for this folder, e.g. ["friends", "colleagues"]. */
     private List<String> queryTags;
 
-    /** No-args ctor for Jackson. */
-    public SidebarFolderPrefs() {
-        this.name = "";
-        this.queryTags = new ArrayList<>();
-    }
-
     /** Canonical ctor for programmatic creation. */
     @JsonCreator
     public SidebarFolderPrefs(
@@ -44,8 +38,5 @@ public class SidebarFolderPrefs {
     @JsonProperty("queryTags")
     public List<String> getQueryTags() {
         return queryTags;
-    }
-    public void setQueryTags(List<String> queryTags) {
-        this.queryTags = (queryTags == null) ? new ArrayList<>() : new ArrayList<>(queryTags);
     }
 }
