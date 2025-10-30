@@ -401,8 +401,8 @@ Format: `stats`
 If the following was declared in `biz` command,
 
 Key - Features: Tags
-* Plan: A, B, C
-* Gender: Male, Female, Other
+* Plan: A, B, C -> `biz f/Plan t/A t/B t/C` (Where f/ is the name of the group in this case it is "Plan" and the tags associated with it is A, B and C).
+* Gender: Male, Female, Other -> `biz f/Gender t/Male t/Female t/Other` (Where f/ is the name of the group in this case it is "Gender" and the tags associated with it is Male, Female and Other).
 
 ``` Sample table view
 Total Number of Customers in AddressBook: 6
