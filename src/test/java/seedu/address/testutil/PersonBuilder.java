@@ -66,6 +66,22 @@ public class PersonBuilder {
     }
 
     /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and adds it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withAdditionalTags(String ... tags) {
+        this.tags.addAll(SampleDataUtil.getTagSet(tags));
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and removes it from the {@code Person} that we are building.
+     */
+    public PersonBuilder withoutTags(String ... tags) {
+        this.tags.removeAll(SampleDataUtil.getTagSet(tags));
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
