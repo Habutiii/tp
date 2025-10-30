@@ -197,7 +197,7 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
-    public void buildPreview_addTags_existingTag_omittedFromPreview() {
+    public void buildPreview_addTags_existingTagomittedFromPreview() {
         List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"),
@@ -220,8 +220,8 @@ public class EditPreviewBuilderTest {
     public void buildPreview_deleteTags_success() {
         List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
-                        new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend"),
-                        new Tag("colleague")))));
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
 
         // delete existing tag
         String input = "edit 1 dt/friend";
