@@ -383,7 +383,7 @@ public class EditPreviewBuilderTest {
 
         FieldPreview tagPreview = previews.get(previews.size() - 1);
         assertEquals("Tags (t/):", tagPreview.getLabel());
-        assertEquals(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS, tagPreview.getValue());
+        assertEquals(String.format(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON, tags.size() + 1), tagPreview.getValue());
         assertFalse(tagPreview.isValid());
     }
 
