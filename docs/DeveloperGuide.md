@@ -143,6 +143,13 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* Your saved folders in the sidebar (created with s/) are now kept between AB3 sessions.  Close AB3, reopen it later and those folders will still be there.
+* If you delete a saved folder (with d/), it’s removed from the sidebar and won’t come back on restart.
+* Auto folders (the ones the app shows automatically when AB3 is launched are based on tags it finds in addressbook) may disappear when they have no matching people that’s normal cleanup.
+  Saved folders don’t vanish on their own, they stay until you delete them.
+* Folder names are standardized: 
+  * Multi-tag folders are shown in a tidy, consistent format (e.g. colleagues & friends) regardless of the order you typed them. 
+  * Duplicate saved folders are ignored, you won’t see the same folder twice.
 
 ### Common classes
 
