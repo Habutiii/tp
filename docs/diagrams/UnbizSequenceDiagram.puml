@@ -80,7 +80,7 @@ end
 BizUntagCommand --> LogicManager : result
 deactivate BizUntagCommand
 BizUntagCommand -[hidden]-> LogicManager : result
-destroy BizUntagCommand
+
 
 [<--LogicManager
 deactivate LogicManager

@@ -40,7 +40,6 @@ deactivate Model
 BizTagCommand --> LogicManager : result
 deactivate BizTagCommand
 BizTagCommand -[hidden]-> LogicManager : result
-destroy BizTagCommand
 
 [<--LogicManager
 deactivate LogicManager
