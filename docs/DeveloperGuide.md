@@ -465,8 +465,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >    - Use case ends.
 >
 > **Extensions:**
-> - 1a. Agent types synonym (e.g., addbiz). 
->   - 1a1. System displays: "Unknown command. Type help to see available commands".
+> - 2a. Agent has typed the feature name or its tags wrongly. 
+>   - 2a1. Agent runs `undo` command as outlined in the `undo` use case. 
 >   - Use case ends.
 
 ---
@@ -483,11 +483,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >    - Use case ends.
 >
 > **Extensions:**
-> - 1a. Agent types synonym (e.g., addbiz).
->   - 1a1. System displays: “Unknown command. Type help to see available commands.” 
+> - 1a. Agent enters feature name that does not exist in Statistics.
+>   - 1a1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]"
 >   - Use case ends.
-> - 1b. Agent enters feature name that does not exist in Statistics.
->   - 1b1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]".
+> - 2a. Agent has undeclared the wrong feature name.
+>   - 2a1. Agent runs `undo` command as outlined in the `undo` use case.
 >   - Use case ends.
 
 ---
@@ -505,9 +505,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 >    - Use case ends.  
 >
 > **Extensions:**  
-> - 2a. No data available.  
->   - 2a1. System displays: "Number of customers in AddressBook: 0".  
->   - Use case ends.  
+> - 2a. No customers in AddressBook.  
+>   - 2a1. No declared Features and Tags
+>     - System displays: “Number of customers in AddressBook: 0”  
+>     - Use case ends. 
+>   - 2a2. There are declared Features and Tags
+>     - System displays: “Number of customers in AddressBook: 0” and Tables for each Feature and relevant tags, but there will be no meaningful data.
+>     - Use case ends.
 
 ---
 
@@ -585,6 +589,33 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 6. Command box displays the next command.
 >    - Use case ends.  
 
+---
+
+### UC14 Use case: Creating and saving custom folders
+
+> **System:** Insurance Management App
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent wants to create a custom folder for all entries with tags friends and travel.
+> 2. Agent issues list command with the two tags.
+> 3. Agent adds 's/' at the end of the command to create a custom folder.
+> 4. Folder 'friends & travel' is created.
+> 5. Agent can click into newly created folder for easy sorting and access.
+>       - Use case ends
+
+---
+
+### UC15 Use case: Deleting folders
+
+> **System:** Insurance Management App
+> **Actor:** Insurance Agent
+>
+> **MSS:**
+> 1. Agent issues wants to delete folder called 'events'.
+> 2. Agent writes "list t/events d/" command
+> 3. Folder with respective tag(s) is deleted.
+>    - Use case ends
 
 ### Non-Functional Requirements
 
