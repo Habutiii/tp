@@ -208,8 +208,8 @@ public class ListCommandUndoTest {
     @Test
     void undoDeleteRestoreMultiCallsAddComposite() throws CommandException {
         StubModel model = new StubModel();
-        // Composite snapshot: "friends & colleagues" backed by ["friends","colleagues"]
-        model.active.add(new TagFolder("friends & colleagues", 1, List.of("friends", "colleagues")));
+        // Name must match the normalized "colleagues & friends"
+        model.active.add(new TagFolder("colleagues & friends", 1, List.of("friends", "colleagues")));
         model.hasFolder = true;
         model.removeReturn = true;
 

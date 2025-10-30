@@ -4,9 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -25,7 +23,6 @@ public class ListCommand extends Command {
             + "  list\n"
             + "  list t/policyholder"
             + "  list t/friends t/colleagues s/";
-    public static final String MESSAGE_LIST_BY_TAG_PREFIX = "Listed person(s) who ";
     public static final String MESSAGE_SUCCESS = "Listed all persons";
     public static final String MESSAGE_FOLDER_EXISTS = "Folder \"%s\" already exists";
     public static final String MESSAGE_FOLDER_CREATED = "Created folder \"%s\" and listed matching persons";
@@ -151,11 +148,17 @@ public class ListCommand extends Command {
                 MESSAGE_LISTED_MATCHING, String.join(", ", tagNamesForSidebar)));
     }
 
-    /** Build a stable, human-readable folder name like "friends & colleagues". */
+    /** Build a stable folder name like "family & friends" independent of tag order. */
     private static String deriveFolderName(List<String> tags) {
-        // remove dupes, preserve order
-        Set<String> unique = new LinkedHashSet<>(tags);
-        return String.join(" & ", unique);
+        // normalize: trim, lowercase, de-duplicate, sort
+        java.util.List<String> norm = tags.stream()
+                .map(s -> s == null ? "" : s.trim().toLowerCase())
+                .filter(s -> !s.isEmpty())
+                .distinct()
+                .sorted()
+                .toList();
+
+        return String.join(" & ", norm);
     }
 
     @Override
