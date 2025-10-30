@@ -129,6 +129,26 @@ public class ListCommandParserSaveFolderTest {
 
         @Override public void refreshActiveTagFolderCounts() {
         }
+
+        @Override
+        public boolean hasTagFolder(String name) {
+            return false;
+        }
+
+        @Override
+        public void addActiveTagFoldersFromUser(List<String> tagNames) {
+
+        }
+
+        @Override
+        public void addCompositeTagFolderFromUser(List<String> tagNames) {
+
+        }
+
+        @Override
+        public boolean removeTagFolderByName(String name) {
+            return false;
+        }
     }
 
     private CommandResult run(ListCommandParser parser, String raw, CaptureModelStub model) throws Exception {
@@ -182,5 +202,18 @@ public class ListCommandParserSaveFolderTest {
         assertEquals(ListCommand.MESSAGE_SUCCESS, r.getFeedbackToUser());
         assertFalse(model.addActiveCalled);
         assertFalse(model.addCompositeCalled);
+    }
+
+    @Test
+    void parseWithTagsSaveOrDeleteOkay() throws Exception {
+        ListCommandParser parser = new ListCommandParser();
+
+        // save path
+        ListCommand saveCmd = parser.parse(" t/friends s/");
+        assertTrue(saveCmd != null); // parsing succeeded
+
+        // delete path
+        ListCommand delCmd = parser.parse(" t/friends d/");
+        assertTrue(delCmd != null); // parsing succeeded
     }
 }
