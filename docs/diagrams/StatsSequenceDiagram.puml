@@ -6,6 +6,7 @@ box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
 participant "s:StatsCommand" as StatsCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
@@ -44,8 +45,15 @@ loop for (feature in b)
     deactivate StatsCommand
 end
 
+create CommandResult
+StatsCommand --> CommandResult
+activate CommandResult
 
-StatsCommand --> LogicManager : result
+CommandResult --> StatsCommand
+deactivate CommandResult
+
+
+StatsCommand --> LogicManager : r
 deactivate StatsCommand
 StatsCommand -[hidden]-> LogicManager : result
 destroy StatsCommand

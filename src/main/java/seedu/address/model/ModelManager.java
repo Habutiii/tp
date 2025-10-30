@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -282,19 +283,18 @@ public class ModelManager implements Model {
         target.clear();
         for (TagFolder f : source) {
             // copy query tags (shallow copy of String elements)
-            java.util.List<String> q = (f.getQueryTags() == null)
-                    ? java.util.List.of()
-                    : new java.util.ArrayList<>(f.getQueryTags());
+            List<String> q = new ArrayList<>(f.getQueryTags());
 
             TagFolder c;
             if (f.isUserCreated()) {
                 // preserve user-created flag using user factory methods
-                c = (q.size() <= 1)
+                // single/composite based on query tag count
+                c = (q.size() < 2)
                         ? TagFolder.userSingle(f.getName())
                         : TagFolder.userComposite(f.getName(), q);
             } else {
                 // non-user folders: use constructors/factory for composite/single
-                c = (q.size() <= 1)
+                c = (q.size() < 2)
                         ? new TagFolder(f.getName(), f.getCount())
                         : TagFolder.composite(f.getName(), q);
             }
@@ -434,9 +434,11 @@ public class ModelManager implements Model {
                     .sorted()
                     .toList();
 
-            String display = norm.isEmpty()
-                    ? (sf.getName() == null ? "" : sf.getName().trim())
-                    : String.join(" & ", norm);
+            if (norm.isEmpty()) {
+                continue;
+            }
+
+            String display = String.join(" & ", norm);
 
             if (display.isEmpty() || hasTagFolder(display)) {
                 continue;
@@ -562,7 +564,7 @@ public class ModelManager implements Model {
     private void persistUserFoldersToPrefs() {
         var saved = activeFolders.stream()
                 .filter(TagFolder::isUserCreated)
-                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getName(), f.getQueryTags()))
+                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getQueryTags()))
                 .toList();
         userPrefs.setSavedSidebarFolders(saved);
     }

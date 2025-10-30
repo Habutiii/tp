@@ -22,7 +22,7 @@ public final class TagFolder implements Comparable<TagFolder> {
         this(name, count, queryTags, false);
     }
 
-    /** Full ctor (used for user-created folders). */
+    /** Full actor (used for user-created folders). */
     public TagFolder(String name, int count, List<String> queryTags, boolean userCreated) {
         this.name = name;
         this.count.set(count);
