@@ -26,6 +26,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFolder;
 
 /**
  * Focused tests for the "save folder" behaviour of ListCommand.
@@ -175,6 +176,15 @@ public class ListCommandSaveFolderTest {
         @Override
         public javafx.collections.ObservableList<seedu.address.model.tag.TagFolder> getActiveTagFolders() {
             return FXCollections.observableArrayList();
+        }
+
+        @Override
+        public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+            return FXCollections.observableArrayList();
+        }
+
+        @Override
+        public void setActiveTagFolders(ObservableList<TagFolder> newTagFolders) {
         }
 
         @Override

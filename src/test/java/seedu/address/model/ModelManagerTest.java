@@ -25,6 +25,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -32,6 +34,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ClientMatchesPredicate;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFolder;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -261,6 +264,48 @@ public class ModelManagerTest {
         bootstrap.invoke(modelManager);
         assertNotNull(modelManager.getActiveTagFolders());
     }
+
+    @Test
+    void getActiveTagFoldersCopy_isIndependentDeepCopy() {
+        // Add a person to ensure a tag folder exists
+        modelManager.addPerson(new PersonBuilder().withTags("friends").build());
+
+        ObservableList<TagFolder> copy = modelManager.getActiveTagFoldersCopy();
+        assertFalse(copy.isEmpty());
+
+        // Modify the count on the copy and verify original is unaffected
+        TagFolder copyFolder = copy.get(0);
+        copyFolder.setCount(999);
+
+        TagFolder originalFolder = modelManager.getActiveTagFolders().get(0);
+        assertNotEquals(999, originalFolder.getCount());
+
+        // Modify the original and verify copy is unaffected
+        originalFolder.setCount(1000);
+        assertNotEquals(1000, copyFolder.getCount());
+    }
+
+    @Test
+    void setActiveTagFolders_replacesListAndHandlesNull() {
+        // Prepare a user-created folder list
+        ObservableList<TagFolder> newFolders = FXCollections.observableArrayList();
+        newFolders.add(TagFolder.userSingle("custom"));
+
+        modelManager.setActiveTagFolders(newFolders);
+        assertTrue(modelManager.hasTagFolder("custom"));
+        assertEquals(1, modelManager.getActiveTagFolders().size());
+
+        // Passing null should clear active folders
+        modelManager.setActiveTagFolders(null);
+        assertTrue(modelManager.getActiveTagFolders().isEmpty());
+
+        // passing empty list should also clear active folders
+        modelManager.setActiveTagFolders(newFolders);
+        modelManager.setActiveTagFolders(FXCollections.observableArrayList());
+        assertTrue(modelManager.getActiveTagFolders().isEmpty());
+
+    }
+
 
     @Test
     void equals_returnsFalse_whenOtherIsNotModelManager() {
