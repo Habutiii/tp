@@ -10,7 +10,6 @@ import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.DuplicateFieldChecker;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -105,15 +104,15 @@ public class EditPreviewBuilder {
 
         boolean isMultipleTagOps = false;
         int tagOpCount = 0;
-        String EMPTY_TAG = "";
+        String emptyTag = "";
 
-        if (newTagsList.size() == 1 && !newTagsList.contains(EMPTY_TAG)) {
+        if (newTagsList.size() == 1 && !newTagsList.contains(emptyTag)) {
             tagOpCount++;
         }
-        if (addTagsList.size() == 1 && !addTagsList.contains(EMPTY_TAG)) {
+        if (addTagsList.size() == 1 && !addTagsList.contains(emptyTag)) {
             tagOpCount++;
         }
-        if (deleteTagsList.size() == 1 && !deleteTagsList.contains(EMPTY_TAG)) {
+        if (deleteTagsList.size() == 1 && !deleteTagsList.contains(emptyTag)) {
             tagOpCount++;
         }
         if (tagOpCount > 1) {
