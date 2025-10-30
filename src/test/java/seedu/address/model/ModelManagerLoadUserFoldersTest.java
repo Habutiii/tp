@@ -22,7 +22,7 @@ public class ModelManagerLoadUserFoldersTest {
     }
 
     @Test
-    void loads_singleTag_fromTagsList_asUserSingle() {
+    void loadsSingleTagFromTagsListAsUserSingle() {
         AddressBook ab = new AddressBook();
         UserPrefs up = new UserPrefs();
         up.setSavedSidebarFolders(List.of(
@@ -76,7 +76,7 @@ public class ModelManagerLoadUserFoldersTest {
     }
 
     @Test
-    void uses_name_when_queryTags_isNull_orEmpty() {
+    void usesNameWhenQueryTagsIsNullOrEmpty() {
         AddressBook ab = new AddressBook();
         UserPrefs up = new UserPrefs();
 
