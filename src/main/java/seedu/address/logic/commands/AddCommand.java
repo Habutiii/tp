@@ -10,7 +10,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.tag.Tag;
 
 /**
  * Adds a person to the address book.
@@ -42,11 +47,11 @@ public class AddCommand extends Command {
             "  add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]…",
             "",
             "PARAMETERS",
-            "  • NAME: non-empty string, may contain spaces but not leading/trailing spaces",
-            "  • PHONE: must be numeric string; can only contain digits",
-            "  • EMAIL: must follow standard email format (with '@')",
-            "  • ADDRESS: non-empty string",
-            "  • TAG (optional): alphanumeric, no spaces; you may have multiple t/TAG fields",
+            "  • NAME: " + Name.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
+            "\n  • PHONE: " + Phone.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
+            "\n  • EMAIL: " + Email.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
+            "\n  • ADDRESS: " + Address.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
+            "\n  • TAG (optional): " + Tag.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
             "",
             "EXAMPLES",
             "  add n/John Doe p/98765432 e/john@example.com a/123, Main Street t/friend t/colleague",

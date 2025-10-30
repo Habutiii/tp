@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
@@ -135,6 +136,14 @@ public class ParserUtil {
         for (String tagName : tags) {
             tagSet.add(parseTag(tagName));
         }
+
+        // Parse-time guard for max tags per person
+        if (tagSet.size() > Person.MAX_TAGS_PER_PERSON) {
+            throw new ParseException(String.format(
+                    "Too many tags: maximum is %d, but %d were given.",
+                    Person.MAX_TAGS_PER_PERSON, tagSet.size()));
+        }
+
         return tagSet;
     }
 

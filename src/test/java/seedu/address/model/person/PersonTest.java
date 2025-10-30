@@ -12,7 +12,9 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
@@ -112,5 +114,13 @@ public class PersonTest {
     @Test
     public void equals_deepCopy_success() {
         assertTrue(ALICE.equals(ALICE.copy()));
+    }
+
+    @Test
+    public void constructor_exceedsTagLimit_throwsIllegalArgumentException() {
+        Set<Tag> tooMany = IntStream.rangeClosed(1, Person.MAX_TAGS_PER_PERSON + 1)
+                .mapToObj(i -> new Tag("t" + i)).collect(Collectors.toSet());
+        assertThrows(IllegalArgumentException.class, () ->
+                new Person(ALICE.getName(), ALICE.getPhone(), ALICE.getEmail(), ALICE.getAddress(), tooMany));
     }
 }

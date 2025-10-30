@@ -16,6 +16,11 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -27,6 +32,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
@@ -149,6 +155,79 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_replaceTags_success() {
+        Person personToEdit = model.getFilteredPersonList().get(0);
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withTags("friends") // Replace old tags completely
+                .build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withTags("friends") // triggers getTags().isPresent()
+                .build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_addTags_success() {
+        Person personToEdit = model.getFilteredPersonList().get(0);
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withAdditionalTags("newtag") // simulate adding tag
+                .build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.addTags(Set.of(new Tag("newtag"))); // directly call addTags()
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_deleteExistingTags_success() {
+        Person personToEdit = model.getFilteredPersonList().get(0);
+        // assume the first person has "friends" tag in TypicalPersons
+        Person editedPerson = new PersonBuilder(personToEdit)
+                .withoutTags("friends")
+                .build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.deleteTags(Set.of(new Tag("friends"))); // triggers deleteTags branch
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(personToEdit, editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_deleteNonExistingTag_failure() {
+        Person personToEdit = model.getFilteredPersonList().get(0);
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptor();
+        descriptor.deleteTags(Set.of(new Tag("ghost"))); // tag not present
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_TAGS_TO_DELETE_NOT_FOUND);
+    }
+
+
+
+    @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
 
@@ -220,5 +299,25 @@ public class EditCommandTest {
         String manual = cmd.man();
         assertTrue(manual.contains("edit"));
         assertTrue(manual.contains("PARAMETERS"));
+    }
+
+    @Test
+    public void execute_editCausesTooManyTags_throwsCommandException() {
+        // Retrieve a valid person from the model (e.g., Alice)
+        Person originalPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+        // Build a set of tags that exceeds the limit
+        List<String> tooManyTagStrings = IntStream.rangeClosed(1, Person.MAX_TAGS_PER_PERSON + 2)
+                .mapToObj(i -> "tag" + i)
+                .collect(Collectors.toList());
+
+        // Build descriptor with too many tags
+        EditCommand.EditPersonDescriptor descriptor =
+                new EditPersonDescriptorBuilder().withTags(tooManyTagStrings.toArray(new String[0])).build();
+
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        // Expect CommandException due to tag overflow
+        assertThrows(CommandException.class, () -> editCommand.execute(model));
     }
 }

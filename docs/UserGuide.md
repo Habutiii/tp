@@ -64,7 +64,7 @@ The following keybinds are available in Ethical Insurance
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[t/TAG]…​` can be used as ` ` (Up to 15 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -150,7 +150,7 @@ Only printable ASCII characters are allowed.
   - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
   - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
-- **Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Tag:** Each Person can only have up to 15 tags. A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 **Criteria for Same Person:**
@@ -162,18 +162,24 @@ Only printable ASCII characters are allowed.
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When using `t/TAG`, the existing tags of the person will be removed.
+* Use `at/TAG` to add on to **existing** tags.
+* Use `dt/TAG` to remove from **existing** tags.
+* You can only use either of these tag editing commands once per `edit` command.
 * You can remove all the person’s tags by typing `t/` without
     specifying any tags after it.
+* Each person after editing can only contain a maximum of 15 tags.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 3 at/InsuranceA` Adds the tag `InsuranceA` on to existing tags of the 3rd person.
+*  `edit 3 dt/InsuranceA` Deletes the tag `InsuranceA` from the existing tags of the 3rd person.
 
 Parameter restrictions: Same as `add` command.
 
@@ -248,7 +254,7 @@ Examples: [See result in 'Viewing Summary Statistics']
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -267,7 +273,7 @@ Examples:
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -374,6 +380,9 @@ _Details coming soon ..._
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Ethical Insurance home folder.
+
+**Q**: Why when I issue add/edit command, something appears on the right side of the application?<br>
+**A**: When issuing an add or edit command, a live preview of what you are adding or editing will appear on the right side of your screen. This allows you to quickly verify that the information you entered is correct. When an invalid field is detected (e.g., `n/X Æ A-12`), that field will be highlighted in red to indicate an error. Currently, duplicate users are not flagged (coming soon!).
 
 --------------------------------------------------------------------------------------------------------------------
 
