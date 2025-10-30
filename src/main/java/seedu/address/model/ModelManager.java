@@ -288,12 +288,13 @@ public class ModelManager implements Model {
             TagFolder c;
             if (f.isUserCreated()) {
                 // preserve user-created flag using user factory methods
-                c = (q.size() <= 1)
+                // single/composite based on query tag count
+                c = (q.size() < 2)
                         ? TagFolder.userSingle(f.getName())
                         : TagFolder.userComposite(f.getName(), q);
             } else {
                 // non-user folders: use constructors/factory for composite/single
-                c = (q.size() <= 1)
+                c = (q.size() < 2)
                         ? new TagFolder(f.getName(), f.getCount())
                         : TagFolder.composite(f.getName(), q);
             }
