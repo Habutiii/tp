@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -273,8 +274,63 @@ public class ModelManager implements Model {
     // =========== Tag Folders (sidebar) ==================================================
 
     @Override
-    public javafx.collections.ObservableList<TagFolder> getActiveTagFolders() {
-        return javafx.collections.FXCollections.unmodifiableObservableList(activeFolders);
+    public ObservableList<TagFolder> getActiveTagFolders() {
+        return FXCollections.unmodifiableObservableList(activeFolders);
+    }
+
+    private void copyTagFolderList(ObservableList<TagFolder> source,
+                                      ObservableList<TagFolder> target) {
+        target.clear();
+        for (TagFolder f : source) {
+            // copy query tags (shallow copy of String elements)
+            List<String> q = new ArrayList<>(f.getQueryTags());
+
+            TagFolder c;
+            if (f.isUserCreated()) {
+                // preserve user-created flag using user factory methods
+                // single/composite based on query tag count
+                c = (q.size() < 2)
+                        ? TagFolder.userSingle(f.getName())
+                        : TagFolder.userComposite(f.getName(), q);
+            } else {
+                // non-user folders: use constructors/factory for composite/single
+                c = (q.size() < 2)
+                        ? new TagFolder(f.getName(), f.getCount())
+                        : TagFolder.composite(f.getName(), q);
+            }
+
+            // preserve the count
+            c.setCount(f.getCount());
+            target.add(c);
+        }
+    }
+
+    @Override
+    public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+        ObservableList<TagFolder> copy =
+                FXCollections.observableArrayList();
+
+        copyTagFolderList(activeFolders, copy);
+
+        return FXCollections.unmodifiableObservableList(copy);
+    }
+
+
+    @Override
+    public void setActiveTagFolders(ObservableList<TagFolder> newTagFolders) {
+        activeFolders.clear();
+        if (newTagFolders == null || newTagFolders.isEmpty()) {
+            refreshActiveTagFolderCounts();
+            sortFolders();
+            persistUserFoldersToPrefs();
+            return;
+        }
+
+        copyTagFolderList(newTagFolders, activeFolders);
+
+        refreshActiveTagFolderCounts();
+        sortFolders();
+        persistUserFoldersToPrefs();
     }
 
     @Override

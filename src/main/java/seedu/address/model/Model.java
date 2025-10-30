@@ -152,6 +152,10 @@ public interface Model {
 
     ObservableList<TagFolder> getActiveTagFolders();
 
+    ObservableList<TagFolder> getActiveTagFoldersCopy();
+
+    void setActiveTagFolders(ObservableList<TagFolder> newTagFolders);
+
     void addActiveTagFolders(List<String> tagNames);
 
     void addCompositeTagFolder(List<String> tagNames);

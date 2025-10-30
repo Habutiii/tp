@@ -2,9 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.tag.TagFolder;
 
 /**
  * Clears the address book.
@@ -34,8 +36,9 @@ public class ClearCommand extends Command {
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#clearing-all-entries--clear"
     );
 
-    // to keep the current status of
+    // to keep the current status of addressbook and tag folders for undo
     private ReadOnlyAddressBook currentAddressBook;
+    private ObservableList<TagFolder> currentTagFolders;
 
     @Override
     public CommandResult execute(Model model) {
@@ -43,6 +46,7 @@ public class ClearCommand extends Command {
 
         // Store a copy of current address book for undo functionality
         currentAddressBook = new AddressBook(model.getAddressBook().getPersonList());
+        currentTagFolders = model.getActiveTagFoldersCopy();
 
         // Clear the address book
         model.setAddressBook(new AddressBook());
@@ -61,8 +65,13 @@ public class ClearCommand extends Command {
     @Override
     public String undo(Model model) {
         requireNonNull(model);
-        if (currentAddressBook != null) {
-            model.setAddressBook(currentAddressBook);
+        if (currentAddressBook != null || currentTagFolders != null) {
+            if (currentAddressBook != null) {
+                model.setAddressBook(currentAddressBook);
+            }
+            if (currentTagFolders != null) {
+                model.setActiveTagFolders(currentTagFolders);
+            }
             return MESSAGE_UNDO_SUCCESS;
         } else {
             throw new IllegalStateException(MESSAGE_UNDO_FAILED);

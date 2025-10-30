@@ -55,6 +55,15 @@ public class ListCommandUndoTest {
             return active;
         }
 
+        @Override
+        public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+            return FXCollections.observableArrayList();
+        }
+
+        @Override
+        public void setActiveTagFolders(ObservableList<TagFolder> newTagFolders) {
+        }
+
         @Override public void addActiveTagFoldersFromUser(List<String> tagNames) {
             addActiveCalled = true;
         }

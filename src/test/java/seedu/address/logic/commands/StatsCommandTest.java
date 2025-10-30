@@ -322,6 +322,15 @@ public class StatsCommandTest {
         public boolean removeTagFolderByName(String name) {
             return false;
         }
+
+        @Override
+        public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+            return FXCollections.observableArrayList();
+        }
+
+        @Override
+        public void setActiveTagFolders(ObservableList<TagFolder> newTagFolders) {
+        }
     }
 
     /**
