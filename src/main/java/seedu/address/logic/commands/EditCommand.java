@@ -78,10 +78,12 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person:\n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_TOO_MANY_TAG_COMMANDS =
+    public static final String MESSAGE_TOO_MANY_TAG_PREFIXES =
             "Only one of t/, at/, or dt/ can be used in a single edit command.";
     public static final String MESSAGE_TAGS_TO_DELETE_NOT_FOUND =
             "One or more tags to delete do not exist for this person.";
+    public static final String MESSAGE_EXCEEDING_MAX_TAGS =
+            "Too many tags after edit: at most %d allowed, but %d provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_UNDO_SUCCESS = "Reverted last edit:\n%1$s";
     public static final String MESSAGE_UNDO_FAILED = "No edit to revert.";
@@ -180,7 +182,7 @@ public class EditCommand extends Command {
         // Edit-time guard for max tags per person
         if (updatedTags.size() > Person.MAX_TAGS_PER_PERSON) {
             throw new CommandException(String.format(
-                    "Too many tags after edit: at most %d allowed, but %d provided.",
+                    MESSAGE_EXCEEDING_MAX_TAGS,
                     Person.MAX_TAGS_PER_PERSON, updatedTags.size()));
         }
 

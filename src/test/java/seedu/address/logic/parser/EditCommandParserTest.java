@@ -213,17 +213,17 @@ public class EditCommandParserTest {
         // Case 1: tag + addtag
         String userInput1 = targetIndex.getOneBased() + " t/friend at/husband";
         assertParseFailure(parser, userInput1,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_TOO_MANY_TAG_COMMANDS));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_TOO_MANY_TAG_PREFIXES));
 
         // Case 2: tag + deltag
         String userInput2 = targetIndex.getOneBased() + " t/friend dt/husband";
         assertParseFailure(parser, userInput2,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_TOO_MANY_TAG_COMMANDS));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_TOO_MANY_TAG_PREFIXES));
 
         // Case 3: addtag + deltag
         String userInput3 = targetIndex.getOneBased() + " at/friend dt/husband";
         assertParseFailure(parser, userInput3,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_TOO_MANY_TAG_COMMANDS));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_TOO_MANY_TAG_PREFIXES));
     }
 
 }

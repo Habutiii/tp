@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.EditCommand.MESSAGE_EXCEEDING_MAX_TAGS;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_TOO_MANY_TAG_PREFIXES;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +10,7 @@ import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.DuplicateFieldChecker;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -99,7 +103,31 @@ public class EditPreviewBuilder {
 
         String tags = String.join(", ", person.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new));
 
-        if (!newTagsList.isEmpty()) {
+        boolean isMultipleTagOps = false;
+        int tagOpCount = 0;
+        String EMPTY_TAG = "";
+
+        if (newTagsList.size() == 1 && !newTagsList.contains(EMPTY_TAG)) {
+            tagOpCount++;
+        }
+        if (addTagsList.size() == 1 && !addTagsList.contains(EMPTY_TAG)) {
+            tagOpCount++;
+        }
+        if (deleteTagsList.size() == 1 && !deleteTagsList.contains(EMPTY_TAG)) {
+            tagOpCount++;
+        }
+        if (tagOpCount > 1) {
+            isMultipleTagOps = true;
+        }
+
+        if (isMultipleTagOps) {
+            fieldPreviews.add(new FieldPreview("Tags (t/):",
+                    MESSAGE_TOO_MANY_TAG_PREFIXES, false));
+        } else if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON
+                || addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
+            fieldPreviews.add(new FieldPreview("Tags (t/):",
+                    MESSAGE_EXCEEDING_MAX_TAGS, false));
+        } else if (!newTagsList.isEmpty()) {
             fieldPreviews.add(createTagsPreview(person, newTagsList));
         } else if (!addTagsList.isEmpty()) {
             fieldPreviews.add(createAddTagsPreview(person, addTagsList));
@@ -170,8 +198,7 @@ public class EditPreviewBuilder {
             String tag = newTagsList.get(i);
             if (!tag.isEmpty() && !Tag.isValidTagName(tag)) {
                 invalidTagIndices.add(i);
-            }
-            if (op == TagOperation.REMOVE && !person.getTags().contains(new Tag(tag))) {
+            } else if (op == TagOperation.REMOVE && !person.getTags().contains(new Tag(tag))) {
                 invalidTagIndices.add(i);
             }
             tagsJoined.append(tag);
@@ -183,7 +210,6 @@ public class EditPreviewBuilder {
         String newTags = tagsJoined.toString();
         String previewText;
         switch (op) {
-        case REPLACE -> previewText = oldTags + " -> " + newTags;
         case ADD -> previewText = oldTags + " + " + newTags;
         case REMOVE -> previewText = oldTags + " - " + newTags;
         default -> previewText = oldTags + " -> " + newTags;
