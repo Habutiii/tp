@@ -430,6 +430,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > - 2a. No matches found.  
 >   - 2a1. System displays: "0 persons listed!".  
 >   - Use case ends.  
+
 ---
 
 ### UC05 case: `help`
@@ -442,7 +443,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 > 2. System shows a popup containing link to user guide and introduces the `man` command.
 > 3. Agent reads and continues working.  
 >    - Use case ends.  
-
 
 ---
 
