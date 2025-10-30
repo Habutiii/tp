@@ -6,38 +6,71 @@ skinparam classBackgroundColor STORAGE_COLOR
 
 package Storage as StoragePackage {
 
-package "UserPrefs Storage" #F4F6F6{
-Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
-Class JsonUserPrefsStorage
+  package "UserPrefs Storage" #F4F6F6 {
+    Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
+    Class JsonUserPrefsStorage
+
+    ' NEW: DTO persisted inside preferences.json
+    Class SidebarFolderPrefs {
+      - name : String
+      - queryTags : List<String>
+      --
+      + SidebarFolderPrefs()
+      + SidebarFolderPrefs(name, queryTags)
+      + getName() : String
+      + setName(String)
+      + getQueryTags() : List<String>
+      + setQueryTags(List<String>)
+    }
+  }
+
+  Class "<<interface>>\nStorage" as Storage
+  Class StorageManager
+
+  package "AddressBook Storage" #F4F6F6 {
+    Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
+    Class JsonAddressBookStorage
+    Class JsonSerializableAddressBook
+    Class JsonAdaptedPerson
+    Class JsonAdaptedTag
+  }
 }
 
-Class "<<interface>>\nStorage" as Storage
-Class StorageManager
-
-package "AddressBook Storage" #F4F6F6{
-Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
-Class JsonAddressBookStorage
-Class JsonSerializableAddressBook
-Class JsonAdaptedPerson
-Class JsonAdaptedTag
-}
-
-}
-
+' keeps Storage hidden outside the package (same as before)
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Storage
 
+' Manager wiring
 StorageManager .up.|> Storage
 StorageManager -up-> "1" UserPrefsStorage
 StorageManager -up-> "1" AddressBookStorage
 
+' Storage interface hierarchy
 Storage -left-|> UserPrefsStorage
 Storage -right-|> AddressBookStorage
 
+' Concrete implementations
 JsonUserPrefsStorage .up.|> UserPrefsStorage
 JsonAddressBookStorage .up.|> AddressBookStorage
 JsonAddressBookStorage ..> JsonSerializableAddressBook
 JsonSerializableAddressBook --> "*" JsonAdaptedPerson
 JsonAdaptedPerson --> "*" JsonAdaptedTag
+
+' NEW: prefs now contain a list of saved folders
+JsonUserPrefsStorage ..> "0..*" SidebarFolderPrefs : reads/writes\nsavedSidebarFolders
+
+' Optional explanatory notes (kept concise and non-implementation-specific)
+note right of JsonUserPrefsStorage
+  Persists user settings including:
+  • GUI settings
+  • AddressBook file path
+  • savedSidebarFolders (user-created sidebar folders)
+end note
+
+note bottom of SidebarFolderPrefs
+  Represents one saved folder in preferences.json:
+  - name: display label (e.g., "friends & colleagues")
+  - queryTags: lower-cased tag keys (e.g., ["friends","colleagues"])
+end note
 
 @enduml

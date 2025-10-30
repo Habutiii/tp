@@ -4,9 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.storage.SidebarFolderPrefs;
 
 /**
  * Represents User's preferences.
@@ -15,6 +20,9 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
+
+    @JsonProperty("savedSidebarFolders")
+    private List<SidebarFolderPrefs> savedSidebarFolders = new ArrayList<>();
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -36,6 +44,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         requireNonNull(newUserPrefs);
         setGuiSettings(newUserPrefs.getGuiSettings());
         setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
+        setSavedSidebarFolders(newUserPrefs.getSavedSidebarFolders());
     }
 
     public GuiSettings getGuiSettings() {
@@ -85,4 +94,11 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         return sb.toString();
     }
 
+    public List<SidebarFolderPrefs> getSavedSidebarFolders() {
+        return List.copyOf(savedSidebarFolders);
+    }
+
+    public void setSavedSidebarFolders(List<SidebarFolderPrefs> folders) {
+        this.savedSidebarFolders = (folders == null) ? new ArrayList<>() : new ArrayList<>(folders);
+    }
 }

@@ -5,7 +5,7 @@ package seedu.address.model.tag;
  */
 public class FeatureTag extends Tag {
     public static final String MESSAGE_CONSTRAINTS =
-            "Feature names should only contain English letters, digits, or '-' (dash), and must not be empty.";
+            Tag.MESSAGE_CONSTRAINTS.replace("tag name", "feature name");
     // Field is known as Feature Names for better understanding for the User.
 
     /**

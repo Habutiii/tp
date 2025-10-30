@@ -98,6 +98,23 @@ Sorts and lists only entries with the respective tag(s) entered.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 
+### Create folder by tag : `list t/<your tag here> s/`
+
+Create and save custom folder. 
+
+Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
+Output will be a folder with the names of the tags you have selected.
+Example:
+- Input: list t/friends t/colleagues s/
+- Output: Folder friends & colleagues created
+
+### Delete folder by tag : `list t/<your tag here> d/`
+
+Delete selected folder. Order does not matter for the deleting of folder, as long as
+the respective tags are that folder will be deleted.
+
+Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
+
 
 ### Adding a person: `add`
 
@@ -164,6 +181,9 @@ _All parameters must contain only printable ASCII characters._
 | 82684533        | phone123     |
 | 66265555        | 9011p041     |
 | 123456789012345 | 9312 1534    |
+- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.
+Must not exceed 40 characters.
+  - Example: friend, VIP, family-member, project2025_
 
 ---
 
@@ -218,7 +238,7 @@ _All parameters must contain only printable ASCII characters._
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
 
 > 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
 
@@ -228,6 +248,22 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 ---
 
 #### Description
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When using `t/TAG`, the existing tags of the person will be removed.
+* Use `at/TAG` to add on to **existing** tags.
+* Use `dt/TAG` to remove from **existing** tags.
+* You can only use either of these tag editing commands once per `edit` command.
+* You can remove all the person’s tags by typing `t/` without
+    specifying any tags after it.
+* Each person after editing can only contain a maximum of 15 tags.
+
+Examples:
+*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 3 at/InsuranceA` Adds the tag `InsuranceA` on to existing tags of the 3rd person.
+*  `edit 3 dt/InsuranceA` Deletes the tag `InsuranceA` from the existing tags of the 3rd person.
 
 - Edits the person at the specified **`INDEX`** in the currently displayed list.  
   The index **must be a positive integer** (1, 2, 3, …).
@@ -324,7 +360,7 @@ Examples: [See result in 'Viewing Summary Statistics']
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -343,7 +379,7 @@ Examples:
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -475,6 +511,8 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **List by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
+**Create and save folder** | `list t/<your tag here> s/` <br> e.g., `list t/friends s/`
+**Delete folder** | `list t/<your tag here> d/` <br> e.g., `list t/friends d/`
 **Help** | `help`
 **Declare Features and Tags** | `biz f/[FEATURE] t/[TAG]...` <br> e.g. `biz f/Plan t/A t/B`
 **Undeclare Features and Tags** | `unbiz f/[FEATURE]...` <br> e.g. `unbiz f/Plan f/Gender`
