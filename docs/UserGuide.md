@@ -36,6 +36,7 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
     * `clear` : Deletes all contacts.
 
     * `exit` : Exits the app.
+    
     * `man` : Manual guide to get you started.
 
 1. Refer to the [Features](#features) below for details of each command.
