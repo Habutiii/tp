@@ -67,6 +67,9 @@ public class ModelManager implements Model {
         requireAllNonNull(addressBook, userPrefs);
         // call this at the end of ModelManager constructor after addressBook is set:
         bootstrapAllTags();
+        loadUserSavedFoldersFromPrefs();
+        refreshActiveTagFolderCounts();
+        sortFolders();
     }
 
     // --- methods below constructors ---
@@ -360,6 +363,37 @@ public class ModelManager implements Model {
         addActiveTagFolders(new java.util.ArrayList<>(all));
     }
 
+    private void loadUserSavedFoldersFromPrefs() {
+        var saved = userPrefs.getSavedSidebarFolders();
+        for (var sf : saved) {
+            List<String> tags = (sf.getQueryTags() == null)
+                    ? java.util.List.<String>of()
+                    : sf.getQueryTags();
+
+            List<String> norm = tags.stream()
+                    .map(s -> s == null ? "" : s.trim().toLowerCase())
+                    .filter(s -> !s.isEmpty())
+                    .distinct()
+                    .sorted()
+                    .toList();
+
+            String display = norm.isEmpty()
+                    ? (sf.getName() == null ? "" : sf.getName().trim())
+                    : String.join(" & ", norm);
+
+            if (display.isEmpty() || hasTagFolder(display)) {
+                continue;
+            }
+
+            TagFolder folder = (norm.size() <= 1)
+                    ? TagFolder.userSingle(display)
+                    : TagFolder.userComposite(display, norm);
+
+            activeFolders.add(folder);
+        }
+    }
+
+
     // Ensures every tag has a corresponding TagFolder.
     private void ensureFoldersExistForTags(java.util.Collection<? extends seedu.address.model.tag.Tag> tags) {
         if (tags == null) {
@@ -418,6 +452,7 @@ public class ModelManager implements Model {
         if (added) {
             refreshActiveTagFolderCounts();
             sortFolders();
+            persistUserFoldersToPrefs();
         }
     }
 
@@ -443,9 +478,10 @@ public class ModelManager implements Model {
             return;
         }
 
-        activeFolders.add(TagFolder.userComposite(display, norm)); // <-- userCreated=true
+        activeFolders.add(TagFolder.userComposite(display, norm));
         refreshActiveTagFolderCounts();
         sortFolders();
+        persistUserFoldersToPrefs();
     }
 
     @Override
@@ -459,9 +495,18 @@ public class ModelManager implements Model {
             if (activeFolders.get(i).getName().toLowerCase().equals(target)) {
                 activeFolders.remove(i);
                 sortFolders();
+                persistUserFoldersToPrefs();
                 return true;
             }
         }
         return false;
+    }
+
+    private void persistUserFoldersToPrefs() {
+        var saved = activeFolders.stream()
+                .filter(TagFolder::isUserCreated)
+                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getName(), f.getQueryTags()))
+                .toList();
+        userPrefs.setSavedSidebarFolders(saved);
     }
 }

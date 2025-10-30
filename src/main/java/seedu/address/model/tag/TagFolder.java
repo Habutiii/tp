@@ -42,7 +42,7 @@ public final class TagFolder implements Comparable<TagFolder> {
 
     /** factory for composites created by the user */
     public static TagFolder userComposite(String displayName, List<String> queryTags) {
-        return new TagFolder(displayName, 0, queryTags, /*userCreated*/ true);
+        return new TagFolder(displayName, 0, queryTags, true);
     }
 
     public boolean isUserCreated() {
