@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -245,5 +246,46 @@ public class EditPreviewBuilderTest {
         FieldPreview preview = EditPreviewBuilder.createDeleteTagsPreview(person, deleteTags);
         assertFalse(preview.isValid());
     }
+
+    @Test
+    public void buildPreview_multipleTagPrefixes_invalidPreview() {
+        List<Person> personList = Arrays.asList(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        // Use t/ and at/ together → invalid combination
+        String input = "edit 1 t/colleague at/family";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals(EditCommand.MESSAGE_TOO_MANY_TAG_PREFIXES, tagPreview.getValue());
+        assertFalse(tagPreview.isValid());
+    }
+
+    @Test
+    public void buildPreview_exceedingMaxTags_invalidPreview() {
+        // Prepare person with MAX_TAGS_PER_PERSON tags
+        int maxTags = Person.MAX_TAGS_PER_PERSON;
+        HashSet<Tag> tags = new HashSet<>();
+        for (int i = 1; i <= maxTags; i++) {
+            tags.add(new Tag("tag" + i));
+        }
+
+        List<Person> personList = Arrays.asList(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"), tags));
+
+        // Try to add another tag
+        String input = "edit 1 at/overflowTag";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS, tagPreview.getValue());
+        assertFalse(tagPreview.isValid());
+    }
+
 
 }
