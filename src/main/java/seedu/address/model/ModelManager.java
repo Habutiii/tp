@@ -124,6 +124,7 @@ public class ModelManager implements Model {
         folderIndex.clear();
         bootstrapAllTags();
         refreshActiveTagFolderCounts();
+        persistUserFoldersToPrefs();
     }
 
     @Override
