@@ -125,7 +125,8 @@ public class EditPreviewBuilder {
         } else if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON
                 || addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
-                    MESSAGE_EXCEEDING_MAX_TAGS, false));
+                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                            addTagsList.size() + person.getTags().size()) , false));
         } else if (!newTagsList.isEmpty()) {
             fieldPreviews.add(createTagsPreview(person, newTagsList));
         } else if (!addTagsList.isEmpty()) {
