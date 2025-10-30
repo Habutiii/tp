@@ -378,9 +378,11 @@ public class ModelManager implements Model {
                     .sorted()
                     .toList();
 
-            String display = norm.isEmpty()
-                    ? (sf.getName() == null ? "" : sf.getName().trim())
-                    : String.join(" & ", norm);
+            if (norm.isEmpty()) {
+                continue;
+            }
+
+            String display = String.join(" & ", norm);
 
             if (display.isEmpty() || hasTagFolder(display)) {
                 continue;
@@ -506,7 +508,7 @@ public class ModelManager implements Model {
     private void persistUserFoldersToPrefs() {
         var saved = activeFolders.stream()
                 .filter(TagFolder::isUserCreated)
-                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getName(), f.getQueryTags()))
+                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getQueryTags()))
                 .toList();
         userPrefs.setSavedSidebarFolders(saved);
     }
