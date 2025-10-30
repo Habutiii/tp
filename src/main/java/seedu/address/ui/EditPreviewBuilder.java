@@ -200,6 +200,9 @@ public class EditPreviewBuilder {
             } else if (op.equals(TagOperation.REMOVE) && Tag.isValidTagName(tag)
                     && !person.getTags().contains(new Tag(tag))) {
                 invalidTagIndices.add(i);
+            } else if (op.equals(TagOperation.ADD) && Tag.isValidTagName(tag)
+                    && person.getTags().contains(new Tag(tag))) {
+                continue;
             }
             tagsJoined.append(tag);
             if (i < newTagsList.size() - 1) {

@@ -197,6 +197,26 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
+    public void buildPreview_addTags_existingTag_omittedFromPreview() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
+
+        // 'colleague' already exists -> should be omitted
+        String input = "edit 1 at/colleague at/family";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        // 'colleague' should be skipped, only 'family' shown
+        assertEquals("friend, colleague + family", tagPreview.getValue());
+        assertTrue(tagPreview.isValid());
+    }
+
+
+    @Test
     public void buildPreview_deleteTags_success() {
         List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
@@ -253,7 +273,7 @@ public class EditPreviewBuilderTest {
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend")))));
 
-        // Use t/ and at/ together → invalid combination
+        // Use t/ and at/ together -> invalid combination
         String input = "edit 1 t/colleague at/family";
         List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
 
@@ -273,7 +293,7 @@ public class EditPreviewBuilderTest {
             tags.add(new Tag("tag" + i));
         }
 
-        List<Person> personList = Arrays.asList(
+        List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), tags));
 
