@@ -273,8 +273,64 @@ public class ModelManager implements Model {
     // =========== Tag Folders (sidebar) ==================================================
 
     @Override
-    public javafx.collections.ObservableList<TagFolder> getActiveTagFolders() {
-        return javafx.collections.FXCollections.unmodifiableObservableList(activeFolders);
+    public ObservableList<TagFolder> getActiveTagFolders() {
+        return FXCollections.unmodifiableObservableList(activeFolders);
+    }
+
+    private void copyTagFolderList(ObservableList<TagFolder> source,
+                                      ObservableList<TagFolder> target) {
+        target.clear();
+        for (TagFolder f : source) {
+            // copy query tags (shallow copy of String elements)
+            java.util.List<String> q = (f.getQueryTags() == null)
+                    ? java.util.List.of()
+                    : new java.util.ArrayList<>(f.getQueryTags());
+
+            TagFolder c;
+            if (f.isUserCreated()) {
+                // preserve user-created flag using user factory methods
+                c = (q.size() <= 1)
+                        ? TagFolder.userSingle(f.getName())
+                        : TagFolder.userComposite(f.getName(), q);
+            } else {
+                // non-user folders: use constructors/factory for composite/single
+                c = (q.size() <= 1)
+                        ? new TagFolder(f.getName(), f.getCount())
+                        : TagFolder.composite(f.getName(), q);
+            }
+
+            // preserve the count
+            c.setCount(f.getCount());
+            target.add(c);
+        }
+    }
+
+    @Override
+    public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+        ObservableList<TagFolder> copy =
+                FXCollections.observableArrayList();
+
+        copyTagFolderList(activeFolders, copy);
+
+        return FXCollections.unmodifiableObservableList(copy);
+    }
+
+
+    @Override
+    public void setActiveTagFolders(ObservableList<TagFolder> newTagFolders) {
+        activeFolders.clear();
+        if (newTagFolders == null || newTagFolders.isEmpty()) {
+            refreshActiveTagFolderCounts();
+            sortFolders();
+            persistUserFoldersToPrefs();
+            return;
+        }
+
+        copyTagFolderList(newTagFolders, activeFolders);
+
+        refreshActiveTagFolderCounts();
+        sortFolders();
+        persistUserFoldersToPrefs();
     }
 
     @Override
