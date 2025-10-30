@@ -68,7 +68,7 @@ alt missingFeatures.empty == False
     BizUntagCommand --> BizUntagCommand
     deactivate BizUntagCommand
 
-else
+else else
     BizUntagCommand -> BizUntagCommand : result = missingFeatures
     activate BizUntagCommand
 
