@@ -197,11 +197,31 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
-    public void buildPreview_deleteTags_success() {
-        List<Person> personList = Arrays.asList(
+    public void buildPreview_addTags_existingTagomittedFromPreview() {
+        List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
-                        new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend"),
-                            new Tag("colleague")))));
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
+
+        // 'colleague' already exists -> should be omitted
+        String input = "edit 1 at/colleague at/family";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        // 'colleague' should be skipped, only 'family' shown
+        assertEquals("friend, colleague + family", tagPreview.getValue());
+        assertTrue(tagPreview.isValid());
+    }
+
+
+    @Test
+    public void buildPreview_deleteTags_success() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
 
         // delete existing tag
         String input = "edit 1 dt/friend";
@@ -214,8 +234,88 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
+    public void buildPreview_addTags_existingTagcontinueExecuted() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
+
+        // add existing tag 'friend' → should trigger `continue`
+        String input = "edit 1 at/friend";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        // nothing new appended, since 'friend' already exists
+        assertEquals("friend, colleague + ", tagPreview.getValue());
+        assertTrue(tagPreview.isValid()); // confirm branch didn’t invalidate
+    }
+
+    @Test
+    public void buildPreview_addTags_invalidTagNameinvalid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        String input = "edit 1 at/!!!"; // invalid tag name
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertFalse(tagPreview.isValid());
+    }
+
+
+
+    @Test
+    public void buildPreview_deleteTagsexistingTag_valid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"), new Tag("colleague")))));
+
+        // remove existing tag 'friend' -> valid, not added to invalidTagIndices
+        String input = "edit 1 dt/friend";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals("friend, colleague - friend", tagPreview.getValue());
+        assertTrue(tagPreview.isValid()); // ensures skip branch executed
+    }
+
+    @Test
+    public void buildPreview_deleteNonexistentValidTag_invalid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"))))
+        );
+
+        String input = "edit 1 dt/family"; // 'family' valid but not present
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertFalse(tagPreview.isValid());
+    }
+
+
+    @Test
+    public void buildPreview_deleteTags_invalidTagNameinvalid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        String input = "edit 1 dt/!!!"; // invalid tag name
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertFalse(tagPreview.isValid());
+    }
+
+
+
+    @Test
     public void buildPreview_addTags_invalidTag() {
-        List<Person> personList = Arrays.asList(
+        List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend")))));
 
@@ -242,7 +342,7 @@ public class EditPreviewBuilderTest {
     public void createDeleteTagsPreview_missingTag_invalid() {
         Person person = new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                 new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend"))));
-        List<String> deleteTags = Arrays.asList("family"); // not present
+        List<String> deleteTags = List.of("family"); // not present
         FieldPreview preview = EditPreviewBuilder.createDeleteTagsPreview(person, deleteTags);
         assertFalse(preview.isValid());
     }
@@ -253,7 +353,7 @@ public class EditPreviewBuilderTest {
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend")))));
 
-        // Use t/ and at/ together → invalid combination
+        // Use t/ and at/ together -> invalid combination
         String input = "edit 1 t/colleague at/family";
         List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
 
@@ -273,7 +373,7 @@ public class EditPreviewBuilderTest {
             tags.add(new Tag("tag" + i));
         }
 
-        List<Person> personList = Arrays.asList(
+        List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), tags));
 
@@ -283,9 +383,26 @@ public class EditPreviewBuilderTest {
 
         FieldPreview tagPreview = previews.get(previews.size() - 1);
         assertEquals("Tags (t/):", tagPreview.getLabel());
-        assertEquals(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS, tagPreview.getValue());
+        assertEquals(String.format(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                tags.size() + 1), tagPreview.getValue());
         assertFalse(tagPreview.isValid());
     }
 
+    @Test
+    public void buildPreview_normalTagOperation_validTagNoAddOrRemove() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        // Normal tag prefix (t/) with valid tag
+        String input = "edit 1 t/colleague"; // not at/ or dt/, so TagOperation is NORMAL
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals("friend -> colleague", tagPreview.getValue());
+        assertTrue(tagPreview.isValid());
+    }
 
 }

@@ -39,7 +39,7 @@ The main interface features a **command box**, **results display**, and **live c
 ## 📘 Documentation
 
 For detailed documentation, visit the official product site:  
-👉 **[Ethical Insurance Product Website](https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html)**
+👉 **[Ethical Insurance Product Website](https://ay2526s1-cs2103-f13-2.github.io/tp/)**
 
 Includes:
 - [User Guide](https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html) – for end users
