@@ -198,12 +198,12 @@ public class EditPreviewBuilder {
             String tag = newTagsList.get(i);
             if (!tag.isEmpty() && !Tag.isValidTagName(tag)) {
                 invalidTagIndices.add(i);
-            } else if (op.equals(TagOperation.REMOVE) && Tag.isValidTagName(tag)
-                    && !person.getTags().contains(new Tag(tag))) {
-                invalidTagIndices.add(i);
-            } else if (op.equals(TagOperation.ADD) && Tag.isValidTagName(tag)
-                    && person.getTags().contains(new Tag(tag))) {
-                continue;
+            } else if (Tag.isValidTagName(tag)) {
+                if (op.equals(TagOperation.REMOVE) && !person.getTags().contains(new Tag(tag))) {
+                    invalidTagIndices.add(i);
+                } else if (op.equals(TagOperation.ADD) && person.getTags().contains(new Tag(tag))) {
+                    continue;
+                }
             }
             tagsJoined.append(tag);
             if (i < newTagsList.size() - 1) {

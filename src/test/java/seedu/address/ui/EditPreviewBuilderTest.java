@@ -388,5 +388,21 @@ public class EditPreviewBuilderTest {
         assertFalse(tagPreview.isValid());
     }
 
+    @Test
+    public void buildPreview_normalTagOperation_validTagNoAddOrRemove() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend")))));
+
+        // Normal tag prefix (t/) with valid tag
+        String input = "edit 1 t/colleague"; // not at/ or dt/, so TagOperation is NORMAL
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals("friend -> colleague", tagPreview.getValue());
+        assertTrue(tagPreview.isValid());
+    }
 
 }
