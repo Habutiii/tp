@@ -283,9 +283,7 @@ public class ModelManager implements Model {
         target.clear();
         for (TagFolder f : source) {
             // copy query tags (shallow copy of String elements)
-            List<String> q = (f.getQueryTags() == null)
-                    ? List.of()
-                    : new ArrayList<>(f.getQueryTags());
+            List<String> q = new ArrayList<>(f.getQueryTags());
 
             TagFolder c;
             if (f.isUserCreated()) {
