@@ -125,8 +125,6 @@ public class AddPreviewBuilderTest {
             }
         }
         expected.append(", (Max number of tags is 15)");
-        System.out.println("Actual: " + previews.get(4).getValue());
-        System.out.println("Invalid indices: " + previews.get(4).getInvalidTagIndices());
         assertEquals(expected.toString(), previews.get(4).getValue());
         assertFalse(previews.get(4).isValid());
         assertTrue(previews.get(4).getInvalidTagIndices().contains(14));
