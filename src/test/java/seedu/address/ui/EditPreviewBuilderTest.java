@@ -284,6 +284,21 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
+    public void buildPreview_deleteNonexistentValidTag_invalid() {
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"),
+                        new HashSet<>(Arrays.asList(new Tag("friend"))))
+        );
+
+        String input = "edit 1 dt/family"; // 'family' valid but not present
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertFalse(tagPreview.isValid());
+    }
+
+
+    @Test
     public void buildPreview_deleteTags_invalidTagNameinvalid() {
         List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
