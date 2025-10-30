@@ -150,7 +150,7 @@ Only printable ASCII characters are allowed.
   - Valid: 123 Main St, Block 5, #01-01, 42 Wallaby Way, 7th Avenue, Apt 3
   - Invalid: " ", " Blk 456, Den Road, #01-355", "Blk 456, Den Road, #01-355 "
 
-- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.   
+- **Tag:** Each Person can only have up to 15 tags. A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 **Criteria for Same Person:**
@@ -249,7 +249,7 @@ Examples: [See result in 'Viewing Summary Statistics']
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
 
@@ -268,7 +268,7 @@ Examples:
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** Can only contain letters, numbers and dash ("-"). Tags are case insensitive.  
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
   _Example: friend, VIP, family-member, project2025_
 
 
