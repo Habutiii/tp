@@ -1,6 +1,6 @@
 ---
 layout: page
-title: AddressBook Level-3
+title: Ethical Insurance
 ---
 
 [![CI Status](https://github.com/AY2526S1-CS2103-F13-2/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2526S1-CS2103-F13-2/tp/actions)
