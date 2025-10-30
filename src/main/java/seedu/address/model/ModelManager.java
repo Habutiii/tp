@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -282,9 +283,9 @@ public class ModelManager implements Model {
         target.clear();
         for (TagFolder f : source) {
             // copy query tags (shallow copy of String elements)
-            java.util.List<String> q = (f.getQueryTags() == null)
-                    ? java.util.List.of()
-                    : new java.util.ArrayList<>(f.getQueryTags());
+            List<String> q = (f.getQueryTags() == null)
+                    ? List.of()
+                    : new ArrayList<>(f.getQueryTags());
 
             TagFolder c;
             if (f.isUserCreated()) {

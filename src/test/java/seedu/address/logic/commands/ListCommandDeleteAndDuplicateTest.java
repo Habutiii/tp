@@ -119,11 +119,20 @@ public class ListCommandDeleteAndDuplicateTest {
         @Override public ObservableList<TagFolder> getActiveTagFolders() {
             return FXCollections.observableArrayList();
         }
+
+        @Override
+        public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+            return FXCollections.observableArrayList();
+        }
+
         @Override public void addActiveTagFolders(List<String> tagNames) {
         }
         @Override public void addCompositeTagFolder(List<String> tagNames) {
         }
         @Override public void refreshActiveTagFolderCounts() {
+        }
+        @Override
+        public void setActiveTagFolders(ObservableList<TagFolder> tagFolders) {
         }
     }
 
