@@ -27,6 +27,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagFolder;
 
 /**
  * Tests the trailing 's' behaviour and tag parsing for ListCommandParser.
@@ -148,6 +149,16 @@ public class ListCommandParserSaveFolderTest {
         @Override
         public boolean removeTagFolderByName(String name) {
             return false;
+        }
+
+
+        @Override
+        public ObservableList<TagFolder> getActiveTagFoldersCopy() {
+            return FXCollections.observableArrayList();
+        }
+
+        @Override
+        public void setActiveTagFolders(ObservableList<TagFolder> newTagFolders) {
         }
     }
 
