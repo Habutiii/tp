@@ -7,7 +7,7 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
 
 
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -27,15 +27,15 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -44,6 +44,7 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
 ## Keybinds
 
 The following keybinds are available in Ethical Insurance
+
 ![Keybinds](images/Keybinds.png)
 
 - Up Arrow (↑): Goes back to previous command in history.
@@ -53,7 +54,7 @@ The following keybinds are available in Ethical Insurance
 
 ## Features
 
-### 💡 Notes about Command Format
+### Notes about Command Format
 
 | Rule                               | Description                                                                                | Example                                                                |
 |------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
@@ -77,6 +78,8 @@ Format: `man [COMMAND]`
 * If `COMMAND` is not specified, shows a list of all available commands.
 * If `COMMAND` is specified, shows the manual for the command.
 
+---
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -85,6 +88,7 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+---
 
 ### Listing all persons : `list`
 
@@ -100,7 +104,7 @@ Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t
 
 ### Create folder by tag : `list t/<your tag here> s/`
 
-Create and save custom folder. 
+Create and save custom folder.
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
 Output will be a folder with the names of the tags you have selected.
@@ -115,6 +119,7 @@ the respective tags are that folder will be deleted.
 
 Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
 
+---
 
 ### Adding a person: `add`
 
@@ -129,7 +134,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 > ⚠️ **Duplicate Rule:**  
 > Another person with the same **`NAME`** and **`PHONE_NUMBER`** is treated as a duplicate entry.
 
-### **⚠️ Criteria for Same Person**
+#### **⚠️ Criteria for Same Person**
 
 Two persons are considered the same if:
 - They have the **same `NAME`** (case-insensitive), and
@@ -139,18 +144,17 @@ Duplicate entries are not allowed in the address book.
 
 ---
 
-#### **Examples**
+**Examples**
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
----
 
 ### **Parameter Restrictions**
 
-_All parameters must contain only printable ASCII characters._
+>All parameters must contain only printable ASCII characters.
 
-#### **Name**
+**Name**
 - Must start with a **letter or number**.
 - Can contain **letters**, **spaces**, and the following special characters only:  
   `(space) , ( ) / . @ - '`
@@ -158,36 +162,33 @@ _All parameters must contain only printable ASCII characters._
 
 **Examples**
 
-| ✅ Valid     | ❌ Invalid |
-|-------------|-----------|
-| Jean-Luc    | John123   |
-| Tan         | Strauß    |
-| Mei Ling    | José      |
-| O’Connor    | John*     |
-| Mary (Ann)  | John_     |
-| Alex @ Home |           |
+| Valid       | Invalid |
+|-------------|---------|
+| Jean-Luc    | John123 |
+| Tan         | Strauß  |
+| Mei Ling    | José    |
+| O’Connor    | John*   |
+| Mary (Ann)  | John_   |
+| Alex @ Home |         |
 
----
-
-#### **Phone**
+**Phone**
 - Must be **3–15 digits** (to account for international numbers).
 - Only digits (0–9) are allowed — **no spaces, letters, or symbols.**
 
 **Examples**
 
-| ✅ Valid         | ❌ Invalid    |
+| Valid           | Invalid      |
 |-----------------|--------------|
 | 94567802        | +65 98765432 |
 | 82684533        | phone123     |
 | 66265555        | 9011p041     |
 | 123456789012345 | 9312 1534    |
+
 - **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.
-Must not exceed 40 characters.
-  - Example: friend, VIP, family-member, project2025_
+  Must not exceed 40 characters.
+    - Example: friend, VIP, family-member, project2025_
 
----
-
-#### **Email**
+**Email**
 - Must be a **valid email address**, with:
     - An alphanumeric username
     - Optional special characters (`+`, `_`, `.`, `-`)
@@ -195,28 +196,26 @@ Must not exceed 40 characters.
 
 **Examples**
 
-| ✅ Valid                | ❌ Invalid       |
+| Valid                  | Invalid         |
 |------------------------|-----------------|
 | johndoe@example.com    | johndoe@        |
 | alice.smith-99@mail.co | alice@@mail.com |
 | user+test@abc-def.com  | user@mail       |
 
----
-
-#### **Address**
+**Address**
 - Must **not be blank**.
 - Must **start with a non-space** and **not end with a space**.
 - Only printable ASCII characters allowed.
 
 **Examples**
 
-| ✅ Valid                      | ❌ Invalid                     |
+| Valid                        | Invalid                       |
 |------------------------------|-------------------------------|
 | 123 Main St, Block 5, #01-01 | " "                           |
 | 42 Wallaby Way               | " Blk 456, Den Road, #01-355" |
 | 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
 
----
+
 
 #### **Tag**
 - Tags are optional.
@@ -226,7 +225,7 @@ Must not exceed 40 characters.
 
 **Examples**
 
-| ✅ Valid       | ❌ Invalid     |
+| Valid         | Invalid       |
 |---------------|---------------|
 | friend        | friend!       |
 | family-member | family_member |
@@ -243,9 +242,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}
 > 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
 
 > 💡 Example: if you use `find` first, `edit 1` edits the first result from that filtered list.
-  Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) command.
+Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) command.
 
----
 
 #### Description
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
@@ -256,7 +254,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}
 * Use `dt/TAG` to remove from **existing** tags.
 * You can only use either of these tag editing commands once per `edit` command.
 * You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+  specifying any tags after it.
 * Each person after editing can only contain a maximum of 15 tags.
 
 Examples:
@@ -292,7 +290,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ---
 
-#### Description
+**Description**
 
 - The search is **case-insensitive**.  
   Example: `hans` matches `Hans`, `HANS`, and `Johanssen`.
@@ -306,7 +304,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ---
 
-#### Examples
+**Examples**
 
 | Command                    | Description / Result                                                |
 |----------------------------|---------------------------------------------------------------------|
@@ -316,7 +314,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 | `find alex 9123 gmail.com` | Lists clients whose name, phone, or email matches any of the terms. |
 
 > 💡 `find al` returns `Alex Yeow` and `Roy Balakrishnan`
-  
+
 ![result for 'find al'](images/findAlexResult.png)
 
 
@@ -324,6 +322,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ![result for 'find alex 9927'](images/findAlexBerniceResult.png)
 
+---
 
 ### Deleting a person : `delete`
 
@@ -339,11 +338,15 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+---
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
 
 Format: `clear`
+
+---
 
 ### Declaring Features and Tags for Statistics: `biz`
 
@@ -355,7 +358,7 @@ Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 * Add multiple tags fro aggregation of a Feature.
 
 Examples: [See result in 'Viewing Summary Statistics']
-* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics. 
+* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
 
 **Parameter restrictions:**
@@ -366,14 +369,14 @@ Examples: [See result in 'Viewing Summary Statistics']
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`
 
-Undeclares Features and their corresponding Tags. 
+Undeclares Features and their corresponding Tags.
 This command is undoable.
 
 Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
 
 * Undeclare multiple Features by chaining `t\` prefixes together.
 
-Examples: 
+Examples:
 * `biz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
 * `biz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
 
@@ -393,7 +396,7 @@ Statistics will be summarized according to Features and Tags declared by User us
 Format: `stats`
 
 **Example:**
-If the following was declared in `biz` command, 
+If the following was declared in `biz` command,
 
 Key - Features: Tags
 * Plan: A, B, C
@@ -424,6 +427,7 @@ Max Tag: A (1 person)
 Min Tag: B & C (0 people)
 ---------------------------------------------
 ```
+---
 
 ### Undoing the last action : `undo`
 
@@ -458,6 +462,7 @@ Format: `redo`
 * After undoing a delete, running `redo` will delete the person again.
 * If you undo an edit and then perform a new add, you cannot redo the undone edit.
 
+---
 
 ### Exiting the program : `exit`
 
@@ -465,9 +470,13 @@ Exits the program.
 
 Format: `exit`
 
+---
+
 ### Saving the data
 
 Ethical Insurance address book data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+---
 
 ### Editing the data file
 
@@ -477,6 +486,8 @@ Ethical Insurance address book data are saved automatically as a JSON file `[JAR
 If your changes to the data file makes its format invalid, Ethical Insurance will discard all data and start with an empty data file at the next run, *without any warning*. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause Ethical Insurance to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
+
+---
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -503,22 +514,22 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action | Format, Examples
---------|------------------
-**Manual** | `man [COMMAND]` <br> e.g., `man add`
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**List by tag** | `list t/<your tag here>` <br> e.g., `list t/friends`
-**Create and save folder** | `list t/<your tag here> s/` <br> e.g., `list t/friends s/`
-**Delete folder** | `list t/<your tag here> d/` <br> e.g., `list t/friends d/`
-**Help** | `help`
-**Declare Features and Tags** | `biz f/[FEATURE] t/[TAG]...` <br> e.g. `biz f/Plan t/A t/B`
-**Undeclare Features and Tags** | `unbiz f/[FEATURE]...` <br> e.g. `unbiz f/Plan f/Gender`
-**Stats**| `stats`
-**Undo** | `undo`
-**Redo** | `redo`
-**Exit** | `exit`
+| Action                          | Format, Examples                                                                                                                                                      |
+|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Manual**                      | `man [COMMAND]` <br> e.g., `man add`                                                                                                                                  |
+| **Add**                         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
+| **Clear**                       | `clear`                                                                                                                                                               |
+| **Delete**                      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
+| **Edit**                        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
+| **List**                        | `list`                                                                                                                                                                |
+| **List by tag**                 | `list t/<your tag here>` <br> e.g., `list t/friends`                                                                                                                  |
+| **Create and save folder**      | `list t/<your tag here> s/` <br> e.g., `list t/friends s/`                                                                                                            |
+| **Delete folder**               | `list t/<your tag here> d/` <br> e.g., `list t/friends d/`                                                                                                            |
+| **Help**                        | `help`                                                                                                                                                                |
+| **Declare Features and Tags**   | `biz f/[FEATURE] t/[TAG]...` <br> e.g. `biz f/Plan t/A t/B`                                                                                                           |
+| **Undeclare Features and Tags** | `unbiz f/[FEATURE]...` <br> e.g. `unbiz f/Plan f/Gender`                                                                                                              |
+| **Stats**                       | `stats`                                                                                                                                                               |
+| **Undo**                        | `undo`                                                                                                                                                                |
+| **Redo**                        | `redo`                                                                                                                                                                |
+| **Exit**                        | `exit`                                                                                                                                                                |
