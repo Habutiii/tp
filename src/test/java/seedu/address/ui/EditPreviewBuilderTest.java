@@ -198,10 +198,10 @@ public class EditPreviewBuilderTest {
 
     @Test
     public void buildPreview_deleteTags_success() {
-        List<Person> personList = Arrays.asList(
+        List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend"),
-                            new Tag("colleague")))));
+                        new Tag("colleague")))));
 
         // delete existing tag
         String input = "edit 1 dt/friend";
@@ -215,7 +215,7 @@ public class EditPreviewBuilderTest {
 
     @Test
     public void buildPreview_addTags_invalidTag() {
-        List<Person> personList = Arrays.asList(
+        List<Person> personList = List.of(
                 new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                         new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend")))));
 
@@ -242,7 +242,7 @@ public class EditPreviewBuilderTest {
     public void createDeleteTagsPreview_missingTag_invalid() {
         Person person = new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
                 new Address("123 Street"), new HashSet<>(Arrays.asList(new Tag("friend"))));
-        List<String> deleteTags = Arrays.asList("family"); // not present
+        List<String> deleteTags = List.of("family"); // not present
         FieldPreview preview = EditPreviewBuilder.createDeleteTagsPreview(person, deleteTags);
         assertFalse(preview.isValid());
     }

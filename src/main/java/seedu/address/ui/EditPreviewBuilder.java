@@ -106,13 +106,13 @@ public class EditPreviewBuilder {
         int tagOpCount = 0;
         String emptyTag = "";
 
-        if (newTagsList.size() == 1 && !newTagsList.contains(emptyTag)) {
+        if (!newTagsList.isEmpty()) {
             tagOpCount++;
         }
-        if (addTagsList.size() == 1 && !addTagsList.contains(emptyTag)) {
+        if (!addTagsList.isEmpty()) {
             tagOpCount++;
         }
-        if (deleteTagsList.size() == 1 && !deleteTagsList.contains(emptyTag)) {
+        if (!deleteTagsList.isEmpty()) {
             tagOpCount++;
         }
         if (tagOpCount > 1) {
@@ -197,7 +197,8 @@ public class EditPreviewBuilder {
             String tag = newTagsList.get(i);
             if (!tag.isEmpty() && !Tag.isValidTagName(tag)) {
                 invalidTagIndices.add(i);
-            } else if (op == TagOperation.REMOVE && !person.getTags().contains(new Tag(tag))) {
+            } else if (op.equals(TagOperation.REMOVE) && Tag.isValidTagName(tag)
+                    && !person.getTags().contains(new Tag(tag))) {
                 invalidTagIndices.add(i);
             }
             tagsJoined.append(tag);
