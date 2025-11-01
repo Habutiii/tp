@@ -67,9 +67,10 @@ public class LogicManager implements Logic {
             logger.severe("Could not save data to file due to insufficient permission: " + filePath);
 
             // check permission of filePath
-            Path parentPath = filePath.getParent();
-            if (((filePath != null) && !Files.isWritable(filePath))
-                    || ((parentPath != null) && !Files.isWritable(parentPath))) {
+            Path parentPath = (filePath != null) ? filePath.getParent() : null;
+            boolean isParentPathNotWritable = (parentPath != null) && !Files.isWritable(parentPath);
+            boolean isFilePathNotWritable = (filePath != null) && !Files.isWritable(filePath);
+            if (isParentPathNotWritable || isFilePathNotWritable) {
                 throw new CommandException(
                         String.format(FILE_OPS_PERMISSION_ERROR_FORMAT, filePath), ioe);
             }
