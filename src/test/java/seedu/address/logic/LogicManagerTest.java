@@ -105,6 +105,10 @@ public class LogicManagerTest {
                 LogicManager.FILE_OPS_ERROR_FORMAT, DUMMY_IO_EXCEPTION.getMessage()));
 
         prefPath.toFile().delete();
+
+        // when path is null
+        assertCommandFailureForExceptionFromStorage(DUMMY_IO_EXCEPTION, String.format(
+                LogicManager.FILE_OPS_ERROR_FORMAT, DUMMY_IO_EXCEPTION.getMessage()), null);
     }
 
     @Test
