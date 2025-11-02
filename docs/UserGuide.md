@@ -3,7 +3,14 @@ layout: page
 title: User Guide
 ---
 
-Ethical Insurance is a lightweight desktop contact management tool optimized for independent insurance agents managing 0~1000 customers entries.
+<div markdown="block" class="alert alert-info">
+**:information_source: About Ethical Insurance:**
+
+Ethical Insurance is a lightweight desktop contact management tool, a modernised version of the original AddressBook application, specifically tailored for independent insurance agents managing 0 – 1000 customer entries.
+
+Throughout this User Guide, any mention of **“Address Book”** refers to the **Ethical Insurance** application itself. Both terms may be used interchangeably.
+
+</div>
 
 * Table of Contents
 {:toc}
