@@ -483,22 +483,50 @@ Format: `exit`
 
 Ethical Insurance address book data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
----
+#### Data recovery & backup
 
-### Editing the data file
-
-Ethical Insurance address book data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, Ethical Insurance will discard all data and start with an empty data file at the next run, *without any warning*. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause Ethical Insurance to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:** If the data file becomes invalid or corrupted, Ethical Insurance will **discard the file and start with an empty dataset** on the next run. Keep periodic backups so you can restore quickly.
 </div>
 
+**Where is my data stored?**  
+`[JAR location]/data/addressbook.json`
+
+**How do I back up my data?**
+1. Exit the app.
+2. Copy `data/addressbook.json` to a safe folder (e.g., `backups/addressbook-YYYYMMDD.json`).
+
+**How do I restore my data from a backup?**
+1. Exit the app.
+2. Replace `[JAR location]/data/addressbook.json` with your backup copy. Ensure that the name is `addressbook.json`.
+3. Start the app again.
+
+#### Editing the data file manually
+
+**Advanced users:**
+- You may edit `addressbook.json` directly, but only with a plain-text editor and **printable ASCII**.
+- Any invalid structure (e.g., missing commas/quotes) will cause the app to reset the file. Always keep a backup before editing.
+
 ---
 
-### Archiving data files `[coming in v2.0]`
+### Common error messages
 
-_Details coming soon ..._
+| Situation                                             | Example message (may vary slightly)                                                | How to fix                                                                                                                                             |
+|-------------------------------------------------------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Unknown command                                       | `Unknown command`                                                                  | Check the command word (commands are **case-sensitive**). Use `man` to see valid commands, e.g. `man add`.                                             |
+| Wrong command format                                  | `Invalid command format!`                                                          | See the command’s manual: `man COMMAND`. Ensure required prefixes are present (e.g., `n/`, `p/`, `e/`, `a/`).                                          |
+| Invalid index                                         | `The person index provided is invalid`                                             | Use `list` or `find` first, then ensure the index is within the displayed list range.                                                                  |
+| Duplicate person                                      | `This person already exists in the address book`                                   | A duplicate is the **same NAME (case-insensitive) + PHONE_NUMBER**. Change either field or edit the existing entry.                                    |
+| Invalid name/phone/email/address                      | `Name is invalid` / `Phone is invalid` / `Email is invalid` / `Address is invalid` | Follow the **Parameter restrictions** in the `add`/`edit` sections (e.g., phone must be 3–15 digits; email must be well-formed; only printable ASCII). |
+| Tag limit exceeded                                    | `Too many tags (max 15)`                                                           | Reduce the number of tags to 15 or fewer.                                                                                                              |
+| Tag format invalid                                    | `Tag is invalid`                                                                   | Tags may contain **letters, digits, or '-'**, must start/end with a letter or digit, ≤ 40 chars.                                                       |
+| No actions to undo/redo                               | `Nothing to undo` / `Nothing to redo`                                              | Ensure you have performed (or undone) a mutable action in the current runtime.                                                                         |
+| biz/unbiz errors                                      | `Feature already exists` / `Feature not found`                                     | For `biz`, choose a new Feature name; for `unbiz`, ensure the Feature exists (use `stats` to check).                                                   |
+| Data file read issue                                  | `Data file is malformed and will be reset`                                         | See **Data recovery** above to restore from a backup.                                                                                                  |
+
+#### Still stuck?
+
+- Open the app and run `man` to see all commands, or `man [COMMAND]` for a specific one.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -527,7 +555,7 @@ _Details coming soon ..._
 | **Add**                         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
 | **Clear**                       | `clear`                                                                                                                                                               |
 | **Delete**                      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Edit**                        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Edit**                        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [{t/ \| at/ \| dt/}TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                          |
 | **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
 | **List**                        | `list`                                                                                                                                                                |
 | **List by tag**                 | `list t/<your tag here>` <br> e.g., `list t/friends`                                                                                                                  |
