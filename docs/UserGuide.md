@@ -279,8 +279,6 @@ If you used <code>find</code> or <code>list</code> before, <code>edit 1</code> e
 Finds clients whose **name, phone number, or email** contain any of the given keywords (case-insensitive, partial matches allowed).
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
----
-
 **Description**
 
 - The search is **case-insensitive**.  
@@ -292,8 +290,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
   Example: `Alex 9123` matches clients whose name contains “Alex” or phone contains “9123”.
 - Uses **OR semantics** — a client is listed if **any** keyword matches any field.
 - Blank or invalid inputs (e.g., spaces only or non-printable Unicode) are ignored safely.
-
----
 
 **Examples**
 
