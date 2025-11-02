@@ -237,51 +237,40 @@ Another person with the same <code>NAME</code> (case-insensitive) and <code>PHON
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Updates an existing person’s details in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
+**Format:**  
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ | at/ | dt/}TAG]...`
 
 <div markdown="block" class="alert alert-info">
 <strong>:information_source: Notes:</strong>
 <code>INDEX</code> refers to the number shown in the <strong>current list view</strong>, not a fixed ID.<br>
-If you use <code>find</code> first, <code>edit 1</code> edits the first result from that filtered list.
+If you used <code>find</code> or <code>list</code> before, <code>edit 1</code> edits the first result from that filtered list.
 </div>
 
-#### Description
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When using `t/TAG`, the existing tags of the person will be removed.
-* Use `at/TAG` to add on to **existing** tags.
-* Use `dt/TAG` to remove from **existing** tags.
-* You can only use either of these tag editing commands once per `edit` command.
-* You can remove all the person’s tags by typing `t/` without
-  specifying any tags after it.
-* Each person after editing can only contain a maximum of 15 tags.
+**Description**
 
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-*  `edit 3 at/InsuranceA` Adds the tag `InsuranceA` on to existing tags of the 3rd person.
-*  `edit 3 dt/InsuranceA` Deletes the tag `InsuranceA` from the existing tags of the 3rd person.
-
-- Edits the person at the specified **`INDEX`** in the currently displayed list.  
+* Edits the person at the specified `INDEX` in the currently displayed list.  
   The index **must be a positive integer** (1, 2, 3, …).
-- At least **one** of the optional fields must be provided.
-- Only the specified fields are updated, other fields remain unchanged.
-- When editing tags, the existing tags are **replaced**, not added cumulatively.
-- To remove **all** of a person’s tags, type `t/` with nothing following it.
-- Each person can have up to **15 tags** after editing.
-- **Parameter restrictions:** Same as those in the [`add`](#adding-a-person-add) command.
+* At least one of the optional fields must be provided (i.e. `n/`, `p/`, `e/`, `a/`, or `t/`).
+* Only the specified fields will be updated; all other details remain unchanged.
+* When editing tags (`t/`, `at/`, `dt/`):
+  * `at/` adds new tags to existing ones. 
+  * `dt/` removes specified tags from existing ones.
+  * `t/` replaces all existing tags with the new set of tags provided.
+  * To remove all tags, type `t/` with nothing after it.
+  * Only one tag operation (t/, at/, or dt/) can be used per command.
+* Each person can have up to **15 tags** after editing.
+* **Parameter restrictions:** Same as those in the [`add`](#adding-a-person-add) command.
 
----
-
-#### Examples
+**Examples**
 
 | Command                                   | Description                                                              |
 |-------------------------------------------|--------------------------------------------------------------------------|
 | `edit 1 p/91234567 e/johndoe@example.com` | Updates the **phone** and **email** of the 1st person.                   |
-| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and **clears all existing tags**. |
+| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and clears all existing tags.     |
+| `edit 3 at/InsuranceA`                    | Adds the tag **InsuranceA** to the 3rd person’s existing tags.           |
+| `edit 3 dt/InsuranceA`                    | Removes the tag **InsuranceA** from the 3rd person’s existing tags.      |
 
 ---
 
