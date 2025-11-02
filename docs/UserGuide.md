@@ -68,7 +68,8 @@ All commands and parameters are case sensitive. For example, `add` is a valid co
 | **Items in square brackets `[ ]`** | Are optional.                                                                                                                                                                                                                                                           | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`                          |
 | **Items followed by `…`**          | Can be repeated multiple times (including zero).                                                                                                                                                                                                                        | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**)            |
 | **Parameter order**                | Parameters can appear in any order.                                                                                                                                                                                                                                     | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                                 |
-| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                                                                                                                                                                                                  | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/` |
+| **Extra parameters**               | Ignored for commands that take none (`help`, `exit`, `clear`, `undo`, `redo`).                                                                                                                                                                                          | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/` |
+| **Leading/Trailing spaces**        | Leading and trailing spaces are ignored.                                                                                                                                                                                                                                | "   add n/ John ..." → "add n/John ..."                                           |
 | **PDF copy-paste tip**             | Certain characters in this document may appear stylised (e.g. quotes, dashes, or spaces) and may not be recognised by the application. Ethical Insurance only accepts <strong>printable ASCII characters</strong>. Please type commands manually to avoid input errors. | —                                                                                 |
 
 ---
@@ -130,10 +131,17 @@ Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here
 ---
 
 ### Adding a person: `add`
+>All parameters must contain only printable ASCII characters.
 
 Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+
+**Examples**
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
 
 <div markdown="block" class="alert alert-info">
 <strong>:information_source: Tip:</strong>
@@ -142,47 +150,29 @@ A person can have any number of tags (including 0).
 
 <div markdown="span" class="alert alert-warning">
 :exclamation: <strong>Caution:</strong>
-Another person with the same <code>NAME</code> and <code>PHONE_NUMBER</code> is treated as a duplicate entry.
+Another person with the same <code>NAME</code> (case-insensitive) and <code>PHONE_NUMBER</code> is treated as a duplicate entry. Duplicate entries are not allowed in the address book.
 </div>
 
-#### Criteria for Same Person
+**Parameters must adhere to the following restrictions:**
 
-Two persons are considered the same if:
-- They have the **same `NAME`** (case-insensitive), and
-- They have the **same `PHONE_NUMBER`**.
-
-Duplicate entries are not allowed in the address book.
-
----
-
-**Examples**
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-
-### **Parameter Restrictions**
-
->All parameters must contain only printable ASCII characters.
-
-**Name**
-- Must start with a **letter or number**.
+**Name:**
+- Must start with a **letter**.
 - Can contain **letters**, **spaces**, and the following special characters only:  
   `(space) , ( ) / . @ - '`
 - Cannot contain **numbers** inside the name or any other special symbols.
 
 **Examples**
 
-| Valid       | Invalid |
-|-------------|---------|
-| Jean-Luc    | John123 |
-| Tan         | Strauß  |
-| Mei Ling    | José    |
-| O’Connor    | John*   |
-| Mary (Ann)  | John_   |
-| Alex @ Home |         |
+| Valid       | Invalid      |
+|-------------|--------------|
+| Jean-Luc    | John123      |
+| Tan         | Strauß       |
+| Mei Ling    | José         |
+| O'Connor    | John*        |
+| Mary (Ann)  | John_        |
+| Alex @ Home | _xXdarrenXx_ |
 
-**Phone**
+**Phone:**
 - Must be **3–15 digits** (to account for international numbers).
 - Only digits (0–9) are allowed — **no spaces, letters, or symbols.**
 
@@ -195,11 +185,7 @@ Duplicate entries are not allowed in the address book.
 | 66265555        | 9011p041     |
 | 123456789012345 | 9312 1534    |
 
-- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.
-  Must not exceed 40 characters.
-    - Example: friend, VIP, family-member, project2025_
-
-**Email**
+**Email:**
 - Must be a **valid email address**, with:
     - An alphanumeric username
     - Optional special characters (`+`, `_`, `.`, `-`)
@@ -211,11 +197,11 @@ Duplicate entries are not allowed in the address book.
 |------------------------|-----------------|
 | johndoe@example.com    | johndoe@        |
 | alice.smith-99@mail.co | alice@@mail.com |
-| user+test@abc-def.com  | user@mail       |
+| user+test@abc-def.com  | bob@mail.       |
+| user@mail              | user@a.a        |
 
-**Address**
+**Address:**
 - Must **not be blank**.
-- Must **start with a non-space** and **not end with a space**.
 - Only printable ASCII characters allowed.
 
 **Examples**
@@ -226,13 +212,11 @@ Duplicate entries are not allowed in the address book.
 | 42 Wallaby Way               | " Blk 456, Den Road, #01-355" |
 | 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
 
-
-
-#### **Tag**
+**Tag(s):**
 - Tags are optional.
 - Each person can have **up to 15 tags**.
 - Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
-- Tags are **case-insensitive**.
+- Tags are case-insensitive. Must not exceed 40 characters.
 
 **Examples**
 
