@@ -555,6 +555,38 @@ Ethical Insurance address book data are saved in the hard disk automatically aft
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Minimum Window Size and Display Scaling
+
+Ethical Insurance’s user interface is designed to remain clear and fully functional across standard screen sizes and scaling levels.
+
+### Recommended display settings
+
+The application has been tested to work optimally under the following conditions:
+
+- **Screen resolutions:** 1920×1080 and higher
+- **Scaling levels:** 100% and 125%
+
+### Minimum supported configuration
+
+While the interface remains usable (all features accessible, though with reduced comfort) under smaller resolutions and higher scaling, the minimum supported setup is:
+
+| Physical Resolution | Scale | Effective Logical Resolution | Usability                      |
+|---------------------|-------|------------------------------|--------------------------------|
+| 1920×1080 @ 100%    | 1.00  | 1920×1080                    | ✅ Optimal                      |
+| 1920×1080 @ 125%    | 1.25  | 1536×864                     | ✅ Good                         |
+| 1280×720 @ 150%     | 1.50  | 853×480                      | ⚠️ Usable (reduced visibility) |
+
+### Minimum window size
+
+The Ethical Insurance application enforces a **minimum window size of 450 × 800 pixels** to prevent layout distortion or clipping of key UI elements.
+
+<div markdown="span" class="alert alert-info">
+<strong>:information_source: Tip:</strong>
+If the interface appears cramped at higher scaling levels (e.g., 150%), resize the window manually or lower the display scaling in your operating system settings.
+</div>
+
+----------------------------------------------------------------------------------------------------
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
