@@ -112,13 +112,13 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
-### Filtered list by tag : `list t/<your tag here>`
+**Filtered list by tag : `list t/<your tag here>`**
 
 Sorts and lists only entries with the respective tag(s) entered.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 
-### Create folder by tag : `list t/<your tag here> s/`
+**Create folder by tag : `list t/<your tag here> s/`**
 
 Create and save custom folder.
 
@@ -128,7 +128,7 @@ Example:
 - Input: list t/friends t/colleagues s/
 - Output: Folder friends & colleagues created
 
-### Delete folder by tag : `list t/<your tag here> d/`
+**Delete folder by tag : `list t/<your tag here> d/`**
 
 Delete selected folder. Order does not matter for the deleting of folder, as long as
 the respective tags are that folder will be deleted.
@@ -433,13 +433,13 @@ Min Tag: B & C (0 people)
 
 ### Undoing the last action : `undo`
 
-Reverts the most recent mutable action (`add`, `delete`, `clear`, `edit`, `biz`, or `unbiz`) performed during the current runtime.
+Reverts the most recent mutable action (`add`, `delete`, `clear`, `edit`, `biz`, `unbiz`, or `list` with `s/` or `d/` flags) performed during the current runtime.
 
 Format: `undo`
 
-* Only actions that change the address book (`add`, `delete`, `clear`, `edit`, `biz`, or `unbiz`) can be undone.
+* Only actions that change the address book or saved folders (`add`, `delete`, `clear`, `edit`, `biz`, `unbiz`, `list t/... s/`, or `list t/... d/`) can be undone.
 * Multiple undo operations can be performed in sequence to revert several actions, as long as they are all mutable actions.
-* Undo is only available for actions performed in current runtime.
+* Undo is only available for actions performed in the current runtime.
 
 <div markdown="block" class="alert alert-info">
 <strong>:information_source: Tip:</strong><br>
@@ -451,22 +451,37 @@ There is no limit on how many actions can be undone, as long as they were perfor
 * After deleting a person, running `undo` will restore the deleted person.
 * After editing a person, running `undo` will revert the changes made.
 * After clearing the address book, running `undo` will restore all previously deleted entries.
+* After declaring a feature using `biz`, running `undo` will revert that declaration.
+* After undeclaring a feature using `unbiz`, running `undo` will restore the previously removed feature.
+* After creating a saved folder using `list t/friends t/colleagues s/`, running `undo` will remove that saved folder.
+* After deleting a saved folder using `list t/friends t/colleagues d/`, running `undo` will restore that folder.
 
 ---
 
 ### Redoing the last undone action : `redo`
 
-Reapplies the most recent sequence of undone mutable actions, as long as no new action has been performed since the last undo.
+Reapplies the most recent undone action, as long as no new action has been performed since the last undo.
 
 Format: `redo`
 
 * Only actions that were previously undone using `undo` can be redone.
-* If you perform a new action (add, delete, clear, edit) after undoing, the redo history is cleared and you cannot redo the previous actions.
-* Multiple redo operations can be performed in sequence to reapply several undone actions, as long as no new action has interrupted the sequence.
+* If you perform a new action (`add`, `delete`, `clear`, `edit`, `biz`, `unbiz`, or `list` with `s/` or `d/`) after undoing, the redo history is cleared and you cannot redo the previous actions.
+* Multiple redo operations can be performed consecutively to reapply several undone actions, as long as no new action interrupts the sequence.
+* Redo is only available for actions undone in the current runtime.
+
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Tip:</strong>
+Redo can only be used immediately after an <code>undo</code>.  
+Once a new action is performed, the redo history is cleared.
+</div>
 
 **Examples:**
 * After undoing an add, running `redo` will add the person back again.
 * After undoing a delete, running `redo` will delete the person again.
+* After undoing an edit, running `redo` will re-apply the same edits.
+* After undoing a biz, running `redo` will restore the declared feature.
+* After undoing a saved folder creation (`list t/friends s/`), running `redo` will re-create that folder.
+* After undoing a saved folder deletion (`list t/friends d/`), running `redo` will delete that folder again.
 * If you undo an edit and then perform a new add, you cannot redo the undone edit.
 
 ---
