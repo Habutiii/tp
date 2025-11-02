@@ -7,7 +7,7 @@ Ethical Insurance is a lightweight desktop contact management tool optimized for
 
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
