@@ -136,12 +136,12 @@ Adds a person to the address book.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
 <div markdown="block" class="alert alert-info">
-<strong>:information_source: Tip:</strong><br>
+<strong>:information_source: Tip:</strong>
 A person can have any number of tags (including 0).
 </div>
 
 <div markdown="span" class="alert alert-warning">
-:exclamation: <strong>Caution:</strong><br>
+:exclamation: <strong>Caution:</strong>
 Another person with the same <code>NAME</code> and <code>PHONE_NUMBER</code> is treated as a duplicate entry.
 </div>
 
@@ -251,7 +251,7 @@ Edits an existing person in the address book.
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
 
 <div markdown="block" class="alert alert-info">
-<strong>:information_source: Notes:</strong><br>
+<strong>:information_source: Notes:</strong>
 <code>INDEX</code> refers to the number shown in the <strong>current list view</strong>, not a fixed ID.<br>
 If you use <code>find</code> first, <code>edit 1</code> edits the first result from that filtered list.
 </div>
@@ -325,7 +325,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 | `find alex 9123 gmail.com` | Lists clients whose name, phone, or email matches any of the terms. |
 
 <div markdown="block" class="alert alert-info">
-<strong>:information_source: Example:</strong><br>
+<strong>:information_source: Example:</strong>
 <code>find al</code> returns <code>Alex Yeow</code> and <code>Roy Balakrishnan</code>.
 </div>
 
@@ -333,7 +333,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 
 <div markdown="block" class="alert alert-info">
-<strong>:information_source: Example:</strong><br>
+<strong>:information_source: Example:</strong>
 <code>find alex 9927</code> returns <code>Alex Yeoh</code>, <code>Bernice Yu</code>.
 </div>
 
@@ -391,17 +391,22 @@ This command is undoable.
 
 Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
 
-* Undeclare multiple Features by chaining `t\` prefixes together.
+* Undeclare multiple Features by chaining `f/` prefixes together.
 
 Examples:
 * `biz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
 * `biz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
 
-**Parameter restrictions:**
-***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
-  _Example: friend, VIP, family-member, project2025_
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution: Parameter restrictions**
 
+A `Feature` and `Tag` name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
+<br>
+_Example: friend, VIP, family-member, project2025_
+
+</div>
+
+--- 
 
 ### Viewing Summary Statistics: `stats`
 
