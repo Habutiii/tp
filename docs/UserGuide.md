@@ -5,7 +5,6 @@ title: User Guide
 
 Ethical Insurance is a lightweight desktop contact management tool optimized for independent insurance agents managing 0~1000 customers entries.
 
-
 * Table of Contents
 {:toc}
 
@@ -56,29 +55,36 @@ The following keybinds are available in Ethical Insurance
 
 ## Features
 
-### Notes about Command Format
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**
 
-| Rule                               | Description                                                                                | Example                                                                |
-|------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                              | `add n/NAME` → `add n/John Doe`                                        |
-| **Items in square brackets `[ ]`** | Are optional.                                                                              | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`               |
-| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                           | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**) |
-| **Parameter order**                | Parameters can appear in any order.                                                        | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                      |
-| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                     | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/`                                     |
-| **PDF copy-paste tip**             | If copying commands that span multiple lines, ensure spaces near line breaks are not lost. | —                                                                      |
+All commands and parameters are case sensitive. For example, `add` is a valid command, whereas `Add` or `ADD` are not recognized as valid commands.
+
+</div>
+
+| Rule                               | Description                                                                                                                                                                                                                                                             | Example                                                                           |
+|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                                                                                                                                                                                                           | `add n/NAME` → `add n/John Doe`                                                   |
+| **Items in square brackets `[ ]`** | Are optional.                                                                                                                                                                                                                                                           | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`                          |
+| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                                                                                                                                                                                                        | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**)            |
+| **Parameter order**                | Parameters can appear in any order.                                                                                                                                                                                                                                     | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                                 |
+| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                                                                                                                                                                                                  | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/` |
+| **PDF copy-paste tip**             | Certain characters in this document may appear stylised (e.g. quotes, dashes, or spaces) and may not be recognised by the application. Ethical Insurance only accepts <strong>printable ASCII characters</strong>. Please type commands manually to avoid input errors. | —                                                                                 |
 
 ---
 
-> This section explains how to read and use command syntax throughout the User Guide
+## Commands
 
+This section explains how to read and use command syntax throughout the User Guide
 
 ### Viewing Manuals: `man`
 
-Shows manuals for commands.
+Display help manual for commands.
 
 Format: `man [COMMAND]`
 * If `COMMAND` is not specified, shows a list of all available commands.
 * If `COMMAND` is specified, shows the manual for the command.
+* If multiple inputs are entered (e.g., man list help), only the first valid command (list) will be processed, and everything else after the first space will be ignored.
 
 ---
 
@@ -129,14 +135,17 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
-> 💡 **Tip:**  
-> A person can have any number of tags (including 0).
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Tip:</strong><br>
+A person can have any number of tags (including 0).
+</div>
 
+<div markdown="span" class="alert alert-warning">
+:exclamation: <strong>Caution:</strong><br>
+Another person with the same <code>NAME</code> and <code>PHONE_NUMBER</code> is treated as a duplicate entry.
+</div>
 
-> ⚠️ **Duplicate Rule:**  
-> Another person with the same **`NAME`** and **`PHONE_NUMBER`** is treated as a duplicate entry.
-
-#### **⚠️ Criteria for Same Person**
+#### Criteria for Same Person
 
 Two persons are considered the same if:
 - They have the **same `NAME`** (case-insensitive), and
@@ -241,11 +250,11 @@ Edits an existing person in the address book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
 
-> 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
-
-> 💡 Example: if you use `find` first, `edit 1` edits the first result from that filtered list.
-Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) command.
-
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Notes:</strong><br>
+<code>INDEX</code> refers to the number shown in the <strong>current list view</strong>, not a fixed ID.<br>
+If you use <code>find</code> first, <code>edit 1</code> edits the first result from that filtered list.
+</div>
 
 #### Description
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
@@ -315,12 +324,18 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 | `find gmail.com`           | Lists clients using Gmail addresses.                                |
 | `find alex 9123 gmail.com` | Lists clients whose name, phone, or email matches any of the terms. |
 
-> 💡 `find al` returns `Alex Yeow` and `Roy Balakrishnan`
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Example:</strong><br>
+<code>find al</code> returns <code>Alex Yeow</code> and <code>Roy Balakrishnan</code>.
+</div>
 
 ![result for 'find al'](images/findAlexResult.png)
 
 
-> 💡 `find alex 9927` returns `Alex Yeoh`, `Bernice Yu`<br>
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Example:</strong><br>
+<code>find alex 9927</code> returns <code>Alex Yeoh</code>, <code>Bernice Yu</code>.
+</div>
 
 ![result for 'find alex 9927'](images/findAlexBerniceResult.png)
 
@@ -433,13 +448,18 @@ Min Tag: B & C (0 people)
 
 ### Undoing the last action : `undo`
 
-Reverts the most recent mutable action (add, delete, clear, or edit) performed during the current runtime.
+Reverts the most recent mutable action (`add`, `delete`, `clear`, `edit`, `biz`, or `unbiz`) performed during the current runtime.
 
 Format: `undo`
 
-* Only actions that change the address book (add, delete, clear, edit, biz, unbiz) can be undone.
-* Multiple undo operations can be performed in sequence to revert several actions, as long as they are all mutable actions from the current session.
-* Undo is only available for actions performed since the application was started (current runtime).
+* Only actions that change the address book (`add`, `delete`, `clear`, `edit`, `biz`, or `unbiz`) can be undone.
+* Multiple undo operations can be performed in sequence to revert several actions, as long as they are all mutable actions.
+* Undo is only available for actions performed in current runtime.
+
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Tip:</strong><br>
+There is no limit on how many actions can be undone, as long as they were performed in the current runtime.
+</div>
 
 **Examples:**
 * After adding a person, running `undo` will remove the newly added person.
