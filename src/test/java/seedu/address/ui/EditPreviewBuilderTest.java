@@ -246,6 +246,25 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
+    public void createTagsPreview_exceedingMaxTags_invalidPreview() {
+        int max = Person.MAX_TAGS_PER_PERSON;
+        List<String> tags = new ArrayList<>();
+        for (int i = 0; i < max + 1; i++) { // exceed by 1
+            tags.add("tag" + i);
+        }
+        Person person = new PersonBuilder().withTags("a").build();
+
+        FieldPreview preview = EditPreviewBuilder.createTagsPreview(person, tags);
+
+        assertFalse(preview.isValid());
+        assertEquals(
+                String.format(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON, tags.size()),
+                preview.getValue()
+        );
+    }
+
+
+    @Test
     public void createTagsPreview_exactlyMaxTags_valid() {
         int max = Person.MAX_TAGS_PER_PERSON;
         List<String> tags = new ArrayList<>();
