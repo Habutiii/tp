@@ -45,7 +45,7 @@ public class StatsCommandIntegrationTest {
         StatsCommand statsCommand = new StatsCommand();
         String barOutput = "==================================";
         String barTable = "------------------------------------------------";
-        String actualResult = "Total Number of Customers in AddressBook: 3"
+        String actualResult = "Total Number of Customers in Address Book: 3"
                 + "\n\n" + barOutput + "\n\n"
                 + "Gender   |  Number of people\n"
                 + "Other    |  0\n"

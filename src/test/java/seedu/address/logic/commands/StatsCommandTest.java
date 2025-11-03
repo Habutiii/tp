@@ -40,7 +40,7 @@ public class StatsCommandTest {
         StatsCommand statsCommand = new StatsCommand();
         String barOutput = "==================================";
         String barTable = "------------------------------------------------";
-        String actualResult = "Total Number of Customers in AddressBook: 10"
+        String actualResult = "Total Number of Customers in Address Book: 10"
                 + "\n\n" + barOutput + "\n\n"
                 + "Gender   |  Number of people\n"
                 + "Other    |  0\n"
@@ -133,7 +133,7 @@ public class StatsCommandTest {
         };
         CommandResult result = statsCommand.execute(emptyModel);
         System.out.print(result.toString());
-        assertTrue(result.toString().contains("Total Number of Customers in AddressBook: 0"));
+        assertTrue(result.toString().contains("Total Number of Customers in Address Book: 0"));
         assertTrue(result.toString().contains("Average: 0.00")); // mean < 0 branch
     }
 

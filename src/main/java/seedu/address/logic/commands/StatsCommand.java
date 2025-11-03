@@ -68,7 +68,7 @@ public class StatsCommand extends Command {
         }
 
         String summaryTables = String.join("\n", tables);
-        String overview = "Total Number of Customers in AddressBook: " + model.getSize() + "\n\n" + barOutput;
+        String overview = "Total Number of Customers in Address Book: " + model.getSize() + "\n\n" + barOutput;
 
         return String.join("\n\n", overview, summaryTables);
     }
