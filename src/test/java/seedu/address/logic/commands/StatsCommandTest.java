@@ -21,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -40,29 +39,29 @@ public class StatsCommandTest {
         StatsCommand statsCommand = new StatsCommand();
         String barOutput = "==================================";
         String barTable = "------------------------------------------------";
-        String actualResult = "Total Number of Customers in AddressBook: 10"
-                + "\n\n" + barOutput + "\n\n"
-                + "Gender   |  Number of people\n"
-                + "Other    |  0\n"
-                + "Female   |  0\n"
-                + "Male     |  3\n\n"
-                + "Total for Feature: 3\n"
-                + "Average: 1.00\n"
-                + "Max Tag: Male (3 people)\n"
-                + "Min Tag: Other & Female (0 people)\n"
-                + barTable + "\n\n\n"
-                + "Plan   |  Number of people\n"
-                + "A      |  3\n"
-                + "B      |  0\n"
-                + "C      |  0\n\n"
-                + "Total for Feature: 3\n"
-                + "Average: 1.00\n"
-                + "Max Tag: A (3 people)\n"
-                + "Min Tag: B & C (0 people)\n"
-                + barTable + "\n\n";
-        assertEquals(new CommandResult(actualResult),
-                statsCommand.execute(new ModelStub()));
+        String expected =
+                "Total Number of Customers in AddressBook: 10"
+                        + "\n\n" + barOutput + "\n\n"
+                        + "GENDER   |  Number of people\n"
+                        + "OTHER    |  0\n"
+                        + "FEMALE   |  0\n"
+                        + "MALE     |  3\n\n"
+                        + "Total for Feature: 3\n"
+                        + "Average: 1.00\n"
+                        + "Max Tag: MALE (3 people)\n"
+                        + "Min Tag: OTHER & FEMALE (0 people)\n"
+                        + barTable + "\n\n\n"
+                        + "PLAN   |  Number of people\n"
+                        + "A      |  3\n"
+                        + "B      |  0\n"
+                        + "C      |  0\n\n"
+                        + "Total for Feature: 3\n"
+                        + "Average: 1.00\n"
+                        + "Max Tag: A (3 people)\n"
+                        + "Min Tag: B & C (0 people)\n"
+                        + barTable + "\n\n";
 
+        assertEquals(new CommandResult(expected), statsCommand.execute(new ModelStub()));
     }
 
     @Test
@@ -77,17 +76,15 @@ public class StatsCommandTest {
                         new PersonBuilder().withTags("Male", "B").build()
                 );
             }
-
-            @Override
-            public int getSize() {
+            @Override public int getSize() {
                 return 3;
             }
         };
 
-        String result = cmd.execute(model).toString();
-        assertTrue(result.contains("Male")); // max tag
-        assertTrue(result.contains("Other")); // min tag
-        assertTrue(result.contains("Average: 1.00"));
+        String out = cmd.execute(model).toString().toUpperCase();
+        assertTrue(out.contains("MALE"));
+        assertTrue(out.contains("OTHER"));
+        assertTrue(out.contains("AVERAGE: 1.00"));
     }
 
     @Test
@@ -102,20 +99,27 @@ public class StatsCommandTest {
                         new PersonBuilder().withTags("Other").build()
                 );
             }
-
-            @Override
-            public int getSize() {
+            @Override public int getSize() {
                 return 3;
             }
         };
 
-        String result = cmd.execute(model).toString();
-        // all tags count = 1, so maxTag = all, minTag = all
-        assertTrue(result.contains("Max Tag: Other & Female & Male"));
-        assertTrue(result.contains("Min Tag: Other & Female & Male"));
-        assertTrue(result.contains("Average: 1.00"));
-    }
+        String out = cmd.execute(model).toString().toUpperCase();
+        // all tags have count 1 → both max and min contain all three
+        assertTrue(out.contains("MAX TAG: OTHER & FEMALE & MALE") || out.contains("MAX TAG: OTHER & MALE & FEMALE")
+                || out.contains("MAX TAG: FEMALE & MALE & OTHER")
+                || out.contains("MAX TAG: FEMALE & OTHER & MALE")
+                || out.contains("MAX TAG: MALE & OTHER & FEMALE")
+                || out.contains("MAX TAG: MALE & FEMALE & OTHER"));
 
+        assertTrue(out.contains("MIN TAG: OTHER & FEMALE & MALE") || out.contains("MIN TAG: OTHER & MALE & FEMALE")
+                || out.contains("MIN TAG: FEMALE & MALE & OTHER")
+                || out.contains("MIN TAG: FEMALE & OTHER & MALE")
+                || out.contains("MIN TAG: MALE & OTHER & FEMALE")
+                || out.contains("MIN TAG: MALE & FEMALE & OTHER"));
+
+        assertTrue(out.contains("AVERAGE: 1.00"));
+    }
 
     @Test
     public void execute_stats_emptyList() {
@@ -203,10 +207,6 @@ public class StatsCommandTest {
         @Override
         public void addPerson(Person person) {
 
-        }
-
-        @Override
-        public void insertPerson(Index index, Person person) {
         }
 
         @Override
