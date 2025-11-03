@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDTAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETETAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -47,7 +49,9 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]..."
+            + "[" + PREFIX_TAG + "TAG]..." + " OR "
+            + "[" + PREFIX_ADDTAG + "ADDTAG]..." + " OR "
+            + "[" + PREFIX_DELETETAG + "DELETETAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -69,6 +73,8 @@ public class EditCommand extends Command {
             "\n  • EMAIL (optional): " + Email.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
             "\n  • ADDRESS (optional): " + Address.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
             "\n  • TAG (optional): " + Tag.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
+            "\n  • ADDTAG fields add on to the existing tag set of Person if provided",
+            "\n  • DELETETAG fields are removed from the existing tag set of Person if provided",
             "",
             "EXAMPLES",
             "  edit 2 p/91234567 e/new@example.com",

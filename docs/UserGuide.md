@@ -104,9 +104,9 @@ Filter by the respective tag(s) entered and displays a list of the filtered entr
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 Example: 
-- list t/friends
-- list t/travel t/high-cost
-- list t/car t/medical t/expensive
+- `list t/friends`
+- `list t/travel t/high-cost`
+- `list t/car t/medical t/expensive`
 
 
 ### Create folder by tag : `list t/<your tag here> s/`
@@ -121,9 +121,9 @@ Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here
 - Tags are now normalized to all uppercase
 
 Example:
-- Input: list t/friends t/colleagues s/
-- Output: Folder COLLEAGUES & FRIENDS created
-- list t/friends t/colleagues s/ notes here → same result (text after s/ ignored)
+- Input: `list t/friends t/colleagues s/`
+- Output: Folder `COLLEAGUES & FRIENDS` created
+- `list t/friends t/colleagues s/ notes here` → same result (text after s/ ignored)
 
 ### Delete folder by tag : `list t/<your tag here> d/`
 
@@ -136,10 +136,10 @@ Format: `list t/<your tag here> d/` and for multiple tags based folders  `list t
 - You can type d/ more than once, but extra d/ flags are ignored.
 
 Example
-- Input: list t/cars d/
-- Output: Deleted folder "CARS"
-- Input: list t/cars t/medical t/age d/
-- Output: Deleted folder "AGE & CARS & MEDICAL"
+- Input: `list t/cars d/`
+- Output: Deleted folder `"CARS"`
+- Input: `list t/cars t/medical t/age d/`
+- Output: Deleted folder `"AGE & CARS & MEDICAL"`
 
 ---
 
