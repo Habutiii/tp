@@ -130,7 +130,7 @@ public class EditPreviewBuilder {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
                             newTagsList.size()) , false));
-        } else if (addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
+        } else if (addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON && !addTagsList.contains("")) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
                             addTagsList.size() + person.getTags().size()) , false));
