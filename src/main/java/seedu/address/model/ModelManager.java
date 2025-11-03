@@ -27,6 +27,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagFolder;
+import seedu.address.storage.SidebarFolderPrefs;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -71,14 +72,6 @@ public class ModelManager implements Model {
         loadUserSavedFoldersFromPrefs();
         refreshActiveTagFolderCounts();
         sortFolders();
-    }
-
-    // --- methods below constructors ---
-    private static String folderKey(java.util.List<String> tags) {
-        return tags.stream()
-                .map(String::toLowerCase)
-                .sorted()
-                .collect(java.util.stream.Collectors.joining("|"));
     }
 
     //=========== UserPrefs ==================================================================================
@@ -571,7 +564,7 @@ public class ModelManager implements Model {
     private void persistUserFoldersToPrefs() {
         var saved = activeFolders.stream()
                 .filter(TagFolder::isUserCreated)
-                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getQueryTags()))
+                .map(f -> new SidebarFolderPrefs(f.getQueryTags()))
                 .toList();
         userPrefs.setSavedSidebarFolders(saved);
     }
