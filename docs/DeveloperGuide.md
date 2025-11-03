@@ -196,6 +196,7 @@ This design ensures predictable, stateless filtering and encapsulates all keywor
 </div>
 
 #### Example
+
 | User Input       | Description                                                                    |
 |------------------|--------------------------------------------------------------------------------|
 | `find alex`      | Lists all clients whose name, phone, or email contains “alex”                  |
