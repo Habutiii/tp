@@ -259,7 +259,7 @@ Duplicate entries are not allowed in the address book.
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] {[t/TAG]… OR [at/TAG]… OR [dt/TAG]}​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] {[t/TAG]… | [at/TAG]… | [dt/TAG]... }​`
 
 > 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
 
