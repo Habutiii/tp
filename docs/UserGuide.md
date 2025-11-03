@@ -378,8 +378,8 @@ Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
 * Undeclare multiple Features by chaining `f/` prefixes together.
 
 Examples:
-* `biz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
-* `biz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
+* `ubiz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
+* `ubiz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
 
 
 #### Parameter restrictions for `biz` AND `unbiz` commands:
