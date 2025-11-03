@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
+import seedu.address.commons.core.LogsCenter;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-    private static final Logger logger = Logger.getLogger(CommandBox.class.getName());
+    private static final Logger logger = LogsCenter.getLogger(CommandBox.class.getName());
 
     private final CommandExecutor commandExecutor;
     private final Consumer<List<FieldPreview>> livePreviewCallback;
