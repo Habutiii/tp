@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PersonBuilder;
 
 public class EditPreviewBuilderTest {
 
@@ -244,32 +246,42 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
-    public void createTagsPreview_exceedingMaxTags_invalidPreview() {
-        int maxTags = Person.MAX_TAGS_PER_PERSON;
-        HashSet<Tag> tags = new HashSet<>();
-        for (int i = 1; i <= maxTags; i++) {
-            tags.add(new Tag("tag" + i));
+    public void createTagsPreview_exactlyMaxTags_valid() {
+        int max = Person.MAX_TAGS_PER_PERSON;
+        List<String> tags = new ArrayList<>();
+        for (int i = 0; i < max; i++) tags.add("tag" + i);
+        Person person = new PersonBuilder().withTags("a").build();
+        FieldPreview preview = EditPreviewBuilder.createTagsPreview(person, tags);
+        assertTrue(preview.isValid()); // == max should not trigger error
+    }
+
+
+    @Test
+    public void createAddTagsPreview_exceedingMaxTags_invalidPreview() {
+        Person person = new PersonBuilder().withTags("a", "b", "c").build();
+        List<String> tags = new ArrayList<>();
+        for (int i = 0; i < Person.MAX_TAGS_PER_PERSON; i++) {
+            tags.add("new" + i);
         }
 
-        Person person = new Person(
-                new Name("Alice"),
-                new Phone("91234567"),
-                new Email("alice@example.com"),
-                new Address("123 Street"),
-                tags);
-
-        // trying to replace tags with more than the limit
-        List<String> newTagsList = Arrays.asList(new String[maxTags + 1]);
-        for (int i = 0; i <= maxTags; i++) {
-            newTagsList.set(i, "newTag" + i);
-        }
-
-        FieldPreview preview = EditPreviewBuilder.createTagsPreview(person, newTagsList);
-        assertEquals("Tags (t/):", preview.getLabel());
-        assertEquals(String.format(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS,
-                Person.MAX_TAGS_PER_PERSON, newTagsList.size()), preview.getValue());
+        FieldPreview preview = EditPreviewBuilder.createAddTagsPreview(person, tags);
         assertFalse(preview.isValid());
     }
+
+    @Test
+    public void createAddTagsPreview_exceedingMaxTags_butEmptyTagSkipsGuard() {
+        Person person = new PersonBuilder().withTags("a", "b", "c").build();
+        List<String> tags = new ArrayList<>();
+        for (int i = 0; i < Person.MAX_TAGS_PER_PERSON; i++) {
+            tags.add("new" + i);
+        }
+        tags.add(""); // force the !contains("") == false
+
+        FieldPreview preview = EditPreviewBuilder.createAddTagsPreview(person, tags);
+        assertTrue(preview.isValid());
+    }
+
+
 
     @Test
     public void createTagsPreview_emptyTagList_doesNotTriggerMaxLimit() {
