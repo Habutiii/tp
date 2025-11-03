@@ -216,7 +216,7 @@ public class EditPreviewBuilderTest {
     }
 
     @Test
-    public void buildPreview_addTags_exceedingMaxTags_invalidPreview() {
+    public void buildPreview_addTags_exceedingMaxTagsinvalidPreview() {
         int maxTags = Person.MAX_TAGS_PER_PERSON;
         HashSet<Tag> tags = new HashSet<>();
         for (int i = 1; i < maxTags; i++) { // 1 less than max
