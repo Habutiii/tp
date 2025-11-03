@@ -58,14 +58,14 @@ The following keybinds are available in Ethical Insurance
 
 ### Notes about Command Format
 
-| Rule                               | Description                                                                                | Example                                                                |
-|------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                              | `add n/NAME` → `add n/John Doe`                                        |
-| **Items in square brackets `[ ]`** | Are optional.                                                                              | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`               |
-| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                           | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**) |
-| **Parameter order**                | Parameters can appear in any order.                                                        | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                      |
-| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                     | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/`                                     |
-| **PDF copy-paste tip**             | If copying commands that span multiple lines, ensure spaces near line breaks are not lost. | —                                                                      |
+| Rule                               | Description                                                                                | Example                                                                           |
+|------------------------------------|--------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                              | `add n/NAME` → `add n/John Doe`                                                   |
+| **Items in square brackets `[ ]`** | Are optional.                                                                              | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`                          |
+| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                           | `[t/TAG]…` → none, `t/friend`, `t/friend t/family`                                |
+| **Parameter order**                | Parameters can appear in any order.                                                        | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                                 |
+| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                     | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/` |
+| **PDF copy-paste tip**             | If copying commands that span multiple lines, ensure spaces near line breaks are not lost. | —                                                                                 |
 
 ---
 
