@@ -271,6 +271,29 @@ public class EditPreviewBuilderTest {
         assertFalse(preview.isValid());
     }
 
+    @Test
+    public void createTagsPreview_emptyTagList_doesNotTriggerMaxLimit() {
+        int maxTags = Person.MAX_TAGS_PER_PERSON;
+        HashSet<Tag> tags = new HashSet<>();
+        for (int i = 1; i <= maxTags; i++) {
+            tags.add(new Tag("tag" + i));
+        }
+
+        Person person = new Person(
+                new Name("Alice"),
+                new Phone("91234567"),
+                new Email("alice@example.com"),
+                new Address("123 Street"),
+                tags);
+
+        // simulate t/ (empty tag input)
+        List<String> newTagsList = List.of("");
+
+        FieldPreview preview = EditPreviewBuilder.createTagsPreview(person, newTagsList);
+        assertTrue(preview.isValid()); // should not raise max tags error
+    }
+
+
 
     @Test
     public void buildPreview_deleteTags_success() {

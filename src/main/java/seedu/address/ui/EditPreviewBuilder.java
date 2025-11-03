@@ -173,7 +173,7 @@ public class EditPreviewBuilder {
     }
 
     static FieldPreview createTagsPreview(Person person, List<String> newTagsList) {
-        if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON) {
+        if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON && !newTagsList.contains("")) {
             return new FieldPreview("Tags (t/):",
                     String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
                             newTagsList.size()), false);
