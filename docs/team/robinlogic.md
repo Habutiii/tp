@@ -19,6 +19,11 @@ Given below are my contributions to the project.
   * Updated the EditPreviewBuilder to visually highlight tag-related validation errors and enforce the maximum tag limit. 
   * Added targeted JUnit tests to verify tag addition/removal behavior, error messaging, and preview validation. 
   * Refactored shared components to improve code readability, command extensibility, and preview consistency across the command suite.
+* **Project Management** 
+  * Contributed to weekly team meetings to track progress and address challenges. 
+  * Assisted in sprint planning and retrospectives to improve team coordination and efficiency. 
+  * Helped allocate and coordinate tasks to ensure features were delivered on schedule. 
+  * Performed peer code reviews to maintain code quality and adherence to project standards.
 * **Documentation**:
     * Contributed to User Guide (UG) and Developer Guide (DG) by documenting biz, unbiz, and stats commands. 
       * Created UML sequence diagrams in the DG to illustrate command flow and interactions. 
