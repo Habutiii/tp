@@ -21,7 +21,7 @@ public class BizTagCommand extends Command {
             + ": Declares Features, and Tags as categories for Statistics.\n"
             + "Parameters: "
             + PREFIX_FEATURE + "FEATURE "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + PREFIX_TAG + "TAG" + " [" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_FEATURE + "Plan "
             + PREFIX_TAG + "A "
@@ -33,7 +33,7 @@ public class BizTagCommand extends Command {
                     + "Using biz with the same Feature name overwrites the existing Feature - Tags combination.",
             "",
             "USAGE",
-            "  biz f/FEATURE [t/TAG]…",
+            "  biz f/FEATURE t/TAG [t/TAG]…",
             "",
             "PARAMETERS",
             "  • FEATURE: " + FeatureTag.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
