@@ -243,6 +243,33 @@ public class EditPreviewBuilderTest {
         assertFalse(tagPreview.isValid());
     }
 
+    @Test
+    public void createTagsPreview_exceedingMaxTags_invalidPreview() {
+        int maxTags = Person.MAX_TAGS_PER_PERSON;
+        HashSet<Tag> tags = new HashSet<>();
+        for (int i = 1; i <= maxTags; i++) {
+            tags.add(new Tag("tag" + i));
+        }
+
+        Person person = new Person(
+                new Name("Alice"),
+                new Phone("91234567"),
+                new Email("alice@example.com"),
+                new Address("123 Street"),
+                tags);
+
+        // trying to replace tags with more than the limit
+        List<String> newTagsList = Arrays.asList(new String[maxTags + 1]);
+        for (int i = 0; i <= maxTags; i++) {
+            newTagsList.set(i, "newTag" + i);
+        }
+
+        FieldPreview preview = EditPreviewBuilder.createTagsPreview(person, newTagsList);
+        assertEquals("Tags (t/):", preview.getLabel());
+        assertEquals(String.format(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS,
+                Person.MAX_TAGS_PER_PERSON, newTagsList.size()), preview.getValue());
+        assertFalse(preview.isValid());
+    }
 
 
     @Test
