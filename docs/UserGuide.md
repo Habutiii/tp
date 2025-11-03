@@ -408,32 +408,7 @@ Key - Features: Tags
 * Plan: A, B, C -> `biz f/Plan t/A t/B t/C` (Where f/ is the name of the feature. In this case it is "Plan" and the tags associated with it is A, B and C).
 * Gender: Male, Female, Other -> `biz f/Gender t/Male t/Female t/Other` (Where f/ is the name of the feature. In this case it is "Gender" and the tags associated with it is Male, Female and Other).
 
-Sample table view
-Total Number of Customers in Address Book: 6
-
-Gender  | Number of people 
-Male   | 1
-Female  | 3
-Other  | 2
-
-Total for Feature: 6
-Average: 2.00
-Max Tag: Female (3 people)
-Min Tag: Male (1 person)
----------------------------------------------
-
-Plan | Number of people
-A   | 4
-B   | 1
-C   | 1
-
-Total for Feature: 1
-Average: 2.00
-Max Tag: A (4 people)
-Min Tag: B & C (1 person)
----------------------------------------------
-
----
+![Sample table view](images/StatsOutputExample.png)
 
 ### Undoing the last action : `undo`
 
