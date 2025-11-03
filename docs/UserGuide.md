@@ -251,7 +251,7 @@ Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) comman
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When using `t/TAG`, the existing tags of the person will be removed.
+* When using `t/TAG`, the existing tags of the person will be replaced with `TAG`.
 * Use `at/TAG` to add on to **existing** tags.
 * Use `dt/TAG` to remove from **existing** tags.
 * You can only use either of these tag editing commands once per `edit` command.
@@ -272,7 +272,10 @@ Examples:
 - When editing tags, the existing tags are **replaced**, not added cumulatively.
 - To remove **all** of a person’s tags, type `t/` with nothing following it.
 - Each person can have up to **15 tags** after editing.
-- **Parameter restrictions:** Same as those in the [`add`](#adding-a-person-add) command.
+- **Parameter restrictions:**
+  - Same as those in the [`add`](#adding-a-person-add) command.
+  - `at/TAG` and `dt/TAG` accept the same type of inputs as [`t/TAG`](#tag)
+  - `at/TAG` and `dt/TAG` is valid for use such that parameter restrictions for [`Tag`](#tag) still hold.
 
 ---
 
@@ -352,22 +355,18 @@ Format: `clear`
 
 ### Declaring Features and Tags for Statistics: `biz`
 
-Declares Features and Tags to group Tags by Features for statistics. Adding those Categories as tags to People will allow them to be considered for statistics.
+Declares Features and Tags to group Tags by Features for statistics. Adding those Categories as tags to People will allow them to be considered for [statistics](#viewing-summary-statistics-stats).
 Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable.
 
 Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
-* Add multiple tags fro aggregation of a Feature.
+* Add multiple tags for aggregation of a Feature.
 
-Examples: [See result in 'Viewing Summary Statistics']
+Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statistics-stats)
 * `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
 
-**Parameter restrictions:**
-***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
-  _Example: friend, VIP, family-member, project2025_
-
+See Parameter restrictions for this command [below](#parameter-restrictions-for-biz-and-unbiz-commands).
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`
 
@@ -376,24 +375,29 @@ This command is undoable.
 
 Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
 
-* Undeclare multiple Features by chaining `t\` prefixes together.
+* Undeclare multiple Features by chaining `f/` prefixes together.
 
 Examples:
 * `biz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
 * `biz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
 
-**Parameter restrictions:**
-***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
-  _Example: friend, VIP, family-member, project2025_
 
+#### Parameter restrictions for `biz` AND `unbiz` commands:
+***All parameters contains only printable ASCII characters***
+- **Feature and Tag:** A tag/feature name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
+  _Example: friend, VIP, family-member, project2025_
+- Feature and at least one Tag input is required for `biz`
+- Feature input is compulsory for `unbiz`
 
 ### Viewing Summary Statistics: `stats`
 
 Shows Summary Statistics on Customers in the address book.
 
-Statistics will be summarized according to Features and Tags declared by User using the `biz` command.
+Statistics will be summarized according to Features and Tags declared by User using the `biz` command. This ensures that statistics concerning specific features of customers are aggregated for the user - user may want to reserve some tags for statistics while others for pure organisation of the people in the address book.
 
+If there are ties when deciding the Max and Min tags in the summary tables, all the tags associated with the tie will be displayed, according to whether they tied in Max Tag and/or Min Tag.
+
+If there are no declared features and tags, `stats` will only show the total number of customers in the Address Book.
 
 Format: `stats`
 
@@ -401,32 +405,32 @@ Format: `stats`
 If the following was declared in `biz` command,
 
 Key - Features: Tags
-* Plan: A, B, C -> `biz f/Plan t/A t/B t/C` (Where f/ is the name of the group in this case it is "Plan" and the tags associated with it is A, B and C).
-* Gender: Male, Female, Other -> `biz f/Gender t/Male t/Female t/Other` (Where f/ is the name of the group in this case it is "Gender" and the tags associated with it is Male, Female and Other).
+* Plan: A, B, C -> `biz f/Plan t/A t/B t/C` (Where f/ is the name of the feature. In this case it is "Plan" and the tags associated with it is A, B and C).
+* Gender: Male, Female, Other -> `biz f/Gender t/Male t/Female t/Other` (Where f/ is the name of the feature. In this case it is "Gender" and the tags associated with it is Male, Female and Other).
 
 Sample table view
-Total Number of Customers in AddressBook: 6
+Total Number of Customers in Address Book: 6
 
 Gender  | Number of people 
-Male   | 0
-Female  | 0
-Other  | 0
+Male   | 1
+Female  | 3
+Other  | 2
 
-Total for Feature: 0
-Average: 0.00
-Max Tag: Male & Female & Other (0 people)
-Min Tag: Male & Female & Other (0 people)
+Total for Feature: 6
+Average: 2.00
+Max Tag: Female (3 people)
+Min Tag: Male (1 person)
 ---------------------------------------------
 
 Plan | Number of people
-A   | 1
-B   | 0
-C   | 0
+A   | 4
+B   | 1
+C   | 1
 
 Total for Feature: 1
-Average: 0.33
-Max Tag: A (1 person)
-Min Tag: B & C (0 people)
+Average: 2.00
+Max Tag: A (4 people)
+Min Tag: B & C (1 person)
 ---------------------------------------------
 
 ---
