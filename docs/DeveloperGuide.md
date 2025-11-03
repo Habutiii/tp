@@ -645,7 +645,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Contact Detail**: Any piece of information related to a client, such as name, phone number, email or insurance details.
 * **Duplicate Client**: An entry in Ethical Insurance that repeats an existing client’s details.
 * **GUI (Graphical User Interface)**: The visual interface of the application, allowing users to interact with Ethical Insurance via windows, buttons and other graphical elements.
-* Human-editable format (JSON): A structured text format (JavaScript Object Notation) used to store client data, which can be read and edited directly by users.
+* **Human-editable format (JSON)**: A structured text format (JavaScript Object Notation) used to store client data, which can be read and edited directly by users.
 * **Insurance Premium**: The regular payment made by a client for their insurance coverage.
 * **Non-Functional Requirement (NFR)**: A requirement that specifies system quality or constraints (e.g., performance, usability, storage format), rather than a specific feature.
 * **Tag**: A label attached to a client (e.g., “priority”, “prospect”, “policyholder”) that helps agents organize and filter their portfolio.
