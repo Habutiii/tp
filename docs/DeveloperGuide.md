@@ -275,11 +275,6 @@ This process is facilitated through methods like:
 ![Tag Folder Model Sequence Diagram](images/TagFolderSequenceDiagram-Model.png)
 
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -342,7 +337,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `Insurance Management App` and the **Actor** is the `user`, unless specified otherwise)
 
-### UC01 Use case: `add`
+#### UC01 Use case: `add`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent  
@@ -372,7 +367,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC02 Use case: `edit`
+#### UC02 Use case: `edit`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent  
@@ -401,7 +396,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC03 Use case: `delete`
+#### UC03 Use case: `delete`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent  
@@ -420,7 +415,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC04 Use case: `find`
+#### UC04 Use case: `find`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent  
@@ -439,7 +434,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC05 case: `help`
+#### UC05 case: `help`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent  
@@ -452,7 +447,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC06 Use case: `biz`
+#### UC06 Use case: `biz`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent
@@ -470,7 +465,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC07 Use case: `unbiz`
+#### UC07 Use case: `unbiz`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent
@@ -492,7 +487,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC08 Use case: `stats`
+#### UC08 Use case: `stats`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent  
@@ -515,7 +510,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC09 Use case: `list`
+#### UC09 Use case: `list`
  
 **System:** Insurance Management App  
 **Actor:** Insurance Agent  
@@ -527,7 +522,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
  
 ---
 
-### UC10 Use case: `clear`
+#### UC10 Use case: `clear`
 
  **System:** Insurance Management App  
  **Actor:** Insurance Agent
@@ -540,7 +535,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC11 Use case: `undo`
+#### UC11 Use case: `undo`
 
  **System:** Insurance Management App<br>
  **Actor:** Insurance Agent
@@ -558,7 +553,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --- 
 
-### UC12 Use case: `redo`
+#### UC12 Use case: `redo`
 
  **System:** Insurance Management App<br>
  **Actor:** Insurance Agent
@@ -577,7 +572,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC13 Use case: Navigating the command history
+#### UC13 Use case: Navigating the command history
  
  **System:** Insurance Management App  
  **Actor:** Insurance Agent
@@ -593,7 +588,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-### UC14 Use case: Creating and saving custom folders
+#### UC14 Use case: Creating and saving custom folders
 
  **System:** Insurance Management App<br>
  **Actor:** Insurance Agent
@@ -604,11 +599,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
  3. Agent adds 's/' at the end of the command to create a custom folder.
  4. Folder 'friends & travel' is created.
  5. Agent can click into newly created folder for easy sorting and access.<br>
-   Use case ends
+   Use case ends.
 
 ---
 
-### UC15 Use case: Deleting folders
+#### UC15 Use case: Deleting folders
 
  **System:** Insurance Management App<br>
  **Actor:** Insurance Agent
@@ -617,7 +612,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
  1. Agent issues wants to delete folder called 'events'.
  2. Agent writes "list t/events d/" command
  3. Folder with respective tag(s) is deleted.<br>
-   Use case ends
+   Use case ends.
 
 ### Non-Functional Requirements
 
