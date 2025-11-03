@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ListCommand;
@@ -100,8 +99,6 @@ public class ListCommandParserSaveFolderTest {
         @Override public void deletePerson(Person target) {
         }
         @Override public void addPerson(Person person) {
-        }
-        @Override public void insertPerson(Index index, Person person) {
         }
         @Override public void setPerson(Person target, Person editedPerson) {
         }

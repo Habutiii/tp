@@ -3,12 +3,14 @@ package seedu.address.ui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -21,6 +23,7 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static final Logger logger = LogsCenter.getLogger(CommandBox.class.getName());
 
     private final CommandExecutor commandExecutor;
     private final Consumer<List<FieldPreview>> livePreviewCallback;
@@ -87,8 +90,10 @@ public class CommandBox extends UiPart<Region> {
         String prefix = splitInput.length == 0 ? "" : splitInput[0];
         List<FieldPreview> fieldPreviews;
         if (prefix.equals("add")) {
+            logger.info("----------------[LIVE PREVIEW][" + "add user" + "]");
             fieldPreviews = AddPreviewBuilder.buildPreview(input);
         } else if (prefix.equals("edit")) {
+            logger.info("----------------[LIVE PREVIEW][" + "edit user" + "]");
             fieldPreviews = EditPreviewBuilder.buildPreview(input, personList);
         } else {
             livePreviewCallback.accept(new ArrayList<>());
@@ -173,3 +178,4 @@ public class CommandBox extends UiPart<Region> {
     }
 
 }
+

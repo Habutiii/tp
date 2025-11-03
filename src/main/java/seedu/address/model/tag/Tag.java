@@ -11,8 +11,8 @@ import static seedu.address.commons.util.ValidationConstants.PRINTABLE_ASCII_REG
 public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "A tag name should contain only English letters, digits, or '-' (dash). "
-                    + "It must start and end with a letter or digit, and must not exceed 40 characters.";
+            "A tag name should contain only English letters, digits, or '-' (dash). Trailing dash will be ignored "
+                    + "It must start and end with a letter or digit, no whitespace and must not exceed 40 characters.";
 
     public static final String VALIDATION_REGEX = "^[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?$";
     public static final int MAX_LENGTH = 40;
@@ -26,8 +26,9 @@ public class Tag {
      */
     public Tag(String tagName) {
         requireNonNull(tagName);
+        String normalized = tagName.trim().toUpperCase();
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
+        this.tagName = normalized;
     }
 
     /**
@@ -50,8 +51,8 @@ public class Tag {
             return false;
         }
 
-        Tag otherTag = (Tag) other;
-        return tagName.equalsIgnoreCase(otherTag.tagName);
+        Tag o = (Tag) other;
+        return this.tagName.equals(o.tagName);
     }
 
     @Override
