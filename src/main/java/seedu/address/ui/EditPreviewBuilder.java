@@ -182,7 +182,8 @@ public class EditPreviewBuilder {
 
     static FieldPreview createAddTagsPreview(Person person, List<String> newTagsList) {
         List<String> existingTagNames = person.getTags().stream().map(t -> t.tagName.toLowerCase()).toList();
-        List<String> filteredTags = newTagsList.stream().filter(t -> !existingTagNames.contains(t.toLowerCase())).toList();
+        List<String> filteredTags = newTagsList.stream().filter(t -> !existingTagNames.contains(t.toLowerCase()))
+                .toList();
         if (filteredTags.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON && !filteredTags.contains("")) {
             return new FieldPreview("Tags (t/):",
                     String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
