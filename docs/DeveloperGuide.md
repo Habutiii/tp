@@ -219,6 +219,7 @@ When executed, the `ClearCommand` will save a copy of the current state of the a
 Biz feature is implemented via `BizTagCommand` class. When the user inputs `biz f/Plan t/A t/B`, an instance of `BizTagCommand` is created and its `execute` method is called.
 The object then creates a `FeatureTag` with `tagName` Plan and a `Set<Tag>` containing `Tag`s of `tagName`s A and B. It then passes the `FeatureTag` and `Set<Tag>` into `Model` via the `addBizTags()` method in `Model`.
 The object then returns a `String` message to the user about the successful addition. If that Feature already exists in `Model`, this will overwrite that Feature : Tag pair. 
+Feature:Tag pairs do not persist through app closures and app restarts.
 
 ![Biz Sequence Diagram](images/BizSequenceDiagram.png)
 
