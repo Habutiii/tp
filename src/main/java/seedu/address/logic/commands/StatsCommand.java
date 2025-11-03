@@ -88,7 +88,7 @@ public class StatsCommand extends Command {
 
         int padding = maxTagLength;
 
-        results.add(String.format("%-" + padding + "s| Number of people", feature));
+        results.add(String.format("%-" + padding + "s | Number of people", feature));
 
         int catTotal = 0;
         int catCount = 0;
@@ -121,7 +121,7 @@ public class StatsCommand extends Command {
                 catMinTag = new StringBuilder(tag.toString());
             }
 
-            String stat = String.format("%-" + padding + "s| %d", tag, total);
+            String stat = String.format("%-" + padding + "s | %d", tag, total);
             results.add(stat);
         }
 
