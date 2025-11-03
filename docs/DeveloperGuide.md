@@ -234,7 +234,7 @@ The implementation of the feature is atomic - either all inputted Features get r
 
 ### Stats feature
 
-Stats feature in implemented via the `StatsCommand` class. When the user issues the `stats` command, an instance of `StatsCommand` is created and its `execute` method is called. This method interacts with the `Model` component to obtain declared Features and their respective Tags from `bizTags` using the `get_BizTags()` method in `Model`. It will then aggregate statistics such as Average, Min and Max for each Feature using its own `getFeatureStats()` method and return the output as a `String` through the `CommandResult` object.
+Stats feature in implemented via the `StatsCommand` class. When the user issues the `stats` command, an instance of `StatsCommand` is created and its `execute` method is called. This method interacts with the `Model` component to obtain declared Features and their respective Tags from `bizTags` using the `getBizTags()` method in `Model`. It will then aggregate statistics such as Average, Min and Max for each Feature using its own `getFeatureStats()` method and return the output as a `String` through the `CommandResult` object.
 This feature is not undoable.
 ![Stats_Sequence_Diagram](images/StatsSequenceDiagram.png)
 
