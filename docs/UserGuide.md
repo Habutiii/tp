@@ -3,11 +3,17 @@ layout: page
 title: User Guide
 ---
 
-Ethical Insurance is a lightweight desktop contact management tool optimized for independent insurance agents managing 0~1000 customers entries.
+<div markdown="block" class="alert alert-info">
+**:information_source: About Ethical Insurance:**
 
+Ethical Insurance is a lightweight desktop contact management tool, a modernised version of the original AddressBook application, specifically tailored for independent insurance agents managing 0 – 1000 customer entries.
+
+Throughout this User Guide, any mention of **“Address Book”** refers to the **Ethical Insurance** application itself. Both terms may be used interchangeably.
+
+</div>
 
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -56,29 +62,37 @@ The following keybinds are available in Ethical Insurance
 
 ## Features
 
-### Notes about Command Format
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:**
 
-| Rule                               | Description                                                                                | Example                                                                |
-|------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                              | `add n/NAME` → `add n/John Doe`                                        |
-| **Items in square brackets `[ ]`** | Are optional.                                                                              | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`               |
-| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                           | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**) |
-| **Parameter order**                | Parameters can appear in any order.                                                        | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                      |
-| **Extra parameters**               | Ignored for commands that take none (`help`, `list`, `exit`, `clear`).                     | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/`                                     |
-| **PDF copy-paste tip**             | If copying commands that span multiple lines, ensure spaces near line breaks are not lost. | —                                                                      |
+All commands and parameters are case sensitive. For example, `add` is a valid command, whereas `Add` or `ADD` are not recognized as valid commands.
+
+</div>
+
+| Rule                               | Description                                                                                                                                                                                                                                                             | Example                                                                           |
+|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                                                                                                                                                                                                           | `add n/NAME` → `add n/John Doe`                                                   |
+| **Items in square brackets `[ ]`** | Are optional.                                                                                                                                                                                                                                                           | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`                          |
+| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                                                                                                                                                                                                        | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**)            |
+| **Parameter order**                | Parameters can appear in any order.                                                                                                                                                                                                                                     | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                                 |
+| **Extra parameters**               | Ignored for commands that take none (`help`, `exit`, `clear`, `undo`, `redo`).                                                                                                                                                                                          | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/` |
+| **Leading/Trailing spaces**        | Leading and trailing spaces are ignored.                                                                                                                                                                                                                                | "   add n/ John ..." → "add n/John ..."                                           |
+| **PDF copy-paste tip**             | Certain characters in this document may appear stylised (e.g. quotes, dashes, or spaces) and may not be recognised by the application. Ethical Insurance only accepts <strong>printable ASCII characters</strong>. Please type commands manually to avoid input errors. | —                                                                                 |
 
 ---
 
-> This section explains how to read and use command syntax throughout the User Guide
+## Commands
 
+This section explains how to read and use command syntax throughout the User Guide
 
 ### Viewing Manuals: `man`
 
-Shows manuals for commands.
+Display help manual for commands.
 
 Format: `man [COMMAND]`
 * If `COMMAND` is not specified, shows a list of all available commands.
 * If `COMMAND` is specified, shows the manual for the command.
+* If multiple inputs are entered (e.g., man list help), only the first valid command (list) will be processed, and everything else after the first space will be ignored.
 
 ---
 
@@ -98,23 +112,23 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
-### Filtered list by tag : `list t/<your tag here>`
+**Filtered list by tag : `list t/<your tag here>`**
 
 Sorts and lists only entries with the respective tag(s) entered.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 
-### Create folder by tag : `list t/<your tag here> s/`
+**Create folder by tag : `list t/<your tag here> s/`**
 
-Create and save custom folder.
+Create and save custom folder. 
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
-Output will be a folder with the names of the tags you have selected.
+Output will be a folder with the names of the tags you have selected. All tags have been normalized to upper case.
 Example:
 - Input: list t/friends t/colleagues s/
-- Output: Folder friends & colleagues created
+- Output: Folder FRIENDS & COLLEAGUES created
 
-### Delete folder by tag : `list t/<your tag here> d/`
+**Delete folder by tag : `list t/<your tag here> d/`**
 
 Delete selected folder. Order does not matter for the deleting of folder, as long as
 the respective tags are that folder will be deleted.
@@ -124,27 +138,11 @@ Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here
 ---
 
 ### Adding a person: `add`
+>All parameters must contain only printable ASCII characters.
 
 Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-
-> 💡 **Tip:**  
-> A person can have any number of tags (including 0).
-
-
-> ⚠️ **Duplicate Rule:**  
-> Another person with the same **`NAME`** and **`PHONE_NUMBER`** is treated as a duplicate entry.
-
-#### **⚠️ Criteria for Same Person**
-
-Two persons are considered the same if:
-- They have the **same `NAME`** (case-insensitive), and
-- They have the **same `PHONE_NUMBER`**.
-
-Duplicate entries are not allowed in the address book.
-
----
 
 **Examples**
 
@@ -152,30 +150,52 @@ Duplicate entries are not allowed in the address book.
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 
-### **Parameter Restrictions**
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Tip:</strong>
+A person can have any number of tags (including 0).
+</div>
 
->All parameters must contain only printable ASCII characters.
+<div markdown="span" class="alert alert-warning">
+:exclamation: <strong>Caution:</strong>
+Another person with the same <code>NAME</code> (case-insensitive) and <code>PHONE_NUMBER</code> is treated as a duplicate entry. Duplicate entries are not allowed in the address book.
+</div>
 
-**Name**
-- Must start with a **letter or number**.
+**Parameters must adhere to the following restrictions:**
+
+**Name:**
+
+- May only contain English letters (A–Z, a–z) and;
 - Can contain **letters**, **spaces**, and the following special characters only:  
   `(space) , ( ) / . @ - '`
+- A name should also not exceed 100 characters.
 - Cannot contain **numbers** inside the name or any other special symbols.
 
 **Examples**
 
-| Valid       | Invalid |
-|-------------|---------|
-| Jean-Luc    | John123 |
-| Tan         | Strauß  |
-| Mei Ling    | José    |
-| O’Connor    | John*   |
-| Mary (Ann)  | John_   |
-| Alex @ Home |         |
+| Valid       | Invalid      |
+|-------------|--------------|
+| Jean-Luc    | John123      |
+| Tan         | Strauß       |
+| Mei Ling    | José         |
+| O'Connor    | John*        |
+| Mary (Ann)  | John_        |
+| Alex @ Home | _xXdarrenXx_ |
 
-**Phone**
+**Phone:**
 - Must be **3–15 digits** (to account for international numbers).
-- Only digits (0–9) are allowed — **no spaces, letters, or symbols.**
+- Only digits (0–9) are allowed — **no spaces, letters, or symbols eg.`+`.**
+
+<div markdown="block" class="alert alert-info">
+**:information_source: Notes about the restrictions:**
+
+The phone number must be between 3 and 15 digits long.
+Shortcodes are usually 3 to 5 digits long.
+International numbers are usually up to 15 digits long by ITU-T E.164 standard.
+
+Thus, we set the minimum length to 3 and maximum length to 15.
+The phone number should only contain digits.
+
+</div>
 
 **Examples**
 
@@ -186,11 +206,7 @@ Duplicate entries are not allowed in the address book.
 | 66265555        | 9011p041     |
 | 123456789012345 | 9312 1534    |
 
-- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.
-  Must not exceed 40 characters.
-    - Example: friend, VIP, family-member, project2025_
-
-**Email**
+**Email:**
 - Must be a **valid email address**, with:
     - An alphanumeric username
     - Optional special characters (`+`, `_`, `.`, `-`)
@@ -202,11 +218,11 @@ Duplicate entries are not allowed in the address book.
 |------------------------|-----------------|
 | johndoe@example.com    | johndoe@        |
 | alice.smith-99@mail.co | alice@@mail.com |
-| user+test@abc-def.com  | user@mail       |
+| user+test@abc-def.com  | bob@mail.       |
+| user@mail              | user@a.a        |
 
-**Address**
+**Address:**
 - Must **not be blank**.
-- Must **start with a non-space** and **not end with a space**.
 - Only printable ASCII characters allowed.
 
 **Examples**
@@ -217,13 +233,11 @@ Duplicate entries are not allowed in the address book.
 | 42 Wallaby Way               | " Blk 456, Den Road, #01-355" |
 | 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
 
-
-
-#### **Tag**
+**Tag(s):**
 - Tags are optional.
 - Each person can have **up to 15 tags**.
 - Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
-- Tags are **case-insensitive**.
+- Tags are case-insensitive. Must not exceed 40 characters.
 
 **Examples**
 
@@ -237,54 +251,42 @@ Duplicate entries are not allowed in the address book.
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Updates an existing person’s details in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
+**Format:**  
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ | at/ | dt/}TAG]...`
 
-> 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Notes:</strong>
+<code>INDEX</code> refers to the number shown in the <strong>current list view</strong>, not a fixed ID.<br>
+If you used <code>find</code> or <code>list</code> before, <code>edit 1</code> edits the first result from that filtered list.
+</div>
 
-> 💡 Example: if you use `find` first, `edit 1` edits the first result from that filtered list.
-Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) command.
+**Description**
 
-
-#### Description
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When using `t/TAG`, the existing tags of the person will be replaced with `TAG`.
-* Use `at/TAG` to add on to **existing** tags.
-* Use `dt/TAG` to remove from **existing** tags.
-* You can only use either of these tag editing commands once per `edit` command.
-* You can remove all the person’s tags by typing `t/` without
-  specifying any tags after it.
-* Each person after editing can only contain a maximum of 15 tags.
-
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-*  `edit 3 at/InsuranceA` Adds the tag `InsuranceA` on to existing tags of the 3rd person.
-*  `edit 3 dt/InsuranceA` Deletes the tag `InsuranceA` from the existing tags of the 3rd person.
-
-- Edits the person at the specified **`INDEX`** in the currently displayed list.  
+* Edits the person at the specified `INDEX` in the currently displayed list.  
   The index **must be a positive integer** (1, 2, 3, …).
-- At least **one** of the optional fields must be provided.
-- Only the specified fields are updated, other fields remain unchanged.
-- When editing tags, the existing tags are **replaced**, not added cumulatively.
-- To remove **all** of a person’s tags, type `t/` with nothing following it.
-- Each person can have up to **15 tags** after editing.
-- **Parameter restrictions:**
-  - Same as those in the [`add`](#adding-a-person-add) command.
-  - `at/TAG` and `dt/TAG` accept the same type of inputs as [`t/TAG`](#tag)
-  - `at/TAG` and `dt/TAG` is valid for use such that parameter restrictions for [`Tag`](#tag) still hold.
+* At least one of the optional fields must be provided (i.e. `n/`, `p/`, `e/`, `a/`, or `t/`).
+* Only the specified fields will be updated; all other details remain unchanged.
+* When editing tags (`t/`, `at/`, `dt/`):
+  * `at/` adds new tags to existing ones. 
+  * `dt/` removes specified tags from existing ones.
+  * `t/` replaces all existing tags with the new set of tags provided.
+  * To remove all tags, type `t/` with nothing after it.
+  * Only one unique tag operation (t/, at/, or dt/) can be used per command. (See examples below)
+    * The selected unique tag operation can be repeated multiple times in the same command to add/remove multiple tags.
+* Each person can have up to **15 tags** after editing.
+* **Parameter restrictions:** Same as those in the [`add`](#adding-a-person-add) command.
 
----
+**Examples**
 
-#### Examples
-
-| Command                                   | Description                                                              |
-|-------------------------------------------|--------------------------------------------------------------------------|
-| `edit 1 p/91234567 e/johndoe@example.com` | Updates the **phone** and **email** of the 1st person.                   |
-| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and **clears all existing tags**. |
+| Command                                   | Description                                                          |
+|-------------------------------------------|----------------------------------------------------------------------|
+| `edit 1 p/91234567 e/johndoe@example.com` | Updates the **phone** and **email** of the 1st person.               |
+| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and clears all existing tags. |
+| `edit 3 at/InsuranceA`                    | Adds the tag **InsuranceA** to the 3rd person’s existing tags.       |
+| `edit 3 dt/InsuranceA`                    | Removes the tag **InsuranceA** from the 3rd person’s existing tags.  |
+| `edit 4 at/tag1 at/tag2 at/tag3`          | Adds the tags **tag1**, **tag2**, and **tag3** to the 4th person.    |
 
 ---
 
@@ -292,8 +294,6 @@ Examples:
 
 Finds clients whose **name, phone number, or email** contain any of the given keywords (case-insensitive, partial matches allowed).
 Format: `find KEYWORD [MORE_KEYWORDS]`
-
----
 
 **Description**
 
@@ -307,8 +307,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 - Uses **OR semantics** — a client is listed if **any** keyword matches any field.
 - Blank or invalid inputs (e.g., spaces only or non-printable Unicode) are ignored safely.
 
----
-
 **Examples**
 
 | Command                    | Description / Result                                                |
@@ -318,12 +316,18 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 | `find gmail.com`           | Lists clients using Gmail addresses.                                |
 | `find alex 9123 gmail.com` | Lists clients whose name, phone, or email matches any of the terms. |
 
-> 💡 `find al` returns `Alex Yeow` and `Roy Balakrishnan`
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Example:</strong>
+<code>find al</code> returns <code>Alex Yeow</code> and <code>Roy Balakrishnan</code>.
+</div>
 
 ![result for 'find al'](images/findAlexResult.png)
 
 
-> 💡 `find alex 9927` returns `Alex Yeoh`, `Bernice Yu`<br>
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Example:</strong>
+<code>find alex 9927</code> returns <code>Alex Yeoh</code>, <code>Bernice Yu</code>.
+</div>
 
 ![result for 'find alex 9927'](images/findAlexBerniceResult.png)
 
@@ -356,19 +360,17 @@ Format: `clear`
 ### Declaring Features and Tags for Statistics: `biz`
 
 Declares Features and Tags to group Tags by Features for statistics. Adding those Categories as tags to People will allow them to be considered for [statistics](#viewing-summary-statistics-stats).
-Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable. 
+Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable.
 
-**Disclaimer:** These feature-tag relations do not persist after this app closes and is restarted
+**Disclaimer:** These feature-tag relations do not persist after this app closes or is restarted.
 
 Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
 * Add multiple tags for aggregation of a Feature.
 
-Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statistics-stats)
-* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
+Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statistics-stats)* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
 
-See Parameter restrictions for this command [below](#parameter-restrictions-for-biz-and-unbiz-commands).
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`
 
@@ -383,13 +385,16 @@ Examples:
 * `unbiz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
 * `unbiz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
 
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution: Parameter restrictions**
 
-#### Parameter restrictions for `biz` AND `unbiz` commands:
-***All parameters contains only printable ASCII characters***
-- **Feature and Tag:** A tag/feature name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
-  _Example: friend, VIP, family-member, project2025_
-- Feature and at least one Tag input is required for `biz`
-- Feature input is compulsory for `unbiz`
+A `Feature` and `Tag` name for <code>biz</code> and <code>unbiz</code> commands should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.  
+<br>
+_Example: friend, VIP, family-member, project2025_
+
+</div>
+
+--- 
 
 ### Viewing Summary Statistics: `stats`
 
@@ -409,42 +414,62 @@ Format: `stats`
 If the following was declared in `biz` command,
 
 Key - Features: Tags
-* Plan: A, B, C -> `biz f/Plan t/A t/B t/C` (Where f/ is the name of the feature. In this case it is "Plan" and the tags associated with it is A, B and C).
-* Gender: Male, Female, Other -> `biz f/Gender t/Male t/Female t/Other` (Where f/ is the name of the feature. In this case it is "Gender" and the tags associated with it is Male, Female and Other).
+* Plan: A, B, C -> `biz f/Plan t/A t/B t/C` (Where f/ is the name of the group in this case it is "Plan" and the tags associated with it is A, B and C).
+* Gender: Male, Female, Other -> `biz f/Gender t/Male t/Female t/Other` (Where f/ is the name of the group in this case it is "Gender" and the tags associated with it is Male, Female and Other).
 
 ![Sample table view](images/StatsOutputExample.png)
 
 ### Undoing the last action : `undo`
 
-Reverts the most recent mutable action (add, delete, clear, or edit) performed during the current runtime.
+Reverts the most recent mutable action (`add`, `delete`, `clear`, `edit`, `biz`, `unbiz`, or `list` with `s/` or `d/` flags) performed during the current runtime.
 
 Format: `undo`
 
-* Only actions that change the address book (add, delete, clear, edit, biz, unbiz) can be undone.
-* Multiple undo operations can be performed in sequence to revert several actions, as long as they are all mutable actions from the current session.
-* Undo is only available for actions performed since the application was started (current runtime).
+* Only actions that change the address book or saved folders (`add`, `delete`, `clear`, `edit`, `biz`, `unbiz`, `list t/... s/`, or `list t/... d/`) can be undone.
+* Multiple undo operations can be performed in sequence to revert several actions, as long as they are all mutable actions.
+* Undo is only available for actions performed in the current runtime.
+
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Tip:</strong><br>
+There is no limit on how many actions can be undone, as long as they were performed in the current runtime.
+</div>
 
 **Examples:**
 * After adding a person, running `undo` will remove the newly added person.
 * After deleting a person, running `undo` will restore the deleted person.
 * After editing a person, running `undo` will revert the changes made.
 * After clearing the address book, running `undo` will restore all previously deleted entries.
+* After declaring a feature using `biz`, running `undo` will revert that declaration.
+* After undeclaring a feature using `unbiz`, running `undo` will restore the previously removed feature.
+* After creating a saved folder using `list t/friends t/colleagues s/`, running `undo` will remove that saved folder.
+* After deleting a saved folder using `list t/friends t/colleagues d/`, running `undo` will restore that folder.
 
 ---
 
 ### Redoing the last undone action : `redo`
 
-Reapplies the most recent sequence of undone mutable actions, as long as no new action has been performed since the last undo.
+Reapplies the most recent undone action, as long as no new action has been performed since the last undo.
 
 Format: `redo`
 
 * Only actions that were previously undone using `undo` can be redone.
-* If you perform a new action (add, delete, clear, edit) after undoing, the redo history is cleared and you cannot redo the previous actions.
-* Multiple redo operations can be performed in sequence to reapply several undone actions, as long as no new action has interrupted the sequence.
+* If you perform a new action (`add`, `delete`, `clear`, `edit`, `biz`, `unbiz`, or `list` with `s/` or `d/`) after undoing, the redo history is cleared and you cannot redo the previous actions.
+* Multiple redo operations can be performed consecutively to reapply several undone actions, as long as no new action interrupts the sequence.
+* Redo is only available for actions undone in the current runtime.
+
+<div markdown="block" class="alert alert-info">
+<strong>:information_source: Tip:</strong>
+Redo can only be used immediately after an <code>undo</code>.  
+Once a new action is performed, the redo history is cleared.
+</div>
 
 **Examples:**
 * After undoing an add, running `redo` will add the person back again.
 * After undoing a delete, running `redo` will delete the person again.
+* After undoing an edit, running `redo` will re-apply the same edits.
+* After undoing a biz, running `redo` will restore the declared feature.
+* After undoing a saved folder creation (`list t/friends s/`), running `redo` will re-create that folder.
+* After undoing a saved folder deletion (`list t/friends d/`), running `redo` will delete that folder again.
 * If you undo an edit and then perform a new add, you cannot redo the undone edit.
 
 ---
@@ -461,22 +486,50 @@ Format: `exit`
 
 Ethical Insurance address book data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
----
+#### Data recovery & backup
 
-### Editing the data file
-
-Ethical Insurance address book data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
-
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, Ethical Insurance will discard all data and start with an empty data file at the next run, *without any warning*. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause Ethical Insurance to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+<div markdown="span" class="alert alert-warning">
+:exclamation: **Caution:** If the data file becomes invalid or corrupted, Ethical Insurance will **discard the file and start with an empty dataset** on the next run. Keep periodic backups so you can restore quickly.
 </div>
 
+**Where is my data stored?**  
+`[JAR location]/data/addressbook.json`
+
+**How do I back up my data?**
+1. Exit the app.
+2. Copy `data/addressbook.json` to a safe folder (e.g., `backups/addressbook-YYYYMMDD.json`).
+
+**How do I restore my data from a backup?**
+1. Exit the app.
+2. Replace `[JAR location]/data/addressbook.json` with your backup copy. Ensure that the name is `addressbook.json`.
+3. Start the app again.
+
+#### Editing the data file manually
+
+**Advanced users:**
+- You may edit `addressbook.json` directly, but only with a plain-text editor and **printable ASCII**.
+- Any invalid structure (e.g., missing commas/quotes) will cause the app to reset the file. Always keep a backup before editing.
+
 ---
 
-### Archiving data files `[coming in v2.0]`
+### Common error messages
 
-_Details coming soon ..._
+| Situation                                             | Example message (may vary slightly)                                                | How to fix                                                                                                                                             |
+|-------------------------------------------------------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Unknown command                                       | `Unknown command`                                                                  | Check the command word (commands are **case-sensitive**). Use `man` to see valid commands, e.g. `man add`.                                             |
+| Wrong command format                                  | `Invalid command format!`                                                          | See the command’s manual: `man COMMAND`. Ensure required prefixes are present (e.g., `n/`, `p/`, `e/`, `a/`).                                          |
+| Invalid index                                         | `The person index provided is invalid`                                             | Use `list` or `find` first, then ensure the index is within the displayed list range.                                                                  |
+| Duplicate person                                      | `This person already exists in the address book`                                   | A duplicate is the **same NAME (case-insensitive) + PHONE_NUMBER**. Change either field or edit the existing entry.                                    |
+| Invalid name/phone/email/address                      | `Name is invalid` / `Phone is invalid` / `Email is invalid` / `Address is invalid` | Follow the **Parameter restrictions** in the `add`/`edit` sections (e.g., phone must be 3–15 digits; email must be well-formed; only printable ASCII). |
+| Tag limit exceeded                                    | `Too many tags (max 15)`                                                           | Reduce the number of tags to 15 or fewer.                                                                                                              |
+| Tag format invalid                                    | `Tag is invalid`                                                                   | Tags may contain **letters, digits, or '-'**, must start/end with a letter or digit, ≤ 40 chars.                                                       |
+| No actions to undo/redo                               | `Nothing to undo` / `Nothing to redo`                                              | Ensure you have performed (or undone) a mutable action in the current runtime.                                                                         |
+| biz/unbiz errors                                      | `Feature already exists` / `Feature not found`                                     | For `biz`, choose a new Feature name; for `unbiz`, ensure the Feature exists (use `stats` to check).                                                   |
+| Data file read issue                                  | `Data file is malformed and will be reset`                                         | See **Data recovery** above to restore from a backup.                                                                                                  |
+
+#### Still stuck?
+
+- Open the app and run `man` to see all commands, or `man [COMMAND]` for a specific one.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -490,10 +543,60 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Minimum Window Size and Display Scaling
+
+Ethical Insurance’s user interface is designed to remain clear and fully functional across standard screen sizes and scaling levels.
+
+### Recommended display settings
+
+The application has been tested to work optimally under the following conditions:
+
+- **Screen resolutions:** 1920×1080 and higher
+- **Scaling levels:** 100% and 125%
+
+### Minimum supported configuration
+
+While the interface remains usable (all features accessible, though with reduced comfort) under smaller resolutions and higher scaling, the minimum supported setup is:
+
+| Physical Resolution | Scale | Effective Logical Resolution | Usability                      |
+|---------------------|-------|------------------------------|--------------------------------|
+| 1920×1080 @ 100%    | 1.00  | 1920×1080                    | ✅ Optimal                      |
+| 1920×1080 @ 125%    | 1.25  | 1536×864                     | ✅ Good                         |
+| 1280×720 @ 150%     | 1.50  | 853×480                      | ⚠️ Usable (reduced visibility) |
+
+### Minimum window size
+
+The Ethical Insurance application enforces a **minimum window size of 450 × 800 pixels** to prevent layout distortion or clipping of key UI elements.
+
+<div markdown="span" class="alert alert-info">
+<strong>:information_source: Tip:</strong>
+If the interface appears cramped at higher scaling levels (e.g., 150%), resize the window manually or lower the display scaling in your operating system settings.
+</div>
+
+----------------------------------------------------------------------------------------------------
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **Overflowing tags during rapid window resizing**
+
+In rare cases, when the window is resized very quickly (e.g., by dragging the window edges repeatedly), certain UI components such as tags may appear **visually misaligned or overflow** their containers, as shown below:
+
+![Example of overflowing tags](images/OverflowingTags.png)
+
+This behavior occurs due to how the **JavaFX listener** internally handles rapid UI layout updates during resizing events.  
+It does **not affect data integrity or application functionality**, and only causes temporary visual distortion.
+
+**Workarounds:**
+- Resize the window normally instead of dragging edges rapidly.
+- If the overflow occurs, simply **resize the window again**; The layout will automatically correct itself.
+
+<div markdown="span" class="alert alert-info">
+<strong>:information_source: Note:</strong>
+This issue is a limitation of JavaFX’s layout refresh mechanism during fast window resize events.  
+It is cosmetic and does not impact stored data or usability.
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -505,7 +608,7 @@ _Details coming soon ..._
 | **Add**                         | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` |
 | **Clear**                       | `clear`                                                                                                                                                               |
 | **Delete**                      | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                   |
-| **Edit**                        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                                           |
+| **Edit**                        | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [{t/ \| at/ \| dt/}TAG]...`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`                          |
 | **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
 | **List**                        | `list`                                                                                                                                                                |
 | **List by tag**                 | `list t/<your tag here>` <br> e.g., `list t/friends`                                                                                                                  |

@@ -43,29 +43,31 @@ public class StatsCommandIntegrationTest {
     @Test
     public void execute_statsIntegration_success() {
         StatsCommand statsCommand = new StatsCommand();
-        String barOutput = "==================================";
-        String barTable = "------------------------------------------------";
-        String actualResult = "Total Number of Customers in Address Book: 3"
-                + "\n\n" + barOutput + "\n\n"
-                + "Gender   |  Number of people\n"
-                + "Other    |  0\n"
-                + "Female   |  1\n"
-                + "Male     |  1\n\n"
-                + "Total for Feature: 2\n"
-                + "Average: 0.67\n"
-                + "Max Tag: Female & Male (1 person)\n"
-                + "Min Tag: Other (0 people)\n"
-                + barTable + "\n\n\n"
-                + "Plan   |  Number of people\n"
-                + "A      |  2\n"
-                + "B      |  0\n"
-                + "C      |  0\n\n"
-                + "Total for Feature: 2\n"
-                + "Average: 0.67\n"
-                + "Max Tag: A (2 people)\n"
-                + "Min Tag: B & C (0 people)\n"
-                + barTable + "\n\n";
-        assertEquals(new CommandResult(actualResult),
-                statsCommand.execute(model));
+        String barOutput = "==========";
+        String barTable = "----------";
+
+        String expected =
+                "Total Number of Customers in Address Book: 3"
+                        + "\n\n" + barOutput + "\n\n"
+                        + "GENDER| Number of people\n"
+                        + "OTHER | 0\n"
+                        + "FEMALE| 1\n"
+                        + "MALE  | 1\n\n"
+                        + "Total for Feature: 2\n"
+                        + "Average: 0.67\n"
+                        + "Max Tag: FEMALE & MALE (1 person)\n"
+                        + "Min Tag: OTHER (0 people)\n"
+                        + barTable + "\n\n\n"
+                        + "PLAN| Number of people\n"
+                        + "A   | 2\n"
+                        + "B   | 0\n"
+                        + "C   | 0\n\n"
+                        + "Total for Feature: 2\n"
+                        + "Average: 0.67\n"
+                        + "Max Tag: A (2 people)\n"
+                        + "Min Tag: B & C (0 people)\n"
+                        + barTable + "\n\n";
+
+        assertEquals(new CommandResult(expected), statsCommand.execute(model));
     }
 }

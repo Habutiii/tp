@@ -21,12 +21,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagFolder;
+import seedu.address.storage.SidebarFolderPrefs;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -71,14 +71,6 @@ public class ModelManager implements Model {
         loadUserSavedFoldersFromPrefs();
         refreshActiveTagFolderCounts();
         sortFolders();
-    }
-
-    // --- methods below constructors ---
-    private static String folderKey(java.util.List<String> tags) {
-        return tags.stream()
-                .map(String::toLowerCase)
-                .sorted()
-                .collect(java.util.stream.Collectors.joining("|"));
     }
 
     //=========== UserPrefs ==================================================================================
@@ -148,15 +140,6 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ensureFoldersExistForTags(person.getTags());
-        refreshActiveTagFolderCounts();
-    }
-
-    @Override
-    public void insertPerson(Index index, Person person) {
-        requireAllNonNull(index, person);
-        addressBook.insertPerson(index.getZeroBased(), person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ensureFoldersExistForTags(person.getTags());
         refreshActiveTagFolderCounts();
@@ -369,13 +352,17 @@ public class ModelManager implements Model {
             int count = (int) people.stream()
                     .filter(p -> tagFolder.getQueryTags().stream()
                             .allMatch(qt -> p.getTags().stream()
-                                    .anyMatch(t -> t.tagName.equalsIgnoreCase(qt))))
+                                    .anyMatch(t -> t.tagName.equals(qt))))
                     .count();
             tagFolder.setCount(count);
         }
 
         // Remove folders with zero count
-        activeFolders.removeIf(folder -> !folder.isUserCreated() && folder.getCount() == 0);
+        boolean removedAny = activeFolders.removeIf(f -> !f.isUserCreated() && f.getCount() == 0);
+
+        if (removedAny) {
+            sortFolders();
+        }
     }
 
     @Override
@@ -454,18 +441,21 @@ public class ModelManager implements Model {
 
 
     // Ensures every tag has a corresponding TagFolder.
-    private void ensureFoldersExistForTags(java.util.Collection<? extends seedu.address.model.tag.Tag> tags) {
+    private void ensureFoldersExistForTags(java.util.Collection<? extends Tag> tags) {
         if (tags == null) {
             return;
         }
-        for (seedu.address.model.tag.Tag t : tags) {
-            String key = t.tagName.toLowerCase();
-            if (!folderIndex.containsKey(key)) {
-                activeFolders.add(new TagFolder(t.tagName, 0));
-                folderIndex.put(key, activeFolders.size() - 1);
+        boolean added = false;
+        for (Tag t : tags) {
+            String display = t.tagName;
+            if (!hasTagFolder(display)) {
+                activeFolders.add(new TagFolder(display, 0));
+                added = true;
             }
         }
-        sortFolders();
+        if (added) {
+            sortFolders();
+        }
     }
 
     private void sortFolders() {
@@ -564,7 +554,7 @@ public class ModelManager implements Model {
     private void persistUserFoldersToPrefs() {
         var saved = activeFolders.stream()
                 .filter(TagFolder::isUserCreated)
-                .map(f -> new seedu.address.storage.SidebarFolderPrefs(f.getQueryTags()))
+                .map(f -> new SidebarFolderPrefs(f.getQueryTags()))
                 .toList();
         userPrefs.setSavedSidebarFolders(saved);
     }
