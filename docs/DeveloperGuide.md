@@ -9,7 +9,8 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* Application based on [_SE-EDU AB3_](https://github.com/se-edu/addressbook-level3)
+Application based on [_SE-EDU AB3_](https://github.com/se-edu/addressbook-level3)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
