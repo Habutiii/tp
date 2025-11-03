@@ -21,7 +21,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.Command;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.FeatureTag;
@@ -141,15 +140,6 @@ public class ModelManager implements Model {
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        ensureFoldersExistForTags(person.getTags());
-        refreshActiveTagFolderCounts();
-    }
-
-    @Override
-    public void insertPerson(Index index, Person person) {
-        requireAllNonNull(index, person);
-        addressBook.insertPerson(index.getZeroBased(), person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ensureFoldersExistForTags(person.getTags());
         refreshActiveTagFolderCounts();

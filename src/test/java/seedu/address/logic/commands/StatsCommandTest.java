@@ -21,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -208,10 +207,6 @@ public class StatsCommandTest {
         @Override
         public void addPerson(Person person) {
 
-        }
-
-        @Override
-        public void insertPerson(Index index, Person person) {
         }
 
         @Override
