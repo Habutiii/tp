@@ -103,6 +103,11 @@ Format: `list`
 Filter by the respective tag(s) entered and displays a list of the filtered entries.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
+Example: 
+- list t/friends
+- list t/travel t/high-cost
+- list t/car t/medical t/expensive
+
 
 ### Create folder by tag : `list t/<your tag here> s/`
 
@@ -110,7 +115,7 @@ Allows you to create and save a custom folder.
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
 Output will be a folder with the names of the tags you have selected in alphabetical order.
-PLEASE NOTE: Anything after the s/ will be ignored by the AB3.
+PLEASE NOTE: Anything after the s/ will be ignored by the AB3 as only input before the first s/ will be registered.
 
 Example:
 - Input: list t/friends t/colleagues s/
@@ -119,7 +124,7 @@ Example:
 ### Delete folder by tag : `list t/<your tag here> d/`
 
 Delete selected folder. Order does not matter for the deleting of folder, as long as
-the respective tags are that folder will be deleted. PLEASE NOTE: Anything after the d/ will be ignored by the AB3.
+the respective tags are that folder will be deleted. PLEASE NOTE: Anything after the d/ will be ignored by the AB3 as only input before the first d/ will be registered.
 And you can only delete 1 folder at a time, adding more tags is just for you to find the respective folder based on more than 1 tag.
 
 Format: `list t/<your tag here> d/` and for multiple tags based folders  `list t/<your tag here> t/<your tag here> ... d/`
@@ -373,7 +378,7 @@ Examples: [See result in 'Viewing Summary Statistics']
 ***All parameters contains only printable ASCII characters***
 *** Please note that Biz tags are different from the entry Tags above.
 - **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
-  _Example: friend, VIP, family-member, project2025_
+- Example: friend, VIP, family-member, project2025_
 
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`
