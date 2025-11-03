@@ -458,12 +458,12 @@ public class ModelManager implements Model {
 
 
     // Ensures every tag has a corresponding TagFolder.
-    private void ensureFoldersExistForTags(java.util.Collection<? extends seedu.address.model.tag.Tag> tags) {
+    private void ensureFoldersExistForTags(java.util.Collection<? extends Tag> tags) {
         if (tags == null) {
             return;
         }
         boolean added = false;
-        for (seedu.address.model.tag.Tag t : tags) {
+        for (Tag t : tags) {
             String display = t.tagName;
             if (!hasTagFolder(display)) {
                 activeFolders.add(new TagFolder(display, 0));
