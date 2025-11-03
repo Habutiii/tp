@@ -67,8 +67,12 @@ public class AddPreviewBuilder {
         return fieldPreviews;
     }
 
-    static FieldPreview createTagsPreview(List<String> tagList) {
-        LinkedHashSet<String> uniqueTags = new LinkedHashSet<>(tagList);
+    static FieldPreview createTagsPreview(List<String> tagLists) {
+        List<String> upperTagLists = new ArrayList<>();
+        for (String tag : tagLists) {
+            upperTagLists.add(tag.toUpperCase());
+        }
+        LinkedHashSet<String> uniqueTags = new LinkedHashSet<>(upperTagLists);
         List<String> displayTags = new ArrayList<>(uniqueTags);
         StringBuilder tagsJoined = new StringBuilder();
         List<Integer> invalidTagIndices = new ArrayList<>();
