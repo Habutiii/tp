@@ -199,15 +199,6 @@ public class ModelManagerTest {
     }
 
     @Test
-    void folderKey_sortsAndLowersCorrectly() throws Exception {
-        var list = List.of("B", "a", "C");
-        Method m = ModelManager.class.getDeclaredMethod("folderKey", List.class);
-        m.setAccessible(true);
-        String key = (String) m.invoke(null, list);
-        assertEquals("a|b|c", key);
-    }
-
-    @Test
     void addActiveTagFolders_handlesNullEmptyAndAdds() {
 
         modelManager.addActiveTagFolders(null);

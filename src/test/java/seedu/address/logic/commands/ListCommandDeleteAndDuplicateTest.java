@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -82,8 +81,6 @@ public class ListCommandDeleteAndDuplicateTest {
         @Override public void deletePerson(Person target) {
         }
         @Override public void addPerson(Person person) {
-        }
-        @Override public void insertPerson(Index index, Person person) {
         }
         @Override public void setPerson(Person target, Person editedPerson) {
         }

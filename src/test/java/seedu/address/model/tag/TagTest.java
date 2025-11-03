@@ -49,13 +49,9 @@ public class TagTest {
     }
 
     @Test
-    public void equals_caseInsensitiveTags_returnsTrue() {
-        assertEquals(new Tag("Friend"), new Tag("friend"));
-    }
-
-    @Test
-    public void toString_preservesOriginalCase() {
-        assertEquals("Friend", new Tag("Friend").toString());
+    public void toString_normalizesToUppercase() {
+        assertEquals("FRIEND", new Tag("Friend").toString());
+        assertEquals("FRIEND", new Tag("FRIEND").toString());
     }
 
     @Test
@@ -79,20 +75,6 @@ public class TagTest {
         assertThrows(NullPointerException.class, () -> new Tag(null));
         assertThrows(IllegalArgumentException.class, () -> new Tag(""));
         assertThrows(IllegalArgumentException.class, () -> new Tag("!oops"));
-    }
-
-    @Test
-    void equals_isCaseInsensitive_hashCodeMatches() {
-        Tag a = new Tag("Friends");
-        Tag b = new Tag("friends");
-        Tag c = new Tag("colleagues");
-
-        assertTrue(a.equals(b));
-        assertTrue(a.hashCode() == b.hashCode());
-        assertFalse(a.equals(c));
-        assertFalse(a.equals(null));
-        assertFalse(a.equals("friends"));
-        assertEquals("friends", b.toString());
     }
 }
 
