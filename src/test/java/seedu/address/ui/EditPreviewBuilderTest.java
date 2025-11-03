@@ -215,6 +215,30 @@ public class EditPreviewBuilderTest {
         assertTrue(tagPreview.isValid());
     }
 
+    @Test
+    public void buildPreview_addTags_exceedingMaxTags_invalidPreview() {
+        int maxTags = Person.MAX_TAGS_PER_PERSON;
+        HashSet<Tag> tags = new HashSet<>();
+        for (int i = 1; i < maxTags; i++) { // 1 less than max
+            tags.add(new Tag("tag" + i));
+        }
+
+        List<Person> personList = List.of(
+                new Person(new Name("Alice"), new Phone("91234567"), new Email("alice@example.com"),
+                        new Address("123 Street"), tags));
+
+        // Add two new tags -> exceed max
+        String input = "edit 1 at/new1 at/new2";
+        List<FieldPreview> previews = EditPreviewBuilder.buildPreview(input, personList);
+
+        FieldPreview tagPreview = previews.get(previews.size() - 1);
+        assertEquals("Tags (t/):", tagPreview.getLabel());
+        assertEquals(String.format(EditCommand.MESSAGE_EXCEEDING_MAX_TAGS,
+                Person.MAX_TAGS_PER_PERSON, tags.size() + 2), tagPreview.getValue());
+        assertFalse(tagPreview.isValid());
+    }
+
+
 
     @Test
     public void buildPreview_deleteTags_success() {
