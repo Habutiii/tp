@@ -247,7 +247,7 @@ public class EditPreviewBuilderTest {
         FieldPreview tagPreview = previews.get(previews.size() - 1);
         assertEquals("Tags (t/):", tagPreview.getLabel());
         // nothing new appended, since 'friend' already exists
-        assertEquals("friend, colleague + ", tagPreview.getValue());
+        assertEquals("friend, colleague", tagPreview.getValue());
         assertTrue(tagPreview.isValid()); // confirm branch didn’t invalidate
     }
 

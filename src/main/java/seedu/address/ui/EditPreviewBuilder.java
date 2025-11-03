@@ -96,15 +96,19 @@ public class EditPreviewBuilder {
                 DuplicateFieldChecker.isDuplicateField(argMultimap, CliSyntax.PREFIX_ADDRESS),
                 Address::isValidAddress));
 
+        List<String> existingTagNames = person.getTags().stream().map(t -> t.tagName.toLowerCase()).toList();
+
         List<String> newTagsList = argMultimap.getAllValues(CliSyntax.PREFIX_TAG);
-        List<String> addTagsList = argMultimap.getAllValues(CliSyntax.PREFIX_ADDTAG);
+        List<String> addTagsList = argMultimap.getAllValues(CliSyntax.PREFIX_ADDTAG).stream()
+                .filter(t -> !existingTagNames.contains(t.toLowerCase()))
+                .toList();;
         List<String> deleteTagsList = argMultimap.getAllValues(CliSyntax.PREFIX_DELETETAG);
 
         String tags = String.join(", ", person.getTags().stream().map(tag -> tag.tagName).toArray(String[]::new));
 
         boolean isMultipleTagOps = false;
         int tagOpCount = 0;
-        String emptyTag = "";
+
 
         if (!newTagsList.isEmpty()) {
             tagOpCount++;
