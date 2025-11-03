@@ -1,4 +1,5 @@
 package seedu.address.ui;
+import static javafx.beans.binding.Bindings.min;
 
 import java.util.Comparator;
 
@@ -41,6 +42,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    record LabelWithText(Label l, javafx.scene.text.Text t) {}
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
@@ -54,6 +56,12 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            .map(tag->new LabelWithText(new Label(tag.tagName), new javafx.scene.text.Text(tag.tagName)))
+            .peek(r->r.l().setWrapText(true)).peek(r->r.l().maxWidthProperty().bind(tags.widthProperty().subtract(5)))
+            .peek(r->r.t().setFont(r.l().getFont())).peek(r->r.l().prefWidthProperty().bind(min(r.t().getLayoutBounds()
+            .getWidth() + 5, tags.widthProperty().subtract(10)))).forEach(r->tags.getChildren().add(r.l()));
+        name.maxWidthProperty().bind(cardPane.widthProperty().subtract(id.widthProperty()).subtract(40));
+        address.maxWidthProperty().bind(cardPane.widthProperty().subtract(60));
+        tags.maxWidthProperty().bind(cardPane.widthProperty().subtract(30));
     }
 }
