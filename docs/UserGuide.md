@@ -163,9 +163,11 @@ Another person with the same <code>NAME</code> (case-insensitive) and <code>PHON
 **Parameters must adhere to the following restrictions:**
 
 **Name:**
-- Must start with a **letter**.
+
+- May only contain English letters (A–Z, a–z) and;
 - Can contain **letters**, **spaces**, and the following special characters only:  
   `(space) , ( ) / . @ - '`
+- A name should also not exceed 100 characters.
 - Cannot contain **numbers** inside the name or any other special symbols.
 
 **Examples**
@@ -181,7 +183,19 @@ Another person with the same <code>NAME</code> (case-insensitive) and <code>PHON
 
 **Phone:**
 - Must be **3–15 digits** (to account for international numbers).
-- Only digits (0–9) are allowed — **no spaces, letters, or symbols.**
+- Only digits (0–9) are allowed — **no spaces, letters, or symbols eg.`+`.**
+
+<div markdown="block" class="alert alert-info">
+**:information_source: Notes about the restrictions:**
+
+The phone number must be between 3 and 15 digits long.
+Shortcodes are usually 3 to 5 digits long.
+International numbers are usually up to 15 digits long by ITU-T E.164 standard.
+
+Thus, we set the minimum length to 3 and maximum length to 15.
+The phone number should only contain digits.
+
+</div>
 
 **Examples**
 
@@ -259,18 +273,20 @@ If you used <code>find</code> or <code>list</code> before, <code>edit 1</code> e
   * `dt/` removes specified tags from existing ones.
   * `t/` replaces all existing tags with the new set of tags provided.
   * To remove all tags, type `t/` with nothing after it.
-  * Only one tag operation (t/, at/, or dt/) can be used per command.
+  * Only one unique tag operation (t/, at/, or dt/) can be used per command. (See examples below)
+    * The selected unique tag operation can be repeated multiple times in the same command to add/remove multiple tags.
 * Each person can have up to **15 tags** after editing.
 * **Parameter restrictions:** Same as those in the [`add`](#adding-a-person-add) command.
 
 **Examples**
 
-| Command                                   | Description                                                              |
-|-------------------------------------------|--------------------------------------------------------------------------|
-| `edit 1 p/91234567 e/johndoe@example.com` | Updates the **phone** and **email** of the 1st person.                   |
-| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and clears all existing tags.     |
-| `edit 3 at/InsuranceA`                    | Adds the tag **InsuranceA** to the 3rd person’s existing tags.           |
-| `edit 3 dt/InsuranceA`                    | Removes the tag **InsuranceA** from the 3rd person’s existing tags.      |
+| Command                                   | Description                                                          |
+|-------------------------------------------|----------------------------------------------------------------------|
+| `edit 1 p/91234567 e/johndoe@example.com` | Updates the **phone** and **email** of the 1st person.               |
+| `edit 2 n/Betsy Crower t/`                | Changes the **name** of the 2nd person and clears all existing tags. |
+| `edit 3 at/InsuranceA`                    | Adds the tag **InsuranceA** to the 3rd person’s existing tags.       |
+| `edit 3 dt/InsuranceA`                    | Removes the tag **InsuranceA** from the 3rd person’s existing tags.  |
+| `edit 4 at/tag1 at/tag2 at/tag3`          | Adds the tags **tag1**, **tag2**, and **tag3** to the 4th person.    |
 
 ---
 
