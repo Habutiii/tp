@@ -1,6 +1,6 @@
 ---
 layout: page
-title: John Doe's Project Portfolio Page
+title: K0P1-Git's Project Portfolio Page
 ---
 
 ### Project: Ethical Insurance
