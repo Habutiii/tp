@@ -249,7 +249,9 @@ public class EditPreviewBuilderTest {
     public void createTagsPreview_exactlyMaxTags_valid() {
         int max = Person.MAX_TAGS_PER_PERSON;
         List<String> tags = new ArrayList<>();
-        for (int i = 0; i < max; i++) tags.add("tag" + i);
+        for (int i = 0; i < max; i++) {
+            tags.add("tag" + i);
+        }
         Person person = new PersonBuilder().withTags("a").build();
         FieldPreview preview = EditPreviewBuilder.createTagsPreview(person, tags);
         assertTrue(preview.isValid()); // == max should not trigger error
