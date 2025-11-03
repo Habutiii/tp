@@ -94,32 +94,42 @@ Format: `help`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Lists all entries in the address book.
 
 Format: `list`
 
 ### Filtered list by tag : `list t/<your tag here>`
 
-Sorts and lists only entries with the respective tag(s) entered.
+Filter by the respective tag(s) entered and displays a list of the filtered entries.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
 
 ### Create folder by tag : `list t/<your tag here> s/`
 
-Create and save custom folder.
+Allows you to create and save a custom folder.
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
-Output will be a folder with the names of the tags you have selected.
+Output will be a folder with the names of the tags you have selected in alphabetical order.
+PLEASE NOTE: Anything after the s/ will be ignored by the AB3.
+
 Example:
 - Input: list t/friends t/colleagues s/
-- Output: Folder friends & colleagues created
+- Output: Folder colleagues & friends created
 
 ### Delete folder by tag : `list t/<your tag here> d/`
 
 Delete selected folder. Order does not matter for the deleting of folder, as long as
-the respective tags are that folder will be deleted.
+the respective tags are that folder will be deleted. PLEASE NOTE: Anything after the d/ will be ignored by the AB3.
+And you can only delete 1 folder at a time, adding more tags is just for you to find the respective folder based on more than 1 tag.
 
 Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
+
+Example
+- Input: list t/cars d/
+- Output: Deleted folder "cars"
+- Input: list t/cars t/medical t/age d/
+- Output: Deleted folder "age & cars & medical"
+
 
 ---
 
