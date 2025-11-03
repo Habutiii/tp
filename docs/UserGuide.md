@@ -356,7 +356,9 @@ Format: `clear`
 ### Declaring Features and Tags for Statistics: `biz`
 
 Declares Features and Tags to group Tags by Features for statistics. Adding those Categories as tags to People will allow them to be considered for [statistics](#viewing-summary-statistics-stats).
-Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable.
+Applying this command on a Feature with the same name will overwrite the existing Feature-Tags pair. This command is undoable. 
+
+**Disclaimer:** These feature-tag relations do not persist after this app closes and is restarted
 
 Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
@@ -378,8 +380,8 @@ Format: `unbiz f/<your feature 1 here> f/<your feature 2 here>`
 * Undeclare multiple Features by chaining `f/` prefixes together.
 
 Examples:
-* `ubiz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
-* `ubiz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
+* `unbiz f/Plan` undeclares the Feature "Plan" and its associated tags from statistics.
+* `unbiz f/Gender f/Plan` undeclares these Features: "Plan", "Gender".
 
 
 #### Parameter restrictions for `biz` AND `unbiz` commands:
@@ -398,6 +400,8 @@ Statistics will be summarized according to Features and Tags declared by User us
 If there are ties when deciding the Max and Min tags in the summary tables, all the tags associated with the tie will be displayed, according to whether they tied in Max Tag and/or Min Tag.
 
 If there are no declared features and tags, `stats` will only show the total number of customers in the Address Book.
+
+Refer to **Disclaimer** in [`biz`](#declaring-features-and-tags-for-statistics-biz) command for information on feature-tag persistency.
 
 Format: `stats`
 
