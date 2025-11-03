@@ -122,14 +122,13 @@ Delete selected folder. Order does not matter for the deleting of folder, as lon
 the respective tags are that folder will be deleted. PLEASE NOTE: Anything after the d/ will be ignored by the AB3.
 And you can only delete 1 folder at a time, adding more tags is just for you to find the respective folder based on more than 1 tag.
 
-Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
+Format: `list t/<your tag here> d/` and for multiple tags based folders  `list t/<your tag here> t/<your tag here> ... d/`
 
 Example
 - Input: list t/cars d/
 - Output: Deleted folder "cars"
 - Input: list t/cars t/medical t/age d/
 - Output: Deleted folder "age & cars & medical"
-
 
 ---
 
@@ -196,10 +195,6 @@ Duplicate entries are not allowed in the address book.
 | 66265555        | 9011p041     |
 | 123456789012345 | 9312 1534    |
 
-- **Tag:** Each Person can only have up to 15 tags. Tags can only contain letters, numbers and dash ("-"). Tags are case insensitive.
-  Must not exceed 40 characters.
-    - Example: friend, VIP, family-member, project2025_
-
 **Email**
 - Must be a **valid email address**, with:
     - An alphanumeric username
@@ -228,20 +223,23 @@ Duplicate entries are not allowed in the address book.
 | 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
 
 
-
 #### **Tag**
 - Tags are optional.
 - Each person can have **up to 15 tags**.
 - Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
-- Tags are **case-insensitive**.
+- Please note for the '-', starting and trailing '-' will be rejected.
+- Tags are **case-insensitive**. 
+- Must not exceed 40 characters.
 
 **Examples**
 
-| Valid         | Invalid       |
-|---------------|---------------|
-| friend        | friend!       |
+| Valid        | Invalid       |
+|--------------|---------------|
+| friend       | friend!       |
 | family-member | family_member |
-| project2025   | Project@2025  |
+| project2025  | Project@2025  |
+| a-was-here   | -abc or abc-  |
+| helloworld   | hello world   |
 
 ---
 
@@ -262,8 +260,6 @@ Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) comman
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When using `t/TAG`, the existing tags of the person will be removed.
-* Use `at/TAG` to add on to **existing** tags.
-* Use `dt/TAG` to remove from **existing** tags.
 * You can only use either of these tag editing commands once per `edit` command.
 * You can remove all the person’s tags by typing `t/` without
   specifying any tags after it.
@@ -367,7 +363,7 @@ Applying this command on a Feature with the same name will overwrite the existin
 
 Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
-* Add multiple tags fro aggregation of a Feature.
+* Add multiple tags for aggregation of a Feature.
 
 Examples: [See result in 'Viewing Summary Statistics']
 * `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
@@ -375,6 +371,7 @@ Examples: [See result in 'Viewing Summary Statistics']
 
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
+*** Please note that Biz tags are different from the entry Tags above.
 - **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
   _Example: friend, VIP, family-member, project2025_
 
