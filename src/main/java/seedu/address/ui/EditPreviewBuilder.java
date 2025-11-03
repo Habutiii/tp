@@ -126,7 +126,8 @@ public class EditPreviewBuilder {
                 || addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
-                            addTagsList.size() + person.getTags().size()) , false));
+                            addTagsList.size() + person.getTags().size()),
+                    false));
         } else if (!newTagsList.isEmpty()) {
             fieldPreviews.add(createTagsPreview(person, newTagsList));
         } else if (!addTagsList.isEmpty()) {
@@ -140,37 +141,38 @@ public class EditPreviewBuilder {
         return fieldPreviews;
     }
 
-    static FieldPreview createNamePreview(Person person, String newName, boolean duplicate) {
+    static FieldPreview createNamePreview(Person person, String newName, boolean isDuplicate) {
         String oldName = person.getName().fullName;
-        if (duplicate) {
-            return new FieldPreview("Name (n/):", oldName + " -> " + newName + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Name (n/):", oldName + " -> " + newName + " (duplicate n/ found!)", false);
         }
         boolean isValid = Name.isValidName(newName);
         return new FieldPreview("Name (n/):", oldName + " -> " + newName, isValid);
     }
 
-    static FieldPreview createPhonePreview(Person person, String newPhone, boolean duplicate) {
+    static FieldPreview createPhonePreview(Person person, String newPhone, boolean isDuplicate) {
         String oldPhone = person.getPhone().value;
-        if (duplicate) {
-            return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone + " (duplicate p/ found!)", false);
         }
         boolean isValid = Phone.isValidPhone(newPhone);
         return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone, isValid);
     }
 
-    static FieldPreview createEmailPreview(Person person, String newEmail, boolean duplicate) {
+    static FieldPreview createEmailPreview(Person person, String newEmail, boolean isDuplicate) {
         String oldEmail = person.getEmail().value;
-        if (duplicate) {
-            return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail + " (duplicate e/ found!)", false);
         }
         boolean isValid = Email.isValidEmail(newEmail);
         return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail, isValid);
     }
 
-    static FieldPreview createAddressPreview(Person person, String newAddress, boolean duplicate) {
+    static FieldPreview createAddressPreview(Person person, String newAddress, boolean isDuplicate) {
         String oldAddress = person.getAddress().value;
-        if (duplicate) {
-            return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress + " (duplicate a/ found!)",
+                    false);
         }
         boolean isValid = Address.isValidAddress(newAddress);
         return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress, isValid);
@@ -225,7 +227,6 @@ public class EditPreviewBuilder {
     private enum TagOperation {
         REPLACE, ADD, REMOVE
     }
-
 
     static FieldPreview createFieldPreview(
             String label,

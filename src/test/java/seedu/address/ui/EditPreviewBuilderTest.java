@@ -31,7 +31,7 @@ public class EditPreviewBuilderTest {
 
         FieldPreview duplicatePreview = EditPreviewBuilder.createNamePreview(person, "Bob", true);
         assertEquals("Name (n/):", duplicatePreview.getLabel());
-        assertEquals("Alice -> Bob (duplicate)", duplicatePreview.getValue());
+        assertEquals("Alice -> Bob (duplicate n/ found!)", duplicatePreview.getValue());
         assertFalse(duplicatePreview.isValid());
     }
 
@@ -128,7 +128,7 @@ public class EditPreviewBuilderTest {
 
         FieldPreview duplicatePreview = EditPreviewBuilder.createPhonePreview(person, "98765432", true);
         assertEquals("Phone (p/):", duplicatePreview.getLabel());
-        assertEquals("91234567 -> 98765432 (duplicate)", duplicatePreview.getValue());
+        assertEquals("91234567 -> 98765432 (duplicate p/ found!)", duplicatePreview.getValue());
         assertFalse(duplicatePreview.isValid());
     }
 
@@ -143,7 +143,7 @@ public class EditPreviewBuilderTest {
 
         FieldPreview duplicatePreview = EditPreviewBuilder.createEmailPreview(person, "bob@example.com", true);
         assertEquals("Email (e/):", duplicatePreview.getLabel());
-        assertEquals("alice@example.com -> bob@example.com (duplicate)", duplicatePreview.getValue());
+        assertEquals("alice@example.com -> bob@example.com (duplicate e/ found!)", duplicatePreview.getValue());
         assertFalse(duplicatePreview.isValid());
     }
 
@@ -158,7 +158,7 @@ public class EditPreviewBuilderTest {
 
         FieldPreview duplicatePreview = EditPreviewBuilder.createAddressPreview(person, "456 Avenue", true);
         assertEquals("Address (a/):", duplicatePreview.getLabel());
-        assertEquals("123 Street -> 456 Avenue (duplicate)", duplicatePreview.getValue());
+        assertEquals("123 Street -> 456 Avenue (duplicate a/ found!)", duplicatePreview.getValue());
         assertFalse(duplicatePreview.isValid());
     }
 
