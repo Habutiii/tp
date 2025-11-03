@@ -268,6 +268,8 @@ Editing is **undoable** using the [`undo`](#undoing-the-last-action-undo) comman
 * You can only use either of these tag editing commands once per `edit` command.
 * You can remove all the person’s tags by typing `t/` without
   specifying any tags after it.
+* Use `at/TAG` to add on to **existing** tags.
+* Use `dt/TAG` to remove from **existing** tags.
 * Each person after editing can only contain a maximum of 15 tags.
 
 Examples:
