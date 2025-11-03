@@ -126,8 +126,11 @@ public class EditPreviewBuilder {
         if (isMultipleTagOps) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     MESSAGE_TOO_MANY_TAG_PREFIXES, false));
-        } else if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON
-                || addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
+        } else if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON) {
+            fieldPreviews.add(new FieldPreview("Tags (t/):",
+                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                            newTagsList.size()) , false));
+        } else if (addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
                             addTagsList.size() + person.getTags().size()) , false));
