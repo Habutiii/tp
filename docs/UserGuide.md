@@ -587,6 +587,24 @@ If the interface appears cramped at higher scaling levels (e.g., 150%), resize t
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **Overflowing tags during rapid window resizing**
+
+In rare cases, when the window is resized very quickly (e.g., by dragging the window edges repeatedly), certain UI components such as tags may appear **visually misaligned or overflow** their containers, as shown below:
+
+![Example of overflowing tags](images/OverflowingTags.png)
+
+This behavior occurs due to how the **JavaFX listener** internally handles rapid UI layout updates during resizing events.  
+It does **not affect data integrity or application functionality**, and only causes temporary visual distortion.
+
+**Workarounds:**
+- Resize the window normally instead of dragging edges rapidly.
+- If the overflow occurs, simply **resize the window again**; The layout will automatically correct itself.
+
+<div markdown="span" class="alert alert-info">
+<strong>:information_source: Note:</strong>
+This issue is a limitation of JavaFX’s layout refresh mechanism during fast window resize events.  
+It is cosmetic and does not impact stored data or usability.
+</div>
 
 --------------------------------------------------------------------------------------------------------------------
 
