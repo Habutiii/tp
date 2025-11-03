@@ -94,8 +94,8 @@ public class AddPreviewBuilder {
         return new FieldPreview("Tags (t/):", tagsJoined.toString(), invalidTagIndices);
     }
 
-    static FieldPreview createNamePreview(String name, boolean duplicate) {
-        if (duplicate) {
+    static FieldPreview createNamePreview(String name, boolean isDuplicate) {
+        if (isDuplicate) {
             return new FieldPreview("Name (n/):", name + " (duplicate n/ found!)", false);
         }
         boolean isValid = !name.isEmpty() && Name.isValidName(name);
@@ -105,8 +105,8 @@ public class AddPreviewBuilder {
         return new FieldPreview("Name (n/):", name, isValid);
     }
 
-    static FieldPreview createPhonePreview(String phone, boolean duplicate) {
-        if (duplicate) {
+    static FieldPreview createPhonePreview(String phone, boolean isDuplicate) {
+        if (isDuplicate) {
             return new FieldPreview("Phone (p/):", phone + " (duplicate p/ found!)", false);
         }
         boolean isValid = !phone.isEmpty() && Phone.isValidPhone(phone);
@@ -116,8 +116,8 @@ public class AddPreviewBuilder {
         return new FieldPreview("Phone (p/):", phone, isValid);
     }
 
-    static FieldPreview createEmailPreview(String email, boolean duplicate) {
-        if (duplicate) {
+    static FieldPreview createEmailPreview(String email, boolean isDuplicate) {
+        if (isDuplicate) {
             return new FieldPreview("Email (e/):", email + " (duplicate e/ found!)", false);
         }
         boolean isValid = !email.isEmpty() && Email.isValidEmail(email);
@@ -127,8 +127,8 @@ public class AddPreviewBuilder {
         return new FieldPreview("Email (e/):", email, isValid);
     }
 
-    static FieldPreview createAddressPreview(String address, boolean duplicate) {
-        if (duplicate) {
+    static FieldPreview createAddressPreview(String address, boolean isDuplicate) {
+        if (isDuplicate) {
             return new FieldPreview("Address (a/):", address + " (duplicate a/ found!)", false);
         }
         boolean isValid = !address.isEmpty() && Address.isValidAddress(address);
