@@ -111,29 +111,35 @@ Example:
 
 ### Create folder by tag : `list t/<your tag here> s/`
 
-Allows you to create and save a custom folder.
+Saves the current tag selection as a sidebar folder.
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
-Output will be a folder with the names of the tags you have selected in alphabetical order.
-PLEASE NOTE: Anything after the s/ will be ignored by the AB3 as only input before the first s/ will be registered.
+- s/ is a flag, not a value. Anything typed after the first s/ is ignored.
+- The folder name is the selected tags sorted alphabetically and joined with & (e.g. t/friends t/colleagues s/ → colleagues & friends).
+- You can type s/ more than once, but extra s/ flags are ignored.
+- Tag order in the command doesn’t matter (the saved name is always alphabetical).
+- Tags are now normalized to all uppercase
 
 Example:
 - Input: list t/friends t/colleagues s/
-- Output: Folder colleagues & friends created
+- Output: Folder COLLEAGUES & FRIENDS created
+- list t/friends t/colleagues s/ notes here → same result (text after s/ ignored)
 
 ### Delete folder by tag : `list t/<your tag here> d/`
 
-Delete selected folder. Order does not matter for the deleting of folder, as long as
-the respective tags are that folder will be deleted. PLEASE NOTE: Anything after the d/ will be ignored by the AB3 as only input before the first d/ will be registered.
-And you can only delete 1 folder at a time, adding more tags is just for you to find the respective folder based on more than 1 tag.
+Deletes the saved folder that exactly matches the given tag set.
 
 Format: `list t/<your tag here> d/` and for multiple tags based folders  `list t/<your tag here> t/<your tag here> ... d/`
+- d/ is a flag. Anything typed after the first d/ is ignored. 
+- Tag order doesn’t matter; the folder is matched by its tag set, not the order (e.g. t/family t/friends d/ deletes family & friends). 
+- Only one folder is deleted per command. Adding more tags just helps specify the one folder you mean. 
+- You can type d/ more than once, but extra d/ flags are ignored.
 
 Example
 - Input: list t/cars d/
-- Output: Deleted folder "cars"
+- Output: Deleted folder "CARS"
 - Input: list t/cars t/medical t/age d/
-- Output: Deleted folder "age & cars & medical"
+- Output: Deleted folder "AGE & CARS & MEDICAL"
 
 ---
 
@@ -238,13 +244,14 @@ Duplicate entries are not allowed in the address book.
 
 **Examples**
 
-| Valid        | Invalid       |
-|--------------|---------------|
-| friend       | friend!       |
+| Valid         | Invalid       |
+|---------------|---------------|
+| friend        | friend!       |
 | family-member | family_member |
-| project2025  | Project@2025  |
-| a-was-here   | -abc or abc-  |
-| helloworld   | hello world   |
+| project2025   | Project@2025  |
+| a-was-here    | -abc or abc-  |
+| HELLOWORLD    | HELLOW WORLD  |
+| TESTING       | TEST+=1NG     |
 
 ---
 
@@ -252,7 +259,7 @@ Duplicate entries are not allowed in the address book.
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ OR at/ OR dt/}TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] {[t/TAG]… OR [at/TAG]… OR [dt/TAG]}​`
 
 > 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
 
