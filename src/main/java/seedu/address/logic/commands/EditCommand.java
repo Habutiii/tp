@@ -49,9 +49,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]..." + " OR "
-            + "[" + PREFIX_ADDTAG + "ADDTAG]..." + " OR "
-            + "[" + PREFIX_DELETETAG + "DELETETAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]..."
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -61,15 +59,13 @@ public class EditCommand extends Command {
             "  edit — Edits details of an existing person.",
             "",
             "USAGE",
-            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] {[t/TAG]… OR [at/TAG]… OR [dt/TAG]} ",
+            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]",
             "",
             "PARAMETERS",
             "  • INDEX: positive integer referring to displayed list index",
 
             "  • Any of NAME, PHONE, EMAIL, ADDRESS, TAG fields may be provided",
             "  • TAG fields replace the existing tag set if provided",
-            "  • ADDTAG fields add on to the existing tag set of Person if provided",
-            "  • DELETETAG fields are removed from the existing tag set of Person if provided",
             "\n  • NAME (optional): " + Name.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
             "\n  • PHONE (optional): " + Phone.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
             "\n  • EMAIL (optional): " + Email.MESSAGE_CONSTRAINTS.replace("\n", "\n\t"),
