@@ -151,7 +151,7 @@ activate FindCommand
 FindCommand -> Model : updateFilteredPersonList(p)
 activate Model
 
-note right of Model
+note left of Model
 Model filters clients using p.test(Person),
 returning all whose name, phone,
 or email contains "alex" or "9223".

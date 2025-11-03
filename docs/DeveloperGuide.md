@@ -9,7 +9,8 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* Application based on [_SE-EDU AB3_](https://github.com/se-edu/addressbook-level3)
+Application based on [_SE-EDU AB3_](https://github.com/se-edu/addressbook-level3).
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -35,7 +36,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +68,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +85,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -114,7 +115,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -135,7 +136,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103-F13-2/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -143,9 +144,9 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
-* Your saved folders in the sidebar (created with s/) are now kept between AB3 sessions.  Close AB3, reopen it later and those folders will still be there.
+* Your saved folders in the sidebar (created with s/) are now kept between Ethical Insurance sessions.  Close Ethical Insurance, reopen it later and those folders will still be there.
 * If you delete a saved folder (with d/), it’s removed from the sidebar and won’t come back on restart.
-* Auto folders (the ones the app shows automatically when AB3 is launched are based on tags it finds in addressbook) may disappear when they have no matching people that’s normal cleanup.
+* Auto folders (the ones the app shows automatically when Ethical Insurance is launched are based on tags it finds in address book) may disappear when they have no matching people that’s normal cleanup.
   Saved folders don’t vanish on their own, they stay until you delete them.
 * Folder names are standardized: 
   * Multi-tag folders are shown in a tidy, consistent format (e.g. colleagues & friends) regardless of the order you typed them. 
@@ -195,6 +196,7 @@ This design ensures predictable, stateless filtering and encapsulates all keywor
 </div>
 
 #### Example
+
 | User Input       | Description                                                                    |
 |------------------|--------------------------------------------------------------------------------|
 | `find alex`      | Lists all clients whose name, phone, or email contains “alex”                  |
@@ -274,11 +276,6 @@ This process is facilitated through methods like:
 ![Tag Folder Model Sequence Diagram](images/TagFolderSequenceDiagram-Model.png)
 
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -337,285 +334,286 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Insurance Agent                   | build schedule for all my meetings                                         | keep track of my schedule in a single application                       |
 | `*`      | Insurance Agent                   | auto-calculate insurance premium per term                                  | quickly know how much the client has/will be paying over the term years |
 
-*{More to be added}*
-
 ### Use cases
 
 (For all use cases below, the **System** is the `Insurance Management App` and the **Actor** is the `user`, unless specified otherwise)
 
-### UC01 Use case: `add`
+#### UC01 Use case: `add`
 
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...` command.  
-> 2. System validates each parameter.  
-> 3. System checks for duplicates using (name + phone).  
-> 4. If valid, system creates a new client entry and updates the display.  
->    - Use case ends.  
->
-> **Extensions:**  
-> - 2a. Missing required fields.  
->   - 2a1. System displays: "Invalid command format!" and specifies the required parameters.
->   - 2a2. Agent provides all the required parameters.
->   - Use case resumes from step 2.  
->
-> - 2b. Invalid parameter format.  
->   - 2b1. System displays specific error message (e.g., "Phone numbers should be 3 to 15 digits.").  
->   - 2b2. Agent corrects input.  
->   - Use case resumes from step 2.  
->
-> - 3a. Duplicate detected.  
->   - 3a1. System displays: "This person already exists in the address book".  
->   - 3a2. Agent may consider using UC02 to edit existing client details, if required.
->   - Use case ends.  
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent  
 
----
+ **MSS:**  
+ 1. Agent issues `add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/TAG]...` command.  
+ 2. System validates each parameter.  
+ 3. System checks for duplicates using (name + phone).  
+ 4. If valid, system creates a new client entry and updates the display.<br>
+   Use case ends.
 
-### UC02 Use case: `edit`
-
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` command.  
-> 2. System validates the index and input fields.  
-> 3. System checks for duplicates (name + phone).  
-> 4. If valid, system updates client details and displays confirmation.  
->    - Use case ends.  
->
-> **Extensions:**  
-> - 2a. Index out of bounds.  
->   - 2a1. System displays error: "The person index provided is invalid".
->   - 2a2. Agent provides the correct index".
->   - Use case resumes from step 2.  
->
-> - 2b. Invalid parameter format.  
->   - 2b1. System displays error specifying invalid field.  
->   - 2b2. Agent corrects input.  
->   - Use case resumes from step 2.  
->
-> - 3a. Duplicate clients detected.  
->   - 3a1. System displays "This person already exists in the address book."  
->   - Use case ends.  
+ **Extensions:**  
+ - 2a. Missing required fields.  
+   - 2a1. System displays: "Invalid command format!" and specifies the required parameters.
+   - 2a2. Agent provides all the required parameters.<br>
+   Use case resumes from step 2.  
+<br>
+ - 2b. Invalid parameter format.  
+   - 2b1. System displays specific error message (e.g., "Phone numbers should be 3 to 15 digits.").  
+   - 2b2. Agent corrects input.<br>
+   Use case resumes from step 2.  
+<br>
+ - 3a. Duplicate detected.  
+   - 3a1. System displays: "This person already exists in the address book".  
+   - 3a2. Agent may consider using UC02 to edit existing client details, if required.<br>
+   Use case ends.  
 
 ---
 
-### UC03 Use case: `delete`
+#### UC02 Use case: `edit`
 
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues delete INDEX command.  
-> 2. System verifies the index.  
-> 3. System deletes the client record at that index.  
-> 4. System displays confirmation: “Deleted Person: <Client details>”.  
->    - Use case ends.  
->
-> **Extensions:**  
-> - 2a. Index out of bounds.  
->   - 2a1. System displays error: "The person index provided is invalid". 
->   - Use case ends.  
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent  
 
----
+ **MSS:**  
+ 1. Agent issues `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` command.  
+ 2. System validates the index and input fields.  
+ 3. System checks for duplicates (name + phone).  
+ 4. If valid, system updates client details and displays confirmation.  
+   Use case ends.  
 
-### UC04 Use case: `find`
-
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues `find <query 1> <query 2> ...` command.  
-> 2. System searches for clients whose information matches the keywords in the query. 
-> 3. System displays all clients whose information matches the keywords in the query. 
-> 4. Agent views the list of clients displayed by the system.
->    - Use case ends.  
->
-> **Extensions:**  
-> - 2a. No matches found.  
->   - 2a1. System displays: "0 persons listed!".  
->   - Use case ends.  
+ **Extensions:**  
+ - 2a. Index out of bounds.  
+   - 2a1. System displays error: "The person index provided is invalid".
+   - 2a2. Agent provides the correct index".<br>
+   Use case resumes from step 2.  
+<br>
+ - 2b. Invalid parameter format.  
+   - 2b1. System displays error specifying invalid field.  
+   - 2b2. Agent corrects input.  
+     Use case resumes from step 2.  
+<br>
+ - 3a. Duplicate clients detected.  
+   - 3a1. System displays "This person already exists in the address book."  
+   Use case ends.  
 
 ---
 
-### UC05 case: `help`
+#### UC03 Use case: `delete`
 
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues help command.  
-> 2. System shows a popup containing link to user guide and introduces the `man` command.
-> 3. Agent reads and continues working.  
->    - Use case ends.  
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent  
 
----
+ **MSS:**  
+ 1. Agent issues delete INDEX command.  
+ 2. System verifies the index.  
+ 3. System deletes the client record at that index.  
+ 4. System displays confirmation: “Deleted Person: <Client details>”.<br>  
+   Use case ends.  
 
-### UC06 Use case: `biz`
-
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent
->
-> **MSS:**
-> 1. Agent issues biz command with a feature name and tags for those features.
-> 2. System displays confirmation that the feature and its tags have been added.
-> 3. Agent reads and continues working. 
->    - Use case ends.
->
-> **Extensions:**
-> - 2a. Agent has typed the feature name or its tags wrongly. 
->   - 2a1. Agent runs `undo` command as outlined in the `undo` use case. 
->   - Use case ends.
+ **Extensions:**  
+ - 2a. Index out of bounds.  
+   - 2a1. System displays error: "The person index provided is invalid".<br> 
+   Use case ends.  
 
 ---
 
-### UC07 Use case: `unbiz`
+#### UC04 Use case: `find`
 
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent
->
-> **MSS:**
-> 1. Agent issues unbiz command with the feature name of an existing feature in Statistics.
-> 2. System displays confirmation that the feature and its tags have been removed from stats.
-> 3. Agent reads and continues working. 
->    - Use case ends.
->
-> **Extensions:**
-> - 1a. Agent enters feature name that does not exist in Statistics.
->   - 1a1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]"
->   - Use case ends.
-> - 2a. Agent has undeclared the wrong feature name.
->   - 2a1. Agent runs `undo` command as outlined in the `undo` use case.
->   - Use case ends.
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent  
+
+ **MSS:**  
+ 1. Agent issues `find <query 1> <query 2> ...` command.  
+ 2. System searches for clients whose information matches the keywords in the query. 
+ 3. System displays all clients whose information matches the keywords in the query. 
+ 4. Agent views the list of clients displayed by the system.<br>
+   Use case ends.  
+
+ **Extensions:**  
+ - 2a. No matches found.  
+   - 2a1. System displays: "0 persons listed!".  
+   Use case ends.  
 
 ---
 
-### UC08 Use case: `stats`
+#### UC05 case: `help`
 
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues stats command.  
-> 2. System analyses customer data.  
-> 3. System displays summary tables aggregated by declared feature names and tags.  
-> 4. Agent reviews performance insights.  
->    - Use case ends.  
->
-> **Extensions:**  
-> - 2a. No customers in AddressBook.  
->   - 2a1. No declared Features and Tags
->     - System displays: “Number of customers in AddressBook: 0”  
->     - Use case ends. 
->   - 2a2. There are declared Features and Tags
->     - System displays: “Number of customers in AddressBook: 0” and Tables for each Feature and relevant tags, but there will be no meaningful data.
->     - Use case ends.
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent  
+
+ **MSS:**  
+ 1. Agent issues help command.  
+ 2. System shows a popup containing link to user guide and introduces the `man` command.
+ 3. Agent reads and continues working.  
+   Use case ends.  
 
 ---
 
-### UC09 Use case: `list`
+#### UC06 Use case: `biz`
+
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent
+
+ **MSS:**
+ 1. Agent issues biz command with a feature name and tags for those features.
+ 2. System displays confirmation that the feature and its tags have been added.
+ 3. Agent reads and continues working.<br> 
+   Use case ends.
+
+ **Extensions:**
+ - 2a. Agent has typed the feature name or its tags wrongly. 
+   - 2a1. Agent runs `undo` command as outlined in the `undo` use case.<br> 
+   Use case ends.
+
+---
+
+#### UC07 Use case: `unbiz`
+
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent
+
+ **MSS:**
+ 1. Agent issues unbiz command with the feature name of an existing feature in Statistics.
+ 2. System displays confirmation that the feature and its tags have been removed from stats.
+ 3. Agent reads and continues working.<br> 
+   Use case ends.
+
+ **Extensions:**
+ - 1a. Agent enters feature name that does not exist in Statistics.
+   - 1a1. System displays: "Missing feature(s) in Statistics: [FEATURE ENTERED BY USER]"<br>
+   Use case ends.
+<br><br>
+ - 2a. Agent has undeclared the wrong feature name.
+   - 2a1. Agent runs `undo` command as outlined in the`undo`use case.<br>
+   Use case ends.
+
+---
+
+#### UC08 Use case: `stats`
+
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent  
+
+ **MSS:**  
+ 1. Agent issues stats command.  
+ 2. System analyses customer data.  
+ 3. System displays summary tables aggregated by declared feature names and tags.  
+ 4. Agent reviews performance insights.  
+   Use case ends.  
+
+ **Extensions:**  
+ - 2a. No customers in AddressBook.  
+   - 2a1. No declared Features and Tags.
+     - System displays: “Number of customers in AddressBook: 0”  
+     Use case ends. 
+   - 2a2. There are declared Features and Tags.
+     - System displays: “Number of customers in AddressBook: 0” and Tables for each Feature and relevant tags, but there will be no meaningful data.<br>
+     Use case ends.
+
+---
+
+#### UC09 Use case: `list`
  
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent  
->
-> **MSS:**  
-> 1. Agent issues list command.  
-> 2. System displays all the persons in the Insurance Management App.  
->    - Use case ends.  
+**System:** Insurance Management App  
+**Actor:** Insurance Agent  
+
+**MSS:**  
+1. Agent issues list command.  
+2. System displays all the persons in the Insurance Management App.  
+   Use case ends.  
  
 ---
 
-### UC10 Use case: `clear`
+#### UC10 Use case: `clear`
 
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent
->
-> **MSS:**
-> 1. Agent first started the application and there are dummy values initialized or agent wants to clean up all users currently stored.
-> 2. Agent remove all entries by issuing clear command.
->    - Use case ends.  
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent
+
+ **MSS:**
+ 1. Agent first started the application and there are dummy values initialized or agent wants to clean up all users currently stored.
+ 2. Agent remove all entries by issuing clear command.<br>
+   Use case ends.  
 
 
 ---
 
-### UC11 Use case: `undo`
-> **System:** Insurance Management App
-> **Actor:** Insurance Agent
->   
-> **MSS:**
-> 1. Agent accidentally ran an undoable command eg. deleted all entries by issuing clear command.
-> 2. Agent issues undo command.
-> 3. System restores the previous state before the last mutable command.
->    - Use case ends.  
-> 
-> *Extensions:*
-> - 2a. No commands to undo.
->   - 2a1. System displays: "No commands to undo."
->   - Use case ends.
+#### UC11 Use case: `undo`
+
+ **System:** Insurance Management App<br>
+ **Actor:** Insurance Agent
+
+ **MSS:**
+ 1. Agent accidentally ran an undoable command eg. deleted all entries by issuing clear command.
+ 2. Agent issues undo command.
+ 3. System restores the previous state before the last mutable command.<br>
+   Use case ends.  
+ 
+ **Extensions:**
+ - 2a. No commands to undo.
+   - 2a1. System displays: "No commands to undo."<br>
+   Use case ends.
 
 --- 
 
-### UC12 Use case: `redo`
-> **System:** Insurance Management App
-> **Actor:** Insurance Agent
-> 
-> **MSS:**
-> 1. Agent had undone a previous mutable command, but he changes his mind.
-> 2. Agent issues redo command.
-> 3. System reapplies the last undone mutable command.
->    - Use case ends.  
-> 
-> *Extensions:*
-> - 2a. No commands to redo.
->   - 2a1. System displays: "No commands to redo."
->   - Use case ends.
+#### UC12 Use case: `redo`
 
-
----
-
-### UC13 Use case: Navigating the command history
+ **System:** Insurance Management App<br>
+ **Actor:** Insurance Agent
  
-> **System:** Insurance Management App  
-> **Actor:** Insurance Agent
->
-> **MSS:**
-> 1. Agent wants to navigate through previously entered commands.
-> 2. Agent press up arrow key
-> 3. Command box displays the previous command.
-> 4. Agent wants to go back to more recent commands.
-> 5. Agent press down arrow key
-> 6. Command box displays the next command.
->    - Use case ends.  
+ **MSS:**
+ 1. Agent had undone a previous mutable command, but he changes his mind.
+ 2. Agent issues redo command.
+ 3. System reapplies the last undone mutable command.<br>
+   Use case ends.  
+
+ **Extensions:**
+ - 2a. No commands to redo.
+   - 2a1. System displays: "No commands to redo."<br>
+   Use case ends.
+
 
 ---
 
-### UC14 Use case: Creating and saving custom folders
+#### UC13 Use case: Navigating the command history
+ 
+ **System:** Insurance Management App  
+ **Actor:** Insurance Agent
 
-> **System:** Insurance Management App
-> **Actor:** Insurance Agent
->
-> **MSS:**
-> 1. Agent wants to create a custom folder for all entries with tags friends and travel.
-> 2. Agent issues list command with the two tags.
-> 3. Agent adds 's/' at the end of the command to create a custom folder.
-> 4. Folder 'friends & travel' is created.
-> 5. Agent can click into newly created folder for easy sorting and access.
->       - Use case ends
+ **MSS:**
+ 1. Agent wants to navigate through previously entered commands.
+ 2. Agent press up arrow key
+ 3. Command box displays the previous command.
+ 4. Agent wants to go back to more recent commands.
+ 5. Agent press down arrow key
+ 6. Command box displays the next command.<br>
+   Use case ends.  
 
 ---
 
-### UC15 Use case: Deleting folders
+#### UC14 Use case: Creating and saving custom folders
 
-> **System:** Insurance Management App
-> **Actor:** Insurance Agent
->
-> **MSS:**
-> 1. Agent issues wants to delete folder called 'events'.
-> 2. Agent writes "list t/events d/" command
-> 3. Folder with respective tag(s) is deleted.
->    - Use case ends
+ **System:** Insurance Management App<br>
+ **Actor:** Insurance Agent
+
+ **MSS:**
+ 1. Agent wants to create a custom folder for all entries with tags friends and travel.
+ 2. Agent issues list command with the two tags.
+ 3. Agent adds 's/' at the end of the command to create a custom folder.
+ 4. Folder 'friends & travel' is created.
+ 5. Agent can click into newly created folder for easy sorting and access.<br>
+   Use case ends.
+
+---
+
+#### UC15 Use case: Deleting folders
+
+ **System:** Insurance Management App<br>
+ **Actor:** Insurance Agent
+
+ **MSS:**
+ 1. Agent issues wants to delete folder called 'events'.
+ 2. Agent writes "list t/events d/" command
+ 3. Folder with respective tag(s) is deleted.<br>
+   Use case ends.
 
 ### Non-Functional Requirements
 
@@ -630,26 +628,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 9. The UI should be designed to minimize cognitive load, ensuring that users can quickly identify the features they need without excessive searching or confusion.
 10. The app should be packaged into a single file.
 
-*{More to be added}*
-
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: Contact Liangce @Habutiii if you have any queries
-
-* AddressBook: The core system being developed is a lightweight contact management application for independent ethical insurance agents.
-* Actor: A user (typically Insurance Agent) or external entity that interacts with the system.
-* Analytical Insurance Agent: A type of user who wants to analyse client demographics, insurance plans and overall portfolio statistics.
-* Client: An individual whose personal and insurance details are stored and managed in the AddressBook (AB3).
-* Command Guide: A reference page within the application that shows all available commands and their formats.
-* Contact Detail: Any piece of information related to a client, such as name, phone number, email or insurance details.
-* Duplicate Client: An entry in the AddressBook that repeats an existing client’s details.
-* GUI (Graphical User Interface): The visual interface of the application, allowing users to interact with the AddressBook via windows, buttons and other graphical elements.
-* Human-editable format (JSON): A structured text format (JavaScript Object Notation) used to store client data, which can be read and edited directly by users.
-* Insurance Premium: The regular payment made by a client for their insurance coverage.
-* Non-Functional Requirement (NFR): A requirement that specifies system quality or constraints (e.g., performance, usability, storage format), rather than a specific feature.
-* Tag: A label attached to a client (e.g., “priority”, “prospect”, “policyholder”) that helps agents organize and filter their portfolio.
-* Undo: A feature allowing the user to revert a mistaken action (e.g., wrong edit or deletion).
+* **AddressBook**: The core system being developed is a lightweight contact management application for independent ethical insurance agents.
+* **Actor**: A user (typically Insurance Agent) or external entity that interacts with the system.
+* **Analytical Insurance Agent**: A type of user who wants to analyse client demographics, insurance plans and overall portfolio statistics.
+* **Client**: An individual whose personal and insurance details are stored and managed in Ethical Insurance.
+* **Command Guide**: A reference page within the application that shows all available commands and their formats.
+* **Contact Detail**: Any piece of information related to a client, such as name, phone number, email or insurance details.
+* **Duplicate Client**: An entry in Ethical Insurance that repeats an existing client’s details.
+* **GUI (Graphical User Interface)**: The visual interface of the application, allowing users to interact with Ethical Insurance via windows, buttons and other graphical elements.
+* **Human-editable format (JSON)**: A structured text format (JavaScript Object Notation) used to store client data, which can be read and edited directly by users.
+* **Insurance Premium**: The regular payment made by a client for their insurance coverage.
+* **Non-Functional Requirement (NFR)**: A requirement that specifies system quality or constraints (e.g., performance, usability, storage format), rather than a specific feature.
+* **Tag**: A label attached to a client (e.g., “priority”, “prospect”, “policyholder”) that helps agents organize and filter their portfolio.
+* **Undo**: A feature allowing the user to revert a mistaken action (e.g., wrong edit or deletion).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -677,8 +672,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -693,8 +686,6 @@ testers are expected to do more *exploratory* testing.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
 
 ### Saving data
 
