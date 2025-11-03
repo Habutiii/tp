@@ -60,8 +60,13 @@ public class PersonCard extends UiPart<Region> {
             .peek(r->r.l().setWrapText(true)).peek(r->r.l().maxWidthProperty().bind(tags.widthProperty().subtract(5)))
             .peek(r->r.t().setFont(r.l().getFont())).peek(r->r.l().prefWidthProperty().bind(min(r.t().getLayoutBounds()
             .getWidth() + 5, tags.widthProperty().subtract(10)))).forEach(r->tags.getChildren().add(r.l()));
-        name.maxWidthProperty().bind(cardPane.widthProperty().subtract(id.widthProperty()).subtract(40));
-        address.maxWidthProperty().bind(cardPane.widthProperty().subtract(60));
-        tags.maxWidthProperty().bind(cardPane.widthProperty().subtract(30));
+        cardPane.widthProperty().addListener((obs, oldW, newW) -> {
+            if (newW.doubleValue() > 0) {
+                javafx.application.Platform.runLater(() -> {
+                    name.setMaxWidth(cardPane.getWidth() - id.getWidth() - 40);
+                    address.setMaxWidth(cardPane.getWidth() - 60);
+                    tags.setMaxWidth(cardPane.getWidth() - 30); });
+            }
+        });
     }
 }
