@@ -144,9 +144,9 @@ The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
-* Your saved folders in the sidebar (created with s/) are now kept between AB3 sessions.  Close AB3, reopen it later and those folders will still be there.
+* Your saved folders in the sidebar (created with s/) are now kept between Ethical Insurance sessions.  Close Ethical Insurance, reopen it later and those folders will still be there.
 * If you delete a saved folder (with d/), it’s removed from the sidebar and won’t come back on restart.
-* Auto folders (the ones the app shows automatically when AB3 is launched are based on tags it finds in addressbook) may disappear when they have no matching people that’s normal cleanup.
+* Auto folders (the ones the app shows automatically when Ethical Insurance is launched are based on tags it finds in address book) may disappear when they have no matching people that’s normal cleanup.
   Saved folders don’t vanish on their own, they stay until you delete them.
 * Folder names are standardized: 
   * Multi-tag folders are shown in a tidy, consistent format (e.g. colleagues & friends) regardless of the order you typed them. 
@@ -641,7 +641,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * AddressBook: The core system being developed is a lightweight contact management application for independent ethical insurance agents.
 * Actor: A user (typically Insurance Agent) or external entity that interacts with the system.
 * Analytical Insurance Agent: A type of user who wants to analyse client demographics, insurance plans and overall portfolio statistics.
-* Client: An individual whose personal and insurance details are stored and managed in the AddressBook (AB3).
+* Client: An individual whose personal and insurance details are stored and managed in the Ethical Insurance.
 * Command Guide: A reference page within the application that shows all available commands and their formats.
 * Contact Detail: Any piece of information related to a client, such as name, phone number, email or insurance details.
 * Duplicate Client: An entry in the AddressBook that repeats an existing client’s details.
