@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Ethical Insurance" minWidth="1300" minHeight="600">
+         title="Ethical Insurance" minWidth="800" minHeight="450">
   <icons>
     <Image url="@/images/icon.png" />
   </icons>
@@ -40,14 +40,14 @@
               <items>
                   <!-- Left area for tag display -->
                   <StackPane VBox.vgrow="NEVER" fx:id="tagDisplayPlaceholder" styleClass="pane-with-border"
-                             minHeight="150" prefHeight="150" minWidth="220" prefWidth="220">
+                             minHeight="150" prefHeight="150" minWidth="190" prefWidth="200">
                       <padding>
                           <Insets top="5" right="10" bottom="5" left="10" />
                       </padding>
                   </StackPane>
 
 <!--                  Center area split into command box on top and person list below-->
-                  <VBox minWidth="600" prefWidth="600">
+                  <VBox minWidth="400" prefWidth="500">
                     <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" minHeight="100" styleClass="pane-with-border">
                       <padding>
                         <Insets top="5" right="10" bottom="5" left="10" />
@@ -64,7 +64,7 @@
 
 <!--                  Right area for result display-->
                   <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                             minHeight="150" prefHeight="150" minWidth="400" prefWidth="400">
+                             minHeight="150" prefHeight="150" minWidth="190" prefWidth="400">
                       <padding>
                           <Insets top="5" right="10" bottom="5" left="10" />
                       </padding>
