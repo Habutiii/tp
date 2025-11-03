@@ -338,8 +338,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Insurance Agent                   | build schedule for all my meetings                                         | keep track of my schedule in a single application                       |
 | `*`      | Insurance Agent                   | auto-calculate insurance premium per term                                  | quickly know how much the client has/will be paying over the term years |
 
-*{More to be added}*
-
 ### Use cases
 
 (For all use cases below, the **System** is the `Insurance Management App` and the **Actor** is the `user`, unless specified otherwise)
@@ -630,8 +628,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 8. The help page for the app's usage parameters should be easily accessible.
 9. The UI should be designed to minimize cognitive load, ensuring that users can quickly identify the features they need without excessive searching or confusion.
 10. The app should be packaged into a single file.
-
-*{More to be added}*
 
 ### Glossary
 
