@@ -369,13 +369,17 @@ public class ModelManager implements Model {
             int count = (int) people.stream()
                     .filter(p -> tagFolder.getQueryTags().stream()
                             .allMatch(qt -> p.getTags().stream()
-                                    .anyMatch(t -> t.tagName.equalsIgnoreCase(qt))))
+                                    .anyMatch(t -> t.tagName.equals(qt))))
                     .count();
             tagFolder.setCount(count);
         }
 
         // Remove folders with zero count
-        activeFolders.removeIf(folder -> !folder.isUserCreated() && folder.getCount() == 0);
+        boolean removedAny = activeFolders.removeIf(f -> !f.isUserCreated() && f.getCount() == 0);
+
+        if (removedAny) {
+            sortFolders();
+        }
     }
 
     @Override
@@ -458,14 +462,17 @@ public class ModelManager implements Model {
         if (tags == null) {
             return;
         }
+        boolean added = false;
         for (seedu.address.model.tag.Tag t : tags) {
-            String key = t.tagName.toLowerCase();
-            if (!folderIndex.containsKey(key)) {
-                activeFolders.add(new TagFolder(t.tagName, 0));
-                folderIndex.put(key, activeFolders.size() - 1);
+            String display = t.tagName;
+            if (!hasTagFolder(display)) {
+                activeFolders.add(new TagFolder(display, 0));
+                added = true;
             }
         }
-        sortFolders();
+        if (added) {
+            sortFolders();
+        }
     }
 
     private void sortFolders() {
