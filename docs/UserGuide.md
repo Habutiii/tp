@@ -108,32 +108,52 @@ Format: `help`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Lists all entries in the address book.
 
 Format: `list`
 
 **Filtered list by tag : `list t/<your tag here>`**
 
-Sorts and lists only entries with the respective tag(s) entered.
+Filter by the respective tag(s) entered and displays a list of the filtered entries.
 
 Format: `list t/<your tag here>` and for multiple tags `list t/<your tag here> t/<your tag here> ...`
+Example: 
+- `list t/friends`
+- `list t/travel t/high-cost`
+- `list t/car t/medical t/expensive`
+
 
 **Create folder by tag : `list t/<your tag here> s/`**
 
-Create and save custom folder. 
+Saves the current tag selection as a sidebar folder.
 
 Format: `list t/<your tag here> s/` and for multiple tags `list t/<your tag here> t/<your tag here> ... s/`
-Output will be a folder with the names of the tags you have selected. All tags have been normalized to upper case.
+- s/ is a flag, not a value. Anything typed after the first s/ is ignored.
+- The folder name is the selected tags sorted alphabetically and joined with & (e.g. t/friends t/colleagues s/ → colleagues & friends).
+- You can type s/ more than once, but extra s/ flags are ignored.
+- Tag order in the command doesn’t matter (the saved name is always alphabetical).
+- Tags are now normalized to all uppercase
+
 Example:
-- Input: list t/friends t/colleagues s/
-- Output: Folder FRIENDS & COLLEAGUES created
+- Input: `list t/friends t/colleagues s/`
+- Output: Folder `COLLEAGUES & FRIENDS` created
+- `list t/friends t/colleagues s/ notes here` → same result (text after s/ ignored)
 
 **Delete folder by tag : `list t/<your tag here> d/`**
 
-Delete selected folder. Order does not matter for the deleting of folder, as long as
-the respective tags are that folder will be deleted.
+Deletes the saved folder that exactly matches the given tag set.
 
-Format: `list t/<your tag here> d/` and for multiple tags `list t/<your tag here> t/<your tag here> ... d/`
+Format: `list t/<your tag here> d/` and for multiple tags based folders  `list t/<your tag here> t/<your tag here> ... d/`
+- d/ is a flag. Anything typed after the first d/ is ignored. 
+- Tag order doesn’t matter; the folder is matched by its tag set, not the order (e.g. t/family t/friends d/ deletes family & friends). 
+- Only one folder is deleted per command. Adding more tags just helps specify the one folder you mean. 
+- You can type d/ more than once, but extra d/ flags are ignored.
+
+Example
+- Input: `list t/cars d/`
+- Output: Deleted folder `"CARS"`
+- Input: `list t/cars t/medical t/age d/`
+- Output: Deleted folder `"AGE & CARS & MEDICAL"`
 
 ---
 
@@ -233,11 +253,14 @@ The phone number should only contain digits.
 | 42 Wallaby Way               | " Blk 456, Den Road, #01-355" |
 | 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
 
-**Tag(s):**
+
+#### **Tag**
 - Tags are optional.
 - Each person can have **up to 15 tags**.
 - Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
-- Tags are case-insensitive. Must not exceed 40 characters.
+- Please note for the '-', starting and trailing '-' will be rejected.
+- Tags are **case-insensitive**. 
+- Must not exceed 40 characters.
 
 **Examples**
 
@@ -246,12 +269,19 @@ The phone number should only contain digits.
 | friend        | friend!       |
 | family-member | family_member |
 | project2025   | Project@2025  |
+| a-was-here    | -abc or abc-  |
+| HELLOWORLD    | HELLOW WORLD  |
+| TESTING       | TEST+=1NG     |
 
 ---
 
 ### Editing a person : `edit`
 
-Updates an existing person’s details in the address book.
+Edits an existing person in the address book.
+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] {[t/TAG]… | [at/TAG]… | [dt/TAG]... }​`
+
+> 💡 `INDEX` refers to the number shown in the **current list view**, not a fixed ID.
 
 **Format:**  
 `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [{t/ | at/ | dt/}TAG]...`
@@ -370,6 +400,12 @@ Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
 Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statistics-stats)* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
+
+**Parameter restrictions:**
+***All parameters contains only printable ASCII characters***
+*** Please note that Biz tags are different from the entry Tags above.
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive. 
+ _Example: friend, VIP, family-member, project2025_
 
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`

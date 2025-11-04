@@ -50,13 +50,13 @@ public class ListCommand extends Command {
             "  list t/friends /colleagues s/",
             "  list t/friends /colleagues d/",
             "",
-            "Please note the output of save folder function will be the combination of you selected tags",
+            "Please note the output of save folder function will be the alphabetical combination of your selected tags",
             " Example: ",
             " Input: list t/friends t/travel s/",
-            " Output: Folder 'friends & travel' created",
+            " Output: Folder 'FRIENDS & TRAVEL' created",
             "As for the delete folder function, respective folder will be deleted as long as tags are selected",
-            " Input: list t/friends t/travel d/ OR ;ist t/travel t/friends d/",
-            " Output: Folder 'friends & travel' has been deleted",
+            " Input: list t/friends t/travel d/ OR list t/travel t/friends d/",
+            " Output: Deleted folder 'FRIENDS & TRAVEL' \n",
             "SEE MORE",
             "  https://ay2526s1-cs2103-f13-2.github.io/tp/UserGuide.html#listing-all-persons--list"
     );
