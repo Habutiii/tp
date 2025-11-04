@@ -8,7 +8,7 @@ title: User Guide
 
 Ethical Insurance is a lightweight desktop contact management tool, a modernised version of the original AddressBook application, specifically tailored for independent insurance agents managing 0 – 1000 customer entries.
 
-Throughout this User Guide, any mention of **“Address Book”** refers to the **Ethical Insurance** application itself. Both terms may be used interchangeably.
+Throughout this User Guide, any mention of **“address book”** refers to the address book component that **Ethical Insurance** application is managing.
 
 </div>
 
@@ -19,7 +19,7 @@ Throughout this User Guide, any mention of **“Address Book”** refers to the 
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed on your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103-F13-2/tp/releases).
@@ -27,7 +27,7 @@ Throughout this User Guide, any mention of **“Address Book”** refers to the 
 1. Copy the file to the folder you want to use as the _home folder_ for your Ethical Insurance.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar Ethical-Insurance.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -35,7 +35,7 @@ Throughout this User Guide, any mention of **“Address Book”** refers to the 
 
     * `list` : Lists all contacts.
 
-    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the address book.
 
     * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -65,15 +65,14 @@ The following keybinds are available in Ethical Insurance
 <div markdown="span" class="alert alert-warning">
 :exclamation: **Caution:**
 
-All commands and parameters are case sensitive. For example, `add` is a valid command, whereas `Add` or `ADD` are not recognized as valid commands.
-
+All commands and parameters are case-sensitive. For example, `add` is a valid command, whereas `Add` or `ADD` are not recognized as valid commands.
 </div>
 
 | Rule                               | Description                                                                                                                                                                                                                                                             | Example                                                                           |
 |------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
 | **Parameters in `UPPER_CASE`**     | Must be supplied by the user.                                                                                                                                                                                                                                           | `add n/NAME` → `add n/John Doe`                                                   |
 | **Items in square brackets `[ ]`** | Are optional.                                                                                                                                                                                                                                                           | `n/NAME [t/TAG]` → `n/John Doe t/friend` or `n/John Doe`                          |
-| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                                                                                                                                                                                                        | `[t/TAG]…` → none, `t/friend`, `t/friend t/family` (up to **15 tags**)            |
+| **Items followed by `…`**          | Can be repeated multiple times (including zero).                                                                                                                                                                                                                        | `[t/TAG]…` → none, `t/friend`, `t/friend t/family`                                |
 | **Parameter order**                | Parameters can appear in any order.                                                                                                                                                                                                                                     | `n/NAME p/PHONE_NUMBER` = `p/PHONE_NUMBER n/NAME`                                 |
 | **Extra parameters**               | Ignored for commands that take none (`help`, `exit`, `clear`, `undo`, `redo`).                                                                                                                                                                                          | `help 123` → interpreted as `help`, `list t/a s/abcd` is treated as `list t/a s/` |
 | **Leading/Trailing spaces**        | Leading and trailing spaces are ignored.                                                                                                                                                                                                                                | "   add n/ John ..." → "add n/John ..."                                           |
@@ -143,7 +142,7 @@ Example:
 
 Deletes the saved folder that exactly matches the given tag set.
 
-Format: `list t/<your tag here> d/` and for multiple tags based folders  `list t/<your tag here> t/<your tag here> ... d/`
+Format: `list t/<your tag here> d/` and for folders based multiple tags  `list t/<your tag here> t/<your tag here> ... d/`
 - d/ is a flag. Anything typed after the first d/ is ignored. 
 - Tag order doesn’t matter; the folder is matched by its tag set, not the order (e.g. t/family t/friends d/ deletes family & friends). 
 - Only one folder is deleted per command. Adding more tags just helps specify the one folder you mean. 
@@ -160,7 +159,7 @@ Example
 ### Adding a person: `add`
 >All parameters must contain only printable ASCII characters.
 
-Adds a person to the address book.
+Adds a person to the address book of the application.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
 
@@ -184,10 +183,10 @@ Another person with the same <code>NAME</code> (case-insensitive) and <code>PHON
 
 **Name:**
 
-- May only contain English letters (A–Z, a–z) and;
+- May only contain English letters (A–Z, a–z) and
 - Can contain **letters**, **spaces**, and the following special characters only:  
   `(space) , ( ) / . @ - '`
-- A name should also not exceed 100 characters.
+- A name must not exceed 100 characters.
 - Cannot contain **numbers** inside the name or any other special symbols.
 
 **Examples**
@@ -203,7 +202,7 @@ Another person with the same <code>NAME</code> (case-insensitive) and <code>PHON
 
 **Phone:**
 - Must be **3–15 digits** (to account for international numbers).
-- Only digits (0–9) are allowed — **no spaces, letters, or symbols eg.`+`.**
+- Only digits (0–9) are allowed — **no spaces, letters, or symbols eg., `+`.**
 
 <div markdown="block" class="alert alert-info">
 **:information_source: Notes about the restrictions:**
@@ -258,7 +257,7 @@ The phone number should only contain digits.
 - Tags are optional.
 - Each person can have **up to 15 tags**.
 - Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
-- Please note for the '-', starting and trailing '-' will be rejected.
+- Tags cannot begin or end with a dash (`-`).
 - Tags are **case-insensitive**. 
 - Must not exceed 40 characters.
 
@@ -298,7 +297,7 @@ If you used <code>find</code> or <code>list</code> before, <code>edit 1</code> e
   The index **must be a positive integer** (1, 2, 3, …).
 * At least one of the optional fields must be provided (i.e. `n/`, `p/`, `e/`, `a/`, or `t/`).
 * Only the specified fields will be updated; all other details remain unchanged.
-* When editing tags (`t/`, `at/`, `dt/`):
+* When editing tags (`t/`, `at/`, `dt/`)
   * `at/` adds new tags to existing ones. 
   * `dt/` removes specified tags from existing ones.
   * `t/` replaces all existing tags with the new set of tags provided.
@@ -402,8 +401,8 @@ Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statisti
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
 
 **Parameter restrictions:**
-***All parameters contains only printable ASCII characters***
-*** Please note that Biz tags are different from the entry Tags above.
+***All parameters must contain only printable ASCII characters***
+- **Please note that Biz tags are different from the entry Tags above.**
 - **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive. 
  _Example: friend, VIP, family-member, project2025_
 
@@ -434,13 +433,13 @@ _Example: friend, VIP, family-member, project2025_
 
 ### Viewing Summary Statistics: `stats`
 
-Shows Summary Statistics on Customers in the address book.
+Shows Summary Statistics on Customers in Ethical Insurance.
 
-Statistics will be summarized according to Features and Tags declared by User using the `biz` command. This ensures that statistics concerning specific features of customers are aggregated for the user - user may want to reserve some tags for statistics while others for pure organisation of the people in the address book.
+Statistics will be summarized according to Features and Tags declared by User using the `biz` command. This ensures that statistics concerning specific features of customers are aggregated for the user - user may want to reserve some tags for statistics while others for pure organisation of the people in the address book of Ethical Insurance.
 
 If there are ties when deciding the Max and Min tags in the summary tables, all the tags associated with the tie will be displayed, according to whether they tied in Max Tag and/or Min Tag.
 
-If there are no declared features and tags, `stats` will only show the total number of customers in the Address Book.
+If there are no declared features and tags, `stats` will only show the total number of customers in the address book.
 
 Refer to **Disclaimer** in [`biz`](#declaring-features-and-tags-for-statistics-biz) command for information on feature-tag persistency.
 
