@@ -55,7 +55,7 @@ The following keybinds are available in Ethical Insurance
 
 ![Keybinds](images/Keybinds.png)
 
-- Up Arrow (↑): Goes back to previous command in history.
+- Up Arrow (↑): Goes back to previous success command in history for current runtime. The history is cleared upon exiting the app.
 - Down Arrow (↓): Goes forward to next command in history or empties command box when reach the end of history.
 
 --------------------------------------------------------------------------------------------------------------------
