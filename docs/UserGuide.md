@@ -191,14 +191,14 @@ Another person with the same <code>NAME</code> (case-insensitive) and <code>PHON
 
 **Examples**
 
-| Valid       | Invalid      |
-|-------------|--------------|
-| Jean-Luc    | John123      |
-| Tan         | Strauß       |
-| Mei Ling    | José         |
-| O'Connor    | John*        |
-| Mary (Ann)  | John_        |
-| Alex @ Home | _xXdarrenXx_ |
+| Valid         | Invalid        |
+|---------------|----------------|
+| `Jean-Luc`    | `John123`      |
+| `Tan`         | `Strauß`       |
+| `Mei Ling`    | `José`         |
+| `O'Connor`    | `John*`        |
+| `Mary (Ann)`  | `John_`        |
+| `Alex @ Home` | `_xXdarrenXx_` |
 
 **Phone:**
 - Must be **3–15 digits** (to account for international numbers).
@@ -218,12 +218,12 @@ The phone number should only contain digits.
 
 **Examples**
 
-| Valid           | Invalid      |
-|-----------------|--------------|
-| 94567802        | +65 98765432 |
-| 82684533        | phone123     |
-| 66265555        | 9011p041     |
-| 123456789012345 | 9312 1534    |
+| Valid             | Invalid        |
+|-------------------|----------------|
+| `94567802`        | `+65 98765432` |
+| `82684533`        | `phone123`     |
+| `66265555`        | `9011p041`     |
+| `123456789012345` | `9312 1534`    |
 
 **Email:**
 - Must be a **valid email address**, with:
@@ -233,12 +233,12 @@ The phone number should only contain digits.
 
 **Examples**
 
-| Valid                  | Invalid         |
-|------------------------|-----------------|
-| johndoe@example.com    | johndoe@        |
-| alice.smith-99@mail.co | alice@@mail.com |
-| user+test@abc-def.com  | bob@mail.       |
-| user@mail              | user@a.a        |
+| Valid                    | Invalid           |
+|--------------------------|-------------------|
+| `johndoe@example.com`    | `johndoe@`        |
+| `alice.smith-99@mail.co` | `alice@@mail.com` |
+| `user+test@abc-def.com`  | `bob@mail.`       |
+| `user@mail`              | `user@a.a`        |
 
 **Address:**
 - Must **not be blank**.
@@ -246,11 +246,11 @@ The phone number should only contain digits.
 
 **Examples**
 
-| Valid                        | Invalid                       |
-|------------------------------|-------------------------------|
-| 123 Main St, Block 5, #01-01 | " "                           |
-| 42 Wallaby Way               | " Blk 456, Den Road, #01-355" |
-| 7th Avenue, Apt 3            | "Blk 456, Den Road, #01-355 " |
+| Valid                          | Invalid                        |
+|--------------------------------|--------------------------------|
+| `123 Main St, Block 5, #01-01` | ` `                            |
+| `42 Wallaby Way`               | `ßlk 456, Den Road, #01-355`   |
+| `7th Avenue, Apt 3`            | `Blk 456, 好 Den Road, #01-355` |
 
 
 #### **Tag**
@@ -263,14 +263,14 @@ The phone number should only contain digits.
 
 **Examples**
 
-| Valid         | Invalid       |
-|---------------|---------------|
-| friend        | friend!       |
-| family-member | family_member |
-| project2025   | Project@2025  |
-| a-was-here    | -abc or abc-  |
-| HELLOWORLD    | HELLOW WORLD  |
-| TESTING       | TEST+=1NG     |
+| Valid           | Invalid         |
+|-----------------|-----------------|
+| `friend`        | `friend!`       |
+| `family-member` | `family_member` |
+| `project2025`   | `Project@2025`  |
+| `a-was-here`    | `-abc or abc-`  |
+| `HELLOWORLD`    | `HELLOW WORLD`  |
+| `TESTING`       | `TEST+=1NG`     |
 
 ---
 
