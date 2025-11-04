@@ -24,7 +24,7 @@ public final class TagFolder implements Comparable<TagFolder> {
 
     /** Full actor (used for user-created folders). */
     public TagFolder(String name, int count, List<String> queryTags, boolean userCreated) {
-        this.name = name;
+        this.name = name.toUpperCase();
         this.count.set(count);
         this.queryTags = List.copyOf(queryTags);
         this.userCreated = userCreated;
