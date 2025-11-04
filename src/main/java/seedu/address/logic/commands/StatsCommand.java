@@ -108,14 +108,14 @@ public class StatsCommand extends Command {
             catCount++;
 
             if (total == catMax) {
-                catMaxTag.append(catMaxTag.isEmpty() ? tag : " & " + tag);
+                catMaxTag.append(catMaxTag.isEmpty() ? tag : ", " + tag);
             } else if (total > catMax) {
                 catMax = total;
                 catMaxTag = new StringBuilder(tag.toString());
             }
 
             if (total == catMin) {
-                catMinTag.append(catMinTag.isEmpty() ? tag : " & " + tag);
+                catMinTag.append(catMinTag.isEmpty() ? tag : ", " + tag);
             } else if (total < catMin) {
                 catMin = total;
                 catMinTag = new StringBuilder(tag.toString());
@@ -127,11 +127,14 @@ public class StatsCommand extends Command {
 
         float mean = catCount > 0 ? (float) catTotal / catCount : -1;
 
+        String perTag = " per tag)";
         String catSummary = String.join("\n",
                 "\nTotal for Feature: " + catTotal,
                 "Average: " + (mean == -1 ? "N/A" : String.format("%.2f", mean)),
-                "Max Tag: " + catMaxTag + " (" + catMax + String.format(" %s)", catMax != 1 ? "people" : "person"),
-                "Min Tag: " + catMinTag + " (" + catMin + String.format(" %s)", catMin != 1 ? "people" : "person")
+                "Max Tag: " + catMaxTag + " (" + catMax + String.format(" %s", catMax != 1 ? "people" : "person")
+                        + perTag,
+                "Min Tag: " + catMinTag + " (" + catMin + String.format(" %s", catMin != 1 ? "people" : "person")
+                        + perTag
         );
 
         results.add(String.join("\n", catSummary));
