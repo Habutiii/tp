@@ -211,7 +211,6 @@ If you need to include text like `p/` or `e/` inside a name or address, consider
 | `Jean-Luc`    | `John123`      |
 | `Tan`         | `Strauß`       |
 | `Mei Ling`    | `José`         |
-| `O'Connor`    | `John*`        |
 | `Mary (Ann)`  | `John_`        |
 | `Alex @ Home` | `_xXdarrenXx_` |
 
@@ -685,6 +684,7 @@ It is cosmetic and does not impact stored data or usability.
 | **Find**                        | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                            |
 | **List**                        | `list`                                                                                                                                                                |
 | **List by tag**                 | `list t/<your tag here>` <br> e.g., `list t/friends`                                                                                                                  |
+| **Create and save folder**      | `list t/<your tag here> s/` <br> e.g., `list t/friends s/`                                                                                                            |
 | **Create and save folder**      | `list t/<your tag here> s/` <br> e.g., `list t/friends s/`                                                                                                            |
 | **Delete folder**               | `list t/<your tag here> d/` <br> e.g., `list t/friends d/`                                                                                                            |
 | **Help**                        | `help`                                                                                                                                                                |
