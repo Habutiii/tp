@@ -253,7 +253,7 @@ The phone number should only contain digits.
 | `7th Avenue, Apt 3`            | `Blk 456, 好 Den Road, #01-355` |
 
 
-#### **Tag**
+**Tag**
 - Tags are optional.
 - Each person can have **up to 15 tags**.
 - Tags can only contain **letters**, **numbers**, and **dashes (`-`)**.
@@ -397,11 +397,11 @@ Format: `biz f/<your feature here> t/<tag 1> t/<tag 2>`
 
 * Add multiple tags for aggregation of a Feature.
 
-Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statistics-stats)* `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
+Examples: [See result in 'Viewing Summary Statistics'](#viewing-summary-statistics-stats) `biz f/Plan t/A t/B t/C` declares the Feature "Plan" and the Categories "A", "B" and "C" for statistics.
 * `biz f/Gender t/Male t/Female t/Other` declares this Feature and its Categories.
 
 **Parameter restrictions:**
-***All parameters must contain only printable ASCII characters***
+**All parameters must contain only printable ASCII characters**
 - **Please note that Biz tags are different from the entry Tags above.**
 - **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive. 
  _Example: friend, VIP, family-member, project2025_
