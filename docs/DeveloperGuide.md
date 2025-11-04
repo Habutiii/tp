@@ -127,7 +127,7 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, it should make sense on its own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the address book component, which `Person` references. This allows address book component to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
@@ -506,12 +506,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
    Use case ends.  
 
  **Extensions:**  
- - 2a. No customers in AddressBook.  
+ - 2a. No customers in Ethical Insurance.  
    - 2a1. No declared Features and Tags.
-     - System displays: “Number of customers in AddressBook: 0”  
+     - System displays: “Number of customers in Ethical Insurance: 0”  
      Use case ends. 
    - 2a2. There are declared Features and Tags.
-     - System displays: “Number of customers in AddressBook: 0” and Tables for each Feature and relevant tags, but there will be no meaningful data.<br>
+     - System displays: “Number of customers in Ethical Insurance: 0” and Tables for each Feature and relevant tags, but there will be no meaningful data.<br>
      Use case ends.
 
 ---
