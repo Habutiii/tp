@@ -33,7 +33,7 @@ public class BizUntagCommand extends Command {
             "  unbiz — Undeclares Feature(s), and their grouped Tags from Statistics.",
             "",
             "USAGE",
-            "  biz [f/FEATURE] ...",
+            "  biz f/FEATURE [f/FEATURE] ...",
             "",
             "PARAMETERS",
             "  FEATURE: " + FeatureTag.MESSAGE_CONSTRAINTS.replace("\n", "\n\t")
