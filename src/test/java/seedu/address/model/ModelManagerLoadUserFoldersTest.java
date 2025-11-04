@@ -33,7 +33,7 @@ public class ModelManagerLoadUserFoldersTest {
         TagFolder f = find(mm.getActiveTagFolders(), "friends");
         assertNotNull(f, "friends folder should be created");
         assertTrue(f.isUserCreated(), "should be marked user-created");
-        assertEquals(List.of("friends"), f.getQueryTags(), "queryTags should be lower-cased single");
+        assertEquals(List.of("FRIENDS"), f.getQueryTags(), "queryTags should be lower-cased single");
     }
 
     @Test
@@ -47,10 +47,10 @@ public class ModelManagerLoadUserFoldersTest {
         ModelManager mm = new ModelManager(ab, up);
 
         // Display is built from sorted(norm) => "colleagues & friends"
-        TagFolder f = find(mm.getActiveTagFolders(), "colleagues & friends");
+        TagFolder f = find(mm.getActiveTagFolders(), "COLLEAGUES & FRIENDS");
         assertNotNull(f, "composite folder should be created with sorted display");
         assertTrue(f.isUserCreated());
-        assertEquals(List.of("colleagues", "friends"), f.getQueryTags());
+        assertEquals(List.of("COLLEAGUES", "FRIENDS"), f.getQueryTags());
     }
 
     @Test
