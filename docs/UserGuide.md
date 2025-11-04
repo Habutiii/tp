@@ -386,8 +386,8 @@ Examples: [See result in 'Viewing Summary Statistics']
 **Parameter restrictions:**
 ***All parameters contains only printable ASCII characters***
 *** Please note that Biz tags are different from the entry Tags above.
-- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive.
-- Example: friend, VIP, family-member, project2025_
+- **Feature and Tag:** A tag name should contain only English letters, digits, or '-' (dash). It must start and end with a letter or digit, and must not exceed 40 characters. Tags are case-insensitive. 
+ _Example: friend, VIP, family-member, project2025_
 
 
 ### Undeclaring Features and Tags from Statistics: `unbiz`

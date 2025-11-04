@@ -61,7 +61,7 @@ public class EditCommand extends Command {
             "  edit — Edits details of an existing person.",
             "",
             "USAGE",
-            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]",
+            "  edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] {[t/TAG]… OR [at/TAG]… OR [dt/TAG]} ",
             "",
             "PARAMETERS",
             "  • INDEX: positive integer referring to displayed list index",
