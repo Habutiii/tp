@@ -33,7 +33,7 @@ public class AddPreviewBuilderTest {
         assertTrue(previews.get(3).isValid());
 
         assertEquals("Tags (t/):", previews.get(4).getLabel());
-        assertEquals("friend", previews.get(4).getValue());
+        assertEquals("FRIEND", previews.get(4).getValue());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class AddPreviewBuilderTest {
         List<FieldPreview> previews = AddPreviewBuilder.buildPreview(input);
 
         assertEquals("Tags (t/):", previews.get(4).getLabel());
-        assertEquals("friend", previews.get(4).getValue()); // Only one friend shown after new update
+        assertEquals("FRIEND", previews.get(4).getValue()); // Only one friend shown after new update
         assertTrue(previews.get(4).getInvalidTagIndices().isEmpty() || previews.get(4).isValid());
     }
 
@@ -119,7 +119,7 @@ public class AddPreviewBuilderTest {
         // Show only the first 15 tags then error messaage (if nothing goes wrong)
         StringBuilder expected = new StringBuilder();
         for (int i = 1; i <= 15; i++) {
-            expected.append("tag").append(i);
+            expected.append("TAG").append(i);
             if (i < 15) {
                 expected.append(", ");
             }

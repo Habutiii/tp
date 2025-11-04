@@ -104,7 +104,7 @@ public class EditPreviewBuilder {
 
         boolean isMultipleTagOps = false;
         int tagOpCount = 0;
-        String emptyTag = "";
+
 
         if (!newTagsList.isEmpty()) {
             tagOpCount++;
@@ -122,11 +122,6 @@ public class EditPreviewBuilder {
         if (isMultipleTagOps) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     MESSAGE_TOO_MANY_TAG_PREFIXES, false));
-        } else if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON
-                || addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
-            fieldPreviews.add(new FieldPreview("Tags (t/):",
-                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
-                            addTagsList.size() + person.getTags().size()) , false));
         } else if (!newTagsList.isEmpty()) {
             fieldPreviews.add(createTagsPreview(person, newTagsList));
         } else if (!addTagsList.isEmpty()) {
@@ -140,47 +135,61 @@ public class EditPreviewBuilder {
         return fieldPreviews;
     }
 
-    static FieldPreview createNamePreview(Person person, String newName, boolean duplicate) {
+    static FieldPreview createNamePreview(Person person, String newName, boolean isDuplicate) {
         String oldName = person.getName().fullName;
-        if (duplicate) {
-            return new FieldPreview("Name (n/):", oldName + " -> " + newName + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Name (n/):", oldName + " -> " + newName + " (duplicate n/ found!)", false);
         }
         boolean isValid = Name.isValidName(newName);
         return new FieldPreview("Name (n/):", oldName + " -> " + newName, isValid);
     }
 
-    static FieldPreview createPhonePreview(Person person, String newPhone, boolean duplicate) {
+    static FieldPreview createPhonePreview(Person person, String newPhone, boolean isDuplicate) {
         String oldPhone = person.getPhone().value;
-        if (duplicate) {
-            return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone + " (duplicate p/ found!)", false);
         }
         boolean isValid = Phone.isValidPhone(newPhone);
         return new FieldPreview("Phone (p/):", oldPhone + " -> " + newPhone, isValid);
     }
 
-    static FieldPreview createEmailPreview(Person person, String newEmail, boolean duplicate) {
+    static FieldPreview createEmailPreview(Person person, String newEmail, boolean isDuplicate) {
         String oldEmail = person.getEmail().value;
-        if (duplicate) {
-            return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail + " (duplicate e/ found!)", false);
         }
         boolean isValid = Email.isValidEmail(newEmail);
         return new FieldPreview("Email (e/):", oldEmail + " -> " + newEmail, isValid);
     }
 
-    static FieldPreview createAddressPreview(Person person, String newAddress, boolean duplicate) {
+    static FieldPreview createAddressPreview(Person person, String newAddress, boolean isDuplicate) {
         String oldAddress = person.getAddress().value;
-        if (duplicate) {
-            return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress + " (duplicate)", false);
+        if (isDuplicate) {
+            return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress + " (duplicate a/ found!)",
+                    false);
         }
         boolean isValid = Address.isValidAddress(newAddress);
         return new FieldPreview("Address (a/):", oldAddress + " -> " + newAddress, isValid);
     }
 
     static FieldPreview createTagsPreview(Person person, List<String> newTagsList) {
+        if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON && !newTagsList.contains("")) {
+            return new FieldPreview("Tags (t/):",
+                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                            newTagsList.size()), false);
+        }
         return createGenericTagsPreview(person, newTagsList, TagOperation.REPLACE);
     }
 
     static FieldPreview createAddTagsPreview(Person person, List<String> newTagsList) {
+        List<String> existingTagNames = person.getTags().stream().map(t -> t.tagName.toLowerCase()).toList();
+        List<String> filteredTags = newTagsList.stream().filter(t -> !existingTagNames.contains(t.toLowerCase()))
+                .toList();
+        if (filteredTags.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON && !filteredTags.contains("")) {
+            return new FieldPreview("Tags (t/):",
+                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                            filteredTags.size() + person.getTags().size()) , false);
+        }
         return createGenericTagsPreview(person, newTagsList, TagOperation.ADD);
     }
 
@@ -201,7 +210,7 @@ public class EditPreviewBuilder {
             } else if (Tag.isValidTagName(tag)) {
                 if (op.equals(TagOperation.REMOVE) && !person.getTags().contains(new Tag(tag))) {
                     invalidTagIndices.add(i);
-                } else if (op.equals(TagOperation.ADD) && person.getTags().contains(new Tag(tag))) {
+                } else if (!op.equals(TagOperation.REMOVE) && person.getTags().contains(new Tag(tag))) {
                     continue;
                 }
             }
@@ -225,7 +234,6 @@ public class EditPreviewBuilder {
     private enum TagOperation {
         REPLACE, ADD, REMOVE
     }
-
 
     static FieldPreview createFieldPreview(
             String label,

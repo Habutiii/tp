@@ -26,8 +26,9 @@ public class Tag {
      */
     public Tag(String tagName) {
         requireNonNull(tagName);
+        String normalized = tagName.trim().toUpperCase();
         checkArgument(isValidTagName(tagName), MESSAGE_CONSTRAINTS);
-        this.tagName = tagName;
+        this.tagName = normalized;
     }
 
     /**
@@ -50,8 +51,8 @@ public class Tag {
             return false;
         }
 
-        Tag otherTag = (Tag) other;
-        return tagName.equalsIgnoreCase(otherTag.tagName);
+        Tag o = (Tag) other;
+        return this.tagName.equals(o.tagName);
     }
 
     @Override
