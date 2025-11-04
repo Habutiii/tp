@@ -211,6 +211,7 @@ If you need to include text like `p/` or `e/` inside a name or address, consider
 | `Jean-Luc`    | `John123`      |
 | `Tan`         | `Strauß`       |
 | `Mei Ling`    | `José`         |
+| `O'Connor`    | `John*`        |
 | `Mary (Ann)`  | `John_`        |
 | `Alex @ Home` | `_xXdarrenXx_` |
 
