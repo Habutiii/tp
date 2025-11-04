@@ -55,8 +55,8 @@ public class StatsCommandIntegrationTest {
                         + "MALE   | 1\n\n"
                         + "Total for Feature: 2\n"
                         + "Average: 0.67\n"
-                        + "Max Tag: FEMALE & MALE (1 person)\n"
-                        + "Min Tag: OTHER (0 people)\n"
+                        + "Max Tag: FEMALE, MALE (1 person per tag)\n"
+                        + "Min Tag: OTHER (0 people per tag)\n"
                         + barTable + "\n\n\n"
                         + "PLAN | Number of people\n"
                         + "A    | 2\n"
@@ -64,8 +64,8 @@ public class StatsCommandIntegrationTest {
                         + "C    | 0\n\n"
                         + "Total for Feature: 2\n"
                         + "Average: 0.67\n"
-                        + "Max Tag: A (2 people)\n"
-                        + "Min Tag: B & C (0 people)\n"
+                        + "Max Tag: A (2 people per tag)\n"
+                        + "Min Tag: B, C (0 people per tag)\n"
                         + barTable + "\n\n";
 
         assertEquals(new CommandResult(expected), statsCommand.execute(model));
