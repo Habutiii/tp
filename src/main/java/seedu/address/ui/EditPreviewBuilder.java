@@ -104,7 +104,7 @@ public class EditPreviewBuilder {
 
         boolean isMultipleTagOps = false;
         int tagOpCount = 0;
-        String emptyTag = "";
+
 
         if (!newTagsList.isEmpty()) {
             tagOpCount++;
@@ -122,12 +122,6 @@ public class EditPreviewBuilder {
         if (isMultipleTagOps) {
             fieldPreviews.add(new FieldPreview("Tags (t/):",
                     MESSAGE_TOO_MANY_TAG_PREFIXES, false));
-        } else if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON
-                || addTagsList.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON) {
-            fieldPreviews.add(new FieldPreview("Tags (t/):",
-                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
-                            addTagsList.size() + person.getTags().size()),
-                    false));
         } else if (!newTagsList.isEmpty()) {
             fieldPreviews.add(createTagsPreview(person, newTagsList));
         } else if (!addTagsList.isEmpty()) {
@@ -179,10 +173,23 @@ public class EditPreviewBuilder {
     }
 
     static FieldPreview createTagsPreview(Person person, List<String> newTagsList) {
+        if (newTagsList.size() > Person.MAX_TAGS_PER_PERSON && !newTagsList.contains("")) {
+            return new FieldPreview("Tags (t/):",
+                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                            newTagsList.size()), false);
+        }
         return createGenericTagsPreview(person, newTagsList, TagOperation.REPLACE);
     }
 
     static FieldPreview createAddTagsPreview(Person person, List<String> newTagsList) {
+        List<String> existingTagNames = person.getTags().stream().map(t -> t.tagName.toLowerCase()).toList();
+        List<String> filteredTags = newTagsList.stream().filter(t -> !existingTagNames.contains(t.toLowerCase()))
+                .toList();
+        if (filteredTags.size() + person.getTags().size() > Person.MAX_TAGS_PER_PERSON && !filteredTags.contains("")) {
+            return new FieldPreview("Tags (t/):",
+                    String.format(MESSAGE_EXCEEDING_MAX_TAGS, Person.MAX_TAGS_PER_PERSON,
+                            filteredTags.size() + person.getTags().size()) , false);
+        }
         return createGenericTagsPreview(person, newTagsList, TagOperation.ADD);
     }
 
@@ -203,7 +210,7 @@ public class EditPreviewBuilder {
             } else if (Tag.isValidTagName(tag)) {
                 if (op.equals(TagOperation.REMOVE) && !person.getTags().contains(new Tag(tag))) {
                     invalidTagIndices.add(i);
-                } else if (op.equals(TagOperation.ADD) && person.getTags().contains(new Tag(tag))) {
+                } else if (!op.equals(TagOperation.REMOVE) && person.getTags().contains(new Tag(tag))) {
                     continue;
                 }
             }

@@ -15,7 +15,7 @@ activate Model
 Model -> ModelManager : setActiveTagFolders(["A","friend"])
 activate ModelManager
 
-ModelManager -> ActiveTagFolders : dedupe(case-insensitive)\ncreate/update TagFolder("A"), TagFolder("friend")
+ModelManager -> ActiveTagFolders : create/update TagFolder("A"), TagFolder("FRIEND")
 ActiveTagFolders --> ModelManager
 
 ModelManager -> ModelManager : refreshActiveTagFolderCounts()

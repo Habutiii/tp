@@ -2,7 +2,7 @@
 !include style.puml
 skinparam ArrowFontStyle plain
 
-box ""Logic" LOGIC_COLOR_T1
+box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager #3333C4
 participant ":AddressBookParser" as AddressBookParser #3333C4
 participant "lc:ListCommand" as ListCommand #3333C4

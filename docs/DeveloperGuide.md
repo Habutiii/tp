@@ -225,6 +225,7 @@ When executed, the `ClearCommand` will save a copy of the current state of the a
 Biz feature is implemented via `BizTagCommand` class. When the user inputs `biz f/Plan t/A t/B`, an instance of `BizTagCommand` is created and its `execute` method is called.
 The object then creates a `FeatureTag` with `tagName` Plan and a `Set<Tag>` containing `Tag`s of `tagName`s A and B. It then passes the `FeatureTag` and `Set<Tag>` into `Model` via the `addBizTags()` method in `Model`.
 The object then returns a `String` message to the user about the successful addition. If that Feature already exists in `Model`, this will overwrite that Feature : Tag pair. 
+Feature:Tag pairs do not persist through app closures and app restarts.
 
 ![Biz Sequence Diagram](images/BizSequenceDiagram.png)
 
@@ -240,7 +241,7 @@ The implementation of the feature is atomic - either all inputted Features get r
 
 ### Stats feature
 
-Stats feature in implemented via the `StatsCommand` class. When the user issues the `stats` command, an instance of `StatsCommand` is created and its `execute` method is called. This method interacts with the `Model` component to obtain declared Features and their respective Tags from `bizTags` using the `get_BizTags()` method in `Model`. It will then aggregate statistics such as Average, Min and Max for each Feature using its own `getFeatureStats()` method and return the output as a `String` through the `CommandResult` object.
+Stats feature in implemented via the `StatsCommand` class. When the user issues the `stats` command, an instance of `StatsCommand` is created and its `execute` method is called. This method interacts with the `Model` component to obtain declared Features and their respective Tags from `bizTags` using the `getBizTags()` method in `Model`. It will then aggregate statistics such as Average, Min and Max for each Feature using its own `getFeatureStats()` method and return the output as a `String` through the `CommandResult` object.
 This feature is not undoable.
 ![Stats_Sequence_Diagram](images/StatsSequenceDiagram.png)
 
