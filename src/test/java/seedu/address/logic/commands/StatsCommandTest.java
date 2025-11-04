@@ -37,24 +37,24 @@ public class StatsCommandTest {
     @Test
     public void execute_stats_success() {
         StatsCommand statsCommand = new StatsCommand();
-        String barOutput = "==================================";
-        String barTable = "------------------------------------------------";
+        String barOutput = "==========";
+        String barTable = "----------";
         String expected =
-                "Total Number of Customers in AddressBook: 10"
+                "Total Number of Customers in Address Book: 10"
                         + "\n\n" + barOutput + "\n\n"
-                        + "GENDER   |  Number of people\n"
-                        + "OTHER    |  0\n"
-                        + "FEMALE   |  0\n"
-                        + "MALE     |  3\n\n"
+                        + "GENDER | Number of people\n"
+                        + "OTHER  | 0\n"
+                        + "FEMALE | 0\n"
+                        + "MALE   | 3\n\n"
                         + "Total for Feature: 3\n"
                         + "Average: 1.00\n"
                         + "Max Tag: MALE (3 people)\n"
                         + "Min Tag: OTHER & FEMALE (0 people)\n"
                         + barTable + "\n\n\n"
-                        + "PLAN   |  Number of people\n"
-                        + "A      |  3\n"
-                        + "B      |  0\n"
-                        + "C      |  0\n\n"
+                        + "PLAN | Number of people\n"
+                        + "A    | 3\n"
+                        + "B    | 0\n"
+                        + "C    | 0\n\n"
                         + "Total for Feature: 3\n"
                         + "Average: 1.00\n"
                         + "Max Tag: A (3 people)\n"
@@ -137,7 +137,7 @@ public class StatsCommandTest {
         };
         CommandResult result = statsCommand.execute(emptyModel);
         System.out.print(result.toString());
-        assertTrue(result.toString().contains("Total Number of Customers in AddressBook: 0"));
+        assertTrue(result.toString().contains("Total Number of Customers in Address Book: 0"));
         assertTrue(result.toString().contains("Average: 0.00")); // mean < 0 branch
     }
 

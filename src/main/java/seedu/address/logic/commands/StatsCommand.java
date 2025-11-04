@@ -58,8 +58,8 @@ public class StatsCommand extends Command {
 
         ArrayList<String> tables = new ArrayList<>();
 
-        String barOutput = "==================================";
-        String barTable = "------------------------------------------------";
+        String barOutput = "==========";
+        String barTable = "----------";
 
         for (FeatureTag category : bizTags.keySet()) {
             tables.add(this.getFeatureStats(filteredPersons, bizTags, category));
@@ -68,7 +68,7 @@ public class StatsCommand extends Command {
         }
 
         String summaryTables = String.join("\n", tables);
-        String overview = "Total Number of Customers in AddressBook: " + model.getSize() + "\n\n" + barOutput;
+        String overview = "Total Number of Customers in Address Book: " + model.getSize() + "\n\n" + barOutput;
 
         return String.join("\n\n", overview, summaryTables);
     }
@@ -86,9 +86,9 @@ public class StatsCommand extends Command {
         }
         maxTagLength = Math.max(maxTagLength, feature.toString().length());
 
-        int padding = maxTagLength + 2;
+        int padding = maxTagLength;
 
-        results.add(String.format("%-" + padding + "s |  Number of people", feature));
+        results.add(String.format("%-" + padding + "s | Number of people", feature));
 
         int catTotal = 0;
         int catCount = 0;
@@ -121,7 +121,7 @@ public class StatsCommand extends Command {
                 catMinTag = new StringBuilder(tag.toString());
             }
 
-            String stat = String.format("%-" + padding + "s |  %d", tag, total);
+            String stat = String.format("%-" + padding + "s | %d", tag, total);
             results.add(stat);
         }
 
