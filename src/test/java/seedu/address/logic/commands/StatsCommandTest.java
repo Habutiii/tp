@@ -48,8 +48,8 @@ public class StatsCommandTest {
                         + "MALE   | 3\n\n"
                         + "Total for Feature: 3\n"
                         + "Average: 1.00\n"
-                        + "Max Tag: MALE (3 people)\n"
-                        + "Min Tag: OTHER & FEMALE (0 people)\n"
+                        + "Max Tag: MALE (3 people per tag)\n"
+                        + "Min Tag: OTHER, FEMALE (0 people per tag)\n"
                         + barTable + "\n\n\n"
                         + "PLAN | Number of people\n"
                         + "A    | 3\n"
@@ -57,8 +57,8 @@ public class StatsCommandTest {
                         + "C    | 0\n\n"
                         + "Total for Feature: 3\n"
                         + "Average: 1.00\n"
-                        + "Max Tag: A (3 people)\n"
-                        + "Min Tag: B & C (0 people)\n"
+                        + "Max Tag: A (3 people per tag)\n"
+                        + "Min Tag: B, C (0 people per tag)\n"
                         + barTable + "\n\n";
 
         assertEquals(new CommandResult(expected), statsCommand.execute(new ModelStub()));
@@ -106,17 +106,17 @@ public class StatsCommandTest {
 
         String out = cmd.execute(model).toString().toUpperCase();
         // all tags have count 1 → both max and min contain all three
-        assertTrue(out.contains("MAX TAG: OTHER & FEMALE & MALE") || out.contains("MAX TAG: OTHER & MALE & FEMALE")
-                || out.contains("MAX TAG: FEMALE & MALE & OTHER")
-                || out.contains("MAX TAG: FEMALE & OTHER & MALE")
-                || out.contains("MAX TAG: MALE & OTHER & FEMALE")
-                || out.contains("MAX TAG: MALE & FEMALE & OTHER"));
+        assertTrue(out.contains("MAX TAG: OTHER, FEMALE, MALE") || out.contains("MAX TAG: OTHER, MALE, FEMALE")
+                || out.contains("MAX TAG: FEMALE, MALE, OTHER")
+                || out.contains("MAX TAG: FEMALE, OTHER, MALE")
+                || out.contains("MAX TAG: MALE, OTHER, FEMALE")
+                || out.contains("MAX TAG: MALE, FEMALE, OTHER"));
 
-        assertTrue(out.contains("MIN TAG: OTHER & FEMALE & MALE") || out.contains("MIN TAG: OTHER & MALE & FEMALE")
-                || out.contains("MIN TAG: FEMALE & MALE & OTHER")
-                || out.contains("MIN TAG: FEMALE & OTHER & MALE")
-                || out.contains("MIN TAG: MALE & OTHER & FEMALE")
-                || out.contains("MIN TAG: MALE & FEMALE & OTHER"));
+        assertTrue(out.contains("MIN TAG: OTHER, FEMALE, MALE") || out.contains("MIN TAG: OTHER, MALE, FEMALE")
+                || out.contains("MIN TAG: FEMALE, MALE, OTHER")
+                || out.contains("MIN TAG: FEMALE, OTHER, MALE")
+                || out.contains("MIN TAG: MALE, OTHER, FEMALE")
+                || out.contains("MIN TAG: MALE, FEMALE, OTHER"));
 
         assertTrue(out.contains("AVERAGE: 1.00"));
     }

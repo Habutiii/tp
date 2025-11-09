@@ -293,6 +293,17 @@ This process is facilitated through methods like:
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Planned Enhancements**
+
+1. Persist Declared Feature Tags for biz, unbiz, and stats Commands
+   * Currently, the application allows users to declare feature–tag mappings using the biz command, which are then used by the stats command to generate summary statistics. However, these declared tags are stored only in memory and are lost once the application is closed. 
+   * Planned Fix:
+     * Implement persistent storage for feature–tag mappings by serializing them into the application’s save data (e.g., within the same JSON file used for contacts, or a dedicated metadata file). 
+     * Ensure that on application startup, the previously declared mappings are automatically reloaded so that users can continue using stats seamlessly without re-declaring biz tags. 
+     * Update the clear and reset commands to also remove stored feature–tag mappings appropriately.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Requirements**
 
 ### Product scope

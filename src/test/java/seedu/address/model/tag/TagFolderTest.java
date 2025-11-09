@@ -23,18 +23,18 @@ class TagFolderTest {
     @Test
     void ctor_singleTag_setsNameCountAndQueryTags() {
         TagFolder f = new TagFolder("friends", 3);
-        assertEquals("friends", f.getName());
+        assertEquals("FRIENDS", f.getName());
         assertEquals(3, f.getCount());
-        assertEquals(List.of("friends"), f.getQueryTags());
-        assertEquals("friends (3)", f.toString());
+        assertEquals(List.of("FRIENDS"), f.getQueryTags());
+        assertEquals("FRIENDS (3)", f.toString());
     }
 
     @Test
     void composite_factory_usesDisplayNameAndQueryTags() {
-        TagFolder f = TagFolder.composite("friends & colleagues", List.of("friends", "colleagues"));
-        assertEquals("friends & colleagues", f.getName());
+        TagFolder f = TagFolder.composite("friends & colleagues", List.of("FRIENDS", "COLLEAGUES"));
+        assertEquals("COLLEAGUES & FRIENDS", f.getName());
         assertEquals(0, f.getCount()); // factory starts at 0
-        assertEquals(List.of("friends", "colleagues"), f.getQueryTags());
+        assertEquals(List.of("COLLEAGUES", "FRIENDS"), f.getQueryTags());
     }
 
     @Test
@@ -62,9 +62,9 @@ class TagFolderTest {
         // This hits: TagFolder(String name, int count, List<String> queryTags) { this(name, count, queryTags, false); }
         TagFolder tf = new TagFolder("friends & colleagues", 0, List.of("friends", "colleagues"));
 
-        assertEquals("friends & colleagues", tf.getName());
+        assertEquals("COLLEAGUES & FRIENDS", tf.getName());
         assertEquals(0, tf.getCount());
-        assertEquals(List.of("friends", "colleagues"), tf.getQueryTags());
+        assertEquals(List.of("COLLEAGUES", "FRIENDS"), tf.getQueryTags());
 
         // ensure queryTags is an unmodifiable copy (constructor uses List.copyOf)
         assertThrows(UnsupportedOperationException.class, () -> tf.getQueryTags().add("new"));
